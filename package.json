@@ -7,11 +7,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "g": "node generator.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
     "@shadow-panda/style-context": "^0.7.0",
+    "clsx": "^2.0.0",
     "next": "13.5.4",
     "next-themes": "^0.2.1",
     "react": "^18",
@@ -24,10 +26,13 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "change-case": "^5.0.2",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "inquirer": "^9.2.11",
+    "inquirer-autocomplete-prompt": "^3.0.1",
     "prettier": "^3.0.3",
     "typescript": "^5"
   }

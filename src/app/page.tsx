@@ -1,9 +1,15 @@
+import Link from 'next/link'
+
 import Button from '@/components/ui/Button'
 
-export default function Home() {
+const Home = () => {
   return (
     <main>
-      <Button>hihi</Button>
+      <Button asChild>
+        <Link href="/test">test page</Link>
+      </Button>
     </main>
   )
 }
+
+export default Home
