@@ -13,6 +13,8 @@
     "^react",
     "<THIRD_PARTY_MODULES>",
     "^@styled-system",
+    "^@/components/.+$",
+    "^@/features/.+$",
     "^@.+$",
     "^\\..+$"
   ],

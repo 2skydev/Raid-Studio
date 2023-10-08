@@ -9,6 +9,46 @@ export default defineConfig({
   jsxFramework: 'react',
 
   theme: {
-    extend: {},
+    extend: {
+      semanticTokens: {
+        sizes: {
+          headerHeight: {
+            value: '{sizes.14}',
+            description: 'Layout header height',
+          },
+          mainHeight: {
+            value: 'calc(100vh - {sizes.14} - 1px)',
+            description: 'sizes.headerHeight - 100vh',
+          },
+        },
+        zIndex: {
+          scrollbar: {
+            value: '100',
+            description: 'Scrollbar z-index',
+          },
+          header: {
+            value: '50',
+            description: 'Header z-index',
+          },
+        },
+      },
+      keyframes: {
+        backgroundAnimation: {
+          '0%': {
+            transform: 'translateY(100%) rotate(-50deg)',
+          },
+          '100%': {
+            transform: 'translateY(calc(-100vh + -100%)) rotate(20deg)',
+          },
+        },
+      },
+    },
+  },
+
+  staticCss: {
+    recipes: {
+      // Load toast variant styles since it cannot be statically analyzed
+      toast: [{ variant: ['*'] }],
+    },
   },
 })
