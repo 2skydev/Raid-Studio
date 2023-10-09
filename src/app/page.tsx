@@ -8,6 +8,7 @@ import BackgroundAnimation from '@/components/BackgroundAnimation'
 import Button from '@/components/Button'
 
 import SignInDiscordButton from '@/features/auth/SignInDiscordButton'
+import PageContentMotion from '@/features/motion/PageContentMotion'
 
 import AquaticoFont from '@/assets/fonts/Aquatico'
 import { getServerSession } from '@/libs/auth'
@@ -16,7 +17,7 @@ const Home = async () => {
   const session = await getServerSession()
 
   return (
-    <main>
+    <PageContentMotion>
       <BackgroundAnimation />
 
       <Container pt="20">
@@ -37,7 +38,7 @@ const Home = async () => {
           <SignInDiscordButton />
         )}
       </Container>
-    </main>
+    </PageContentMotion>
   )
 }
 

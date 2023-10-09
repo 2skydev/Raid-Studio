@@ -1,12 +1,28 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
+
+import { css } from '@styled-system/css'
 import { styled } from '@styled-system/jsx'
 
 import { ScrollArea } from '@/components/ScrollArea'
 import Sidebar from '@/components/Sidebar'
 
-const StudioLayout = async ({ children }: { children: React.ReactNode }) => {
+import PageContentMotion from '@/features/motion/PageContentMotion'
+import SidebarMotion from '@/features/motion/SidebarMotion'
+
+const StudioLayout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname()
+
   return (
     <styled.div px="4">
-      <styled.aside w="280px" h="mainHeight" pos="fixed">
+      <SidebarMotion
+        className={css({
+          w: '280px',
+          h: 'mainHeight',
+          pos: 'fixed',
+        })}
+      >
         <ScrollArea
           h="full"
           pr="2.5"
@@ -17,19 +33,22 @@ const StudioLayout = async ({ children }: { children: React.ReactNode }) => {
         >
           <Sidebar />
         </ScrollArea>
-      </styled.aside>
+      </SidebarMotion>
 
-      <styled.main
-        ml="calc(280px + token(sizes.10))"
-        flex="1"
-        py="6"
-        pr="8"
-        lg={{
-          py: '8',
-        }}
+      <PageContentMotion
+        key={pathname}
+        className={css({
+          ml: 'calc(280px + token(sizes.10))',
+          flex: '1',
+          py: '6',
+          pr: '8',
+          lg: {
+            py: '8',
+          },
+        })}
       >
         {children}
-      </styled.main>
+      </PageContentMotion>
     </styled.div>
   )
 }
