@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# RAID STUDIO
+![image](https://github.com/2skydev/Raid-Studio/assets/43225384/68c0553f-fd83-4fc9-b0a6-f7f7c34dcefa)
+
+## Skills
+
+![Skills](https://skillicons.dev/icons?i=vercel,nextjs,ts,react,discord)
+[<img src="https://github.com/2skydev/Raid-Studio/assets/43225384/a306bd79-1b16-49a9-a472-5602bfeb7ce5" width="50px" height="50px">](https://panda-css.com)
+[<img src="https://github.com/2skydev/Raid-Studio/assets/43225384/5fc8dd76-d743-4ebb-84a4-20e2c0aabfdc" width="50px" height="50px">](https://www.framer.com/motion)
+
 
 ## Getting Started
+이 프로젝트는 `pnpm`을 사용합니다.
+> vercel에서 `yarn 3`를 지원하지 않기 때문에 `pnpm`으로 선택했습니다.
 
-First, run the development server:
+<br />
+
+패키지 설치
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm i
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+개발모드 실행
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+페이지, 컴포넌트 등 제너레이터 실행
 
-## Learn More
+```bash
+pnpm g
+```
 
-To learn more about Next.js, take a look at the following resources:
+빌드
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+프로덕션 실행
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+pnpm start
+```
