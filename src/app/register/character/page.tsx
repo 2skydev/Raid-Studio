@@ -24,7 +24,6 @@ import { useToast } from '@/components/Toast/useToast'
 
 import useCustomForm from '@/hooks/useCustomForm'
 import apiClient from '@/libs/api/client'
-import * as Styled from '@/styles/pageStyled/RegisterCharacterPage.styled'
 import { Character } from '@/types/character'
 
 const RegisterCharacterPage = () => {

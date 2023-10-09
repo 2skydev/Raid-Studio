@@ -1,7 +1,10 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 
+import { Flex } from '@styled-system/jsx'
+
 import ThemeToggleButton from '@/features/theme/ThemeToggleButton'
+import CurrentUserProfileDropdownMenu from '@/features/user/CurrentUserProfileDropdownMenu'
 
 import AquaticoFont from '@/assets/fonts/Aquatico'
 
@@ -19,7 +22,10 @@ const Header = ({ className }: HeaderProps) => {
           Raid Studio
         </Link>
 
-        <ThemeToggleButton />
+        <Flex gap="4">
+          <CurrentUserProfileDropdownMenu />
+          <ThemeToggleButton />
+        </Flex>
       </Styled.Wrap>
     </Styled.Root>
   )
