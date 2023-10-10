@@ -5,8 +5,6 @@ import { ReactNode } from 'react'
 import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
 
-import { css } from '@styled-system/css'
-
 import { Accordion, AccordionContent, AccordionItem } from '@/components/Accordion'
 
 import * as Styled from './Sidebar.styled'

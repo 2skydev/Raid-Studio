@@ -2,6 +2,7 @@
 
 import { LogOutIcon, SettingsIcon, UsersIcon } from 'lucide-react'
 import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 import { icon } from '@styled-system/recipes'
 
@@ -21,6 +22,8 @@ import { User } from '@/types/user'
 export interface CurrentUserProfileDropdownMenuProps {}
 
 const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps) => {
+  const router = useRouter()
+
   const { data: user } = useAPI<User>('/users/me')
 
   if (!user) return null
@@ -37,7 +40,7 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
       </DropdownMenuTrigger>
 
       <DropdownMenuContent w="40">
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push('/my/profile')}>
           <SettingsIcon className={icon()} />
           설정
         </DropdownMenuItem>
