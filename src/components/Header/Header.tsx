@@ -7,6 +7,7 @@ import { css } from '@styled-system/css'
 import { Flex } from '@styled-system/jsx'
 
 import Button from '@/components/Button'
+import CommandMenu from '@/components/CommandMenu'
 
 import ThemeToggleButton from '@/features/theme/ThemeToggleButton'
 import CurrentUserProfileDropdownMenu from '@/features/user/CurrentUserProfileDropdownMenu'
@@ -39,9 +40,13 @@ const Header = ({ className }: HeaderProps) => {
           </Flex>
         </Link>
 
-        <Flex gap="1">
+        <Flex gap="1" alignItems="center">
+          <CommandMenu />
+
           <CurrentUserProfileDropdownMenu />
+
           <ThemeToggleButton />
+
           <Button w="9" h="9" p="0" variant="ghost" asChild>
             <Link href="https://github.com/2skydev/Raid-Studio" target="_blank">
               <GithubIcon size="1.2rem" />

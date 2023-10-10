@@ -4,3 +4,8 @@ export interface Character {
   level: number
   class: string
 }
+
+export interface CharactersCollectionItem {
+  userId: string
+  characters: Character[]
+}

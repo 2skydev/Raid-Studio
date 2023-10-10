@@ -23,7 +23,7 @@ import { Input } from '@/components/Input'
 import { useToast } from '@/components/Toast/useToast'
 
 import useCustomForm from '@/hooks/useCustomForm'
-import apiClient from '@/libs/api/client'
+import raidStudioClient from '@/libs/raidStudio/client'
 import { Character } from '@/types/character'
 
 const RegisterCharacterPage = () => {
@@ -51,7 +51,7 @@ const RegisterCharacterPage = () => {
       try {
         setLoading(true)
 
-        const { data } = await apiClient.get<Character[]>(
+        const { data } = await raidStudioClient.get<Character[]>(
           `/lostark/characters/${values.characterName}`,
         )
 
@@ -71,7 +71,7 @@ const RegisterCharacterPage = () => {
 
   const registerCharacter = async () => {
     try {
-      await apiClient.patch('/users/change-character', {
+      await raidStudioClient.patch('/users/change-character', {
         characterName: mainCharacter?.name,
       })
 

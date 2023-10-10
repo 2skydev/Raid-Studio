@@ -1,9 +1,9 @@
-import lostarkClient from '@/libs/lostark/client'
+import LostArkAPI from '@/libs/lostark/api'
 
 export async function GET(request: Request, { params }: { params: { characterName: string } }) {
-  const { data } = await lostarkClient.get(`/characters/${params.characterName}/siblings`)
+  const characters = await LostArkAPI.characters.getCharacters(params.characterName)
 
-  if (!data) {
+  if (!characters) {
     return Response.json(
       { error: '캐릭터를 찾을 수 없습니다.' },
       {
@@ -11,13 +11,6 @@ export async function GET(request: Request, { params }: { params: { characterNam
       },
     )
   }
-
-  const characters = data.map((character: any) => ({
-    server: character.ServerName,
-    name: character.CharacterName,
-    level: +character.ItemMaxLevel.replace(',', ''),
-    class: character.CharacterClassName,
-  }))
 
   return Response.json(characters)
 }

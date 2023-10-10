@@ -8,6 +8,4 @@ const client = new MongoClient(process.env.MONGODB_URI!, {
   },
 })
 
-export const db = client.db('larm')
-
-export default client
+export const db = client.db('RAID-STUDIO')

@@ -1,7 +1,7 @@
 'use client'
 
 import { LogOutIcon, SettingsIcon, UsersIcon } from 'lucide-react'
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 
 import { icon } from '@styled-system/recipes'
 
@@ -11,19 +11,19 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/DropdownMenu'
 
+import useAPI from '@/hooks/useAPI'
+import { User } from '@/types/user'
+
 export interface CurrentUserProfileDropdownMenuProps {}
 
 const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps) => {
-  const session = useSession()
+  const { data: user } = useAPI<User>('/users/me')
 
-  if (!session.data) return null
-
-  const user = session.data.user
+  if (!user) return null
 
   return (
     <DropdownMenu>
@@ -32,7 +32,7 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
           <Avatar w="6" h="6">
             <AvatarImage src={user.image} alt={user.name} />
           </Avatar>
-          {user.name} / 풍선알바
+          {user.name}
         </Button>
       </DropdownMenuTrigger>
 

@@ -35,7 +35,7 @@ const Content = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
 >(({ sideOffset = 4, ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
-    <DropdownMenuPrimitive.Content ref={ref} sideOffset={sideOffset} {...props} />
+    <DropdownMenuPrimitive.Content ref={ref} sideOffset={sideOffset} align="end" {...props} />
   </DropdownMenuPrimitive.Portal>
 ))
 Content.displayName = DropdownMenuPrimitive.Content.displayName

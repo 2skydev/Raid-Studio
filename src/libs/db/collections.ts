@@ -1,5 +1,11 @@
-import { User } from '@/types/user'
+import { CharactersCollectionItem } from '@/types/character'
+import { UsersCollectionItem } from '@/types/user'
 
-import { db } from './client'
+import { db } from './index'
 
-export const userCollection = db.collection<User>('users')
+const collections = {
+  users: db.collection<UsersCollectionItem>('users'),
+  characters: db.collection<CharactersCollectionItem>('characters'),
+}
+
+export default collections
