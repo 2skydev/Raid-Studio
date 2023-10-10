@@ -28,7 +28,7 @@ const PAGE_DIR = './src/pages'
  * @value {null | string}
  * @description Setting to null value does not create a page styled file.
  */
-const PAGE_STYLED_DIR = './src/styles/pageStyled'
+const PAGE_STYLED_DIR = null
 
 /**
  * input: 'test'
@@ -109,13 +109,15 @@ const createPageFileText = name => {
 
   return [
     // prettier-ignore
-    `import * as Styled from ${QUOTE}${SRC_ROOT_PATH_ALIAS}/styles/pageStyled/${pageComponentName}.styled${QUOTE}${SEMICOLON}`,
-    ``,
+    ...(PAGE_STYLED_DIR ? [
+      `import * as Styled from ${QUOTE}${SRC_ROOT_PATH_ALIAS}/styles/pageStyled/${pageComponentName}.styled${QUOTE}${SEMICOLON}`,
+      ``,
+    ] : []),
     `const ${pageComponentName} = () => {`,
     `  return (`,
-    `    <Styled.Root>`,
+    `    <${PAGE_STYLED_DIR ? 'Styled.Root' : 'div'}>`,
     `      `,
-    `    </Styled.Root>`,
+    `    </${PAGE_STYLED_DIR ? 'Styled.Root' : 'div'}>`,
     `  )${SEMICOLON}`,
     `}${SEMICOLON}`,
     ``,
@@ -315,8 +317,6 @@ const start = async () => {
         }
       }
 
-      const styledPath = `${PAGE_STYLED_DIR}/${name + PAGE_COMPONENT_NAME_SUFFIX}.styled.ts`
-
       // check page file already exists
       if (fs.existsSync(path)) {
         console.log(`🛑 [${path}] already exists`)
@@ -329,6 +329,8 @@ const start = async () => {
       }
 
       if (PAGE_STYLED_DIR !== null) {
+        const styledPath = `${PAGE_STYLED_DIR}/${name + PAGE_COMPONENT_NAME_SUFFIX}.styled.ts`
+
         // check page styled file already exists
         if (fs.existsSync(styledPath)) {
           console.log(`🛑 [${styledPath}] already exists`)
