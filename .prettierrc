@@ -15,7 +15,7 @@
     "^@styled-system",
     "^@/components/.+$",
     "^@/features/.+$",
-    "^@.+$",
+    "^@/.+$",
     "^\\..+$"
   ],
   "importOrderSeparation": true,

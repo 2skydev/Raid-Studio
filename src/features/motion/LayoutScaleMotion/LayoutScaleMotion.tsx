@@ -4,22 +4,22 @@ import { ReactNode } from 'react'
 
 import { motion } from 'framer-motion'
 
-export interface PageContentMotionScaleProps {
+export interface LayoutScaleMotionProps {
   className?: string
   children?: ReactNode
 }
 
-const PageContentScaleMotion = ({ className, children }: PageContentMotionScaleProps) => {
+const LayoutScaleMotion = ({ className, children }: LayoutScaleMotionProps) => {
   return (
-    <motion.main
+    <motion.div
       className={className}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
       {children}
-    </motion.main>
+    </motion.div>
   )
 }
 
-export default PageContentScaleMotion
+export default LayoutScaleMotion

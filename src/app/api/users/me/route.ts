@@ -1,36 +1,64 @@
-import { omit } from 'lodash'
-
-import { getServerSession } from '@/libs/auth'
 import collections from '@/libs/db/collections'
+import LostArkAPI from '@/libs/lostark/api'
+import RaidStudioAPI from '@/libs/raidStudio/api'
+import { usersAPIPatchBodySchema } from '@/schemas/users'
+import { createCustomErrorResponse, createTryCatchErrorResponse } from '@/utils/api'
 
 export async function GET(request: Request) {
-  const session = await getServerSession()
-
-  if (!session) {
-    return Response.json(
-      {
-        error: '로그인 후 이용해주세요.',
-      },
-      {
-        status: 401,
-      },
-    )
-  }
-
-  const user = await collections.users.findOne({
-    id: session.user.id,
-  })
+  const user = await RaidStudioAPI.users.getCurrentUser()
 
   if (!user) {
-    return Response.json(
-      {
-        error: '유저를 찾을 수 없습니다.',
-      },
-      {
-        status: 404,
-      },
-    )
+    return createCustomErrorResponse('로그인 후 이용해주세요.', 401)
   }
 
-  return Response.json(omit(user, ['_id']))
+  return Response.json(user)
+}
+
+export async function PATCH(request: Request) {
+  const user = await RaidStudioAPI.users.getCurrentUser()
+
+  if (!user) {
+    return createCustomErrorResponse('로그인 후 이용해주세요.', 401)
+  }
+
+  try {
+    const body = usersAPIPatchBodySchema.parse(await request.json())
+
+    if (body.characterName) {
+      const characters = await LostArkAPI.characters.getCharacters(body.characterName)
+
+      if (!characters) {
+        return createCustomErrorResponse('캐릭터를 찾을 수 없습니다.', 404)
+      }
+
+      await collections.characters.replaceOne(
+        {
+          userId: user.id,
+        },
+        {
+          userId: user.id,
+          characters,
+        },
+        {
+          upsert: true,
+        },
+      )
+    }
+
+    await collections.users.updateOne(
+      {
+        id: user.id,
+      },
+      {
+        $set: body,
+      },
+    )
+
+    return Response.json({
+      success: true,
+    })
+  } catch (error) {
+    return createCustomErrorResponse(['캐릭터를 찾을 수 없습니다.', '테스트 에러입니다'], 404)
+    return createTryCatchErrorResponse(error)
+  }
 }
