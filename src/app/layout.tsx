@@ -2,11 +2,8 @@ import type { Metadata } from 'next'
 
 import Header from '@/components/Header'
 import { ScrollArea } from '@/components/ScrollArea'
-import { Toaster } from '@/components/Toast/Toaster'
 
-import NextAuthSessionProvider from '@/features/auth/NextAuthSessionProvider'
-import ThemeProvider from '@/features/theme/ThemeProvider'
-
+import Providers from '@/app/providers'
 import '@/styles/index.css'
 
 export const metadata: Metadata = {
@@ -19,18 +16,15 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <NextAuthSessionProvider>
-            <Toaster />
+        <Providers>
+          <div id="app">
+            <ScrollArea h="100vh" type="always">
+              <Header />
 
-            <div id="app">
-              <ScrollArea h="100vh" type="always">
-                <Header />
-                {children}
-              </ScrollArea>
-            </div>
-          </NextAuthSessionProvider>
-        </ThemeProvider>
+              {children}
+            </ScrollArea>
+          </div>
+        </Providers>
       </body>
     </html>
   )

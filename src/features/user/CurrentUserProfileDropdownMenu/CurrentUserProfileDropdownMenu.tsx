@@ -2,7 +2,7 @@
 
 import { LogOutIcon, SettingsIcon, UsersIcon } from 'lucide-react'
 import { signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 
 import { icon } from '@styled-system/recipes'
 

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 
 import { css } from '@styled-system/css'
 import { Flex } from '@styled-system/jsx'

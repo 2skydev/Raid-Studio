@@ -26,6 +26,10 @@ export default defineConfig({
             value: '100',
             description: 'Scrollbar z-index',
           },
+          pageProgressBar: {
+            value: '99',
+            description: 'Page loading progress bar z-index',
+          },
           header: {
             value: '50',
             description: 'Header z-index',
