@@ -2,13 +2,12 @@
 
 import * as React from 'react'
 
+import { Slot } from '@radix-ui/react-slot'
 import { Loader2Icon } from 'lucide-react'
 
 import { cx, css } from '@styled-system/css'
 import { styled, type HTMLStyledProps } from '@styled-system/jsx'
 import { button, icon } from '@styled-system/recipes'
-
-import { Slot } from '@radix-ui/react-slot'
 
 const BaseButton = React.forwardRef<
   HTMLButtonElement,

@@ -2,12 +2,12 @@
 
 import * as React from 'react'
 
+import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
+import { createStyleContext } from '@shadow-panda/style-context'
+
 import { cx } from '@styled-system/css'
 import { styled } from '@styled-system/jsx'
 import { alertDialog, button } from '@styled-system/recipes'
-
-import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
-import { createStyleContext } from '@shadow-panda/style-context'
 
 const { withProvider, withContext } = createStyleContext(alertDialog)
 

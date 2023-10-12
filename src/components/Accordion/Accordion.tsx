@@ -2,13 +2,12 @@
 
 import * as React from 'react'
 
+import * as AccordionPrimitive from '@radix-ui/react-accordion'
+import { createStyleContext } from '@shadow-panda/style-context'
 import { ChevronDown } from 'lucide-react'
 
 import { styled } from '@styled-system/jsx'
 import { accordion } from '@styled-system/recipes'
-
-import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { createStyleContext } from '@shadow-panda/style-context'
 
 const { withProvider, withContext } = createStyleContext(accordion)
 

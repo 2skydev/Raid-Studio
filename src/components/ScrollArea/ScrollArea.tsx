@@ -2,11 +2,11 @@
 
 import * as React from 'react'
 
-import { styled } from '@styled-system/jsx'
-import { scrollArea } from '@styled-system/recipes'
-
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { createStyleContext } from '@shadow-panda/style-context'
+
+import { styled } from '@styled-system/jsx'
+import { scrollArea } from '@styled-system/recipes'
 
 const { withProvider, withContext } = createStyleContext(scrollArea)
 

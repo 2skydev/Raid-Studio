@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 
+import { DialogProps } from '@radix-ui/react-dialog'
+import { createStyleContext } from '@shadow-panda/style-context'
 import { Command as CommandPrimitive } from 'cmdk'
 import { motion } from 'framer-motion'
 import { Search } from 'lucide-react'
@@ -10,9 +12,6 @@ import { styled } from '@styled-system/jsx'
 import { command, commandDialog } from '@styled-system/recipes'
 
 import { Dialog, DialogContent } from '@/components/Dialog'
-
-import { DialogProps } from '@radix-ui/react-dialog'
-import { createStyleContext } from '@shadow-panda/style-context'
 
 const { withProvider, withContext } = createStyleContext(command)
 

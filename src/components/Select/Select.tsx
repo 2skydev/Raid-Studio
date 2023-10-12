@@ -2,13 +2,12 @@
 
 import * as React from 'react'
 
+import * as SelectPrimitive from '@radix-ui/react-select'
+import { createStyleContext } from '@shadow-panda/style-context'
 import { Check, ChevronDown } from 'lucide-react'
 
 import { styled } from '@styled-system/jsx'
 import { select, icon } from '@styled-system/recipes'
-
-import * as SelectPrimitive from '@radix-ui/react-select'
-import { createStyleContext } from '@shadow-panda/style-context'
 
 const { withProvider, withContext } = createStyleContext(select)
 

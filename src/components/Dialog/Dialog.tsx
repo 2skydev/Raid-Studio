@@ -2,14 +2,13 @@
 
 import * as React from 'react'
 
+import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { createStyleContext } from '@shadow-panda/style-context'
 import { X } from 'lucide-react'
 
 import { css } from '@styled-system/css'
 import { styled } from '@styled-system/jsx'
 import { dialog, icon } from '@styled-system/recipes'
-
-import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { createStyleContext } from '@shadow-panda/style-context'
 
 const { withProvider, withContext } = createStyleContext(dialog)
 

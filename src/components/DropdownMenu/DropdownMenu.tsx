@@ -2,14 +2,13 @@
 
 import * as React from 'react'
 
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
+import { createStyleContext } from '@shadow-panda/style-context'
 import { Check, ChevronRight, Circle } from 'lucide-react'
 
 import { css, cx } from '@styled-system/css'
 import { styled } from '@styled-system/jsx'
 import { dropdownMenu, icon } from '@styled-system/recipes'
-
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { createStyleContext } from '@shadow-panda/style-context'
 
 const { withProvider, withContext } = createStyleContext(dropdownMenu)
 

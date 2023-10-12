@@ -2,13 +2,12 @@
 
 import * as React from 'react'
 
+import * as ToastPrimitive from '@radix-ui/react-toast'
+import { createStyleContext } from '@shadow-panda/style-context'
 import { X } from 'lucide-react'
 
 import { styled } from '@styled-system/jsx'
 import { toast, toastViewport, icon } from '@styled-system/recipes'
-
-import * as ToastPrimitive from '@radix-ui/react-toast'
-import { createStyleContext } from '@shadow-panda/style-context'
 
 const { withProvider, withContext } = createStyleContext(toast)
 
