@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { getServerSession as _getServerSession, type AuthOptions } from 'next-auth'
 import DiscordProvider, { type DiscordProfile } from 'next-auth/providers/discord'
 

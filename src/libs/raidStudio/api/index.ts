@@ -1,3 +1,5 @@
+import 'server-only'
+
 import * as users from './users'
 
 const RaidStudioAPI = {
