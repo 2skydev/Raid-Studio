@@ -1,7 +1,7 @@
 import collections from '@/libs/db/collections'
 import LostArkAPI from '@/libs/lostark/api'
 import RaidStudioAPI from '@/libs/raidStudio/api'
-import { usersAPIPatchBodySchema } from '@/schemas/users'
+import { usersAPIPatchBodySchema } from '@/schemas/user'
 import { createCustomErrorResponse, createTryCatchErrorResponse } from '@/utils/api'
 
 export async function GET(request: Request) {

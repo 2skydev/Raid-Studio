@@ -21,7 +21,7 @@ import { Input } from '@/components/Input'
 
 import useCustomForm from '@/hooks/useCustomForm'
 import raidStudioClient from '@/libs/raidStudio/client'
-import { userProfileFormSchema, User } from '@/schemas/users'
+import { userProfileFormSchema, User } from '@/schemas/user'
 import { showAxiosErrorToast } from '@/utils/api'
 
 export interface UserProfileFormProps extends Omit<User, 'characterName'> {

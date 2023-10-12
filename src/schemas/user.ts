@@ -19,6 +19,10 @@ export const userProfileFormSchema = userSchema.pick({
   name: true,
 })
 
+export const userCharacterNameFormSchema = userSchema.pick({
+  characterName: true,
+})
+
 export const usersAPIPatchBodySchema = userSchema
   .pick({
     name: true,
