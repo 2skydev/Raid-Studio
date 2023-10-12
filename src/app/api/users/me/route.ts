@@ -58,7 +58,6 @@ export async function PATCH(request: Request) {
       success: true,
     })
   } catch (error) {
-    return createCustomErrorResponse(['캐릭터를 찾을 수 없습니다.', '테스트 에러입니다'], 404)
     return createTryCatchErrorResponse(error)
   }
 }

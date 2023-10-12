@@ -15,12 +15,12 @@ export const userSchema = z.object({
 
 export type User = z.infer<typeof userSchema>
 
-export const userProfileFormSchema = userSchema.pick({
-  name: true,
+export const userProfileFormSchema = z.object({
+  name: userSchema.shape.name.trim(),
 })
 
-export const userCharacterNameFormSchema = userSchema.pick({
-  characterName: true,
+export const userCharacterNameFormSchema = z.object({
+  characterName: userSchema.shape.characterName.trim(),
 })
 
 export const usersAPIPatchBodySchema = userSchema
