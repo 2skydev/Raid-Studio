@@ -1,10 +1,4 @@
-import { defineConfig, defineGlobalStyles } from '@pandacss/dev'
-
-const globalCss = defineGlobalStyles({
-  body: {
-    fontFamily: 'pretendard',
-  },
-})
+import { defineConfig } from '@pandacss/dev'
 
 export default defineConfig({
   presets: ['@shadow-panda/preset'],
@@ -13,8 +7,6 @@ export default defineConfig({
   exclude: [],
   outdir: 'styled-system',
   jsxFramework: 'react',
-
-  globalCss,
 
   theme: {
     extend: {

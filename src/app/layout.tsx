@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { css } from '@styled-system/css'
+
 import Header from '@/components/Header'
 import { ScrollArea } from '@/components/ScrollArea'
 
@@ -21,7 +23,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       className={`${PretendardFont.variable} ${AquaticoFont.variable}`}
       suppressHydrationWarning
     >
-      <body>
+      <body className={css({ fontFamily: 'pretendard' })}>
         <Providers>
           <div id="app">
             <ScrollArea h="100vh" type="always">
