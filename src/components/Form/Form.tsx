@@ -230,9 +230,15 @@ export const FormDescription = styled(BaseFormDescription, {
     color: 'muted.foreground',
   },
 })
+
+export const FormMessage = styled(BaseFormMessage, {
+  base: {
+    fontSize: 'sm',
+    color: 'destructive',
+  },
+})
 // ==== custom end ====
 
 export const FormField = BaseFormField
 export const FormItem = styled(BaseFormItem, formItem)
 export const FormControl = styled(BaseFormControl, formControl)
-export const FormMessage = styled(BaseFormMessage, formMessage)

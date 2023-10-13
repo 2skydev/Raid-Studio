@@ -69,20 +69,11 @@ const CommandMenu = ({}: CommandMenuProps) => {
         variant="outline"
         className={css({
           position: 'relative',
-          w: 'full',
+          w: '60',
           justifyContent: 'flex-start',
           textStyle: 'sm',
           color: 'muted.foreground',
-          mr: '4',
-          sm: {
-            pr: '12',
-          },
-          md: {
-            w: '40',
-          },
-          lg: {
-            w: '64',
-          },
+          mx: '4',
         })}
         onClick={() => setOpen(true)}
       >

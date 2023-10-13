@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { userSchema } from '@/schemas/user'
+
 export const characterSchema = z.object({
   server: z.string(),
   name: z.string(),
@@ -8,7 +10,7 @@ export const characterSchema = z.object({
 })
 
 export const userCharactersSchema = z.object({
-  userId: z.string(),
+  userId: userSchema.shape.id,
   characters: z.array(characterSchema),
 })
 
