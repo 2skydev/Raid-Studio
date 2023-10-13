@@ -8,11 +8,16 @@ import { Flex } from '@styled-system/jsx'
 
 import Button from '@/components/Button'
 import CommandMenu from '@/components/CommandMenu'
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from '@/components/NavigationMenu'
 
 import ThemeToggleButton from '@/features/theme/ThemeToggleButton'
 import CurrentUserProfileDropdownMenu from '@/features/user/CurrentUserProfileDropdownMenu'
 
-import AquaticoFont from '@/assets/fonts/Aquatico'
 import logoImage from '@/assets/images/logo.png'
 
 import * as Styled from './Header.styled'
@@ -25,7 +30,7 @@ const Header = ({ className }: HeaderProps) => {
   return (
     <Styled.Root className={clsx('Header', className)}>
       <Styled.Wrap>
-        <Link href="/" className={AquaticoFont.className}>
+        <Link href="/" className={css({ fontFamily: 'aquatico' })}>
           <Flex
             alignItems="center"
             gap="2"
@@ -41,6 +46,16 @@ const Header = ({ className }: HeaderProps) => {
         </Link>
 
         <Flex gap="1" alignItems="center">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link href="/squad/list">전체 공격대 목록</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
           <CommandMenu />
 
           <CurrentUserProfileDropdownMenu />

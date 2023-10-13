@@ -1,4 +1,10 @@
-import { defineConfig } from '@pandacss/dev'
+import { defineConfig, defineGlobalStyles } from '@pandacss/dev'
+
+const globalCss = defineGlobalStyles({
+  body: {
+    fontFamily: 'pretendard',
+  },
+})
 
 export default defineConfig({
   presets: ['@shadow-panda/preset'],
@@ -8,8 +14,22 @@ export default defineConfig({
   outdir: 'styled-system',
   jsxFramework: 'react',
 
+  globalCss,
+
   theme: {
     extend: {
+      tokens: {
+        fonts: {
+          pretendard: {
+            value: 'var(--fonts-pretendard)',
+            description: 'Pretendard font',
+          },
+          aquatico: {
+            value: 'var(--fonts-aquatico)',
+            description: 'Aquatico font',
+          },
+        },
+      },
       semanticTokens: {
         sizes: {
           headerHeight: {

@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 
+import { css } from '@styled-system/css'
 import { Container } from '@styled-system/jsx'
 import { h1, p } from '@styled-system/recipes'
 
@@ -10,7 +11,6 @@ import Button from '@/components/Button'
 import SignInDiscordButton from '@/features/auth/SignInDiscordButton'
 import PageContentMotion from '@/features/motion/PageContentMotion'
 
-import AquaticoFont from '@/assets/fonts/Aquatico'
 import { getServerSession } from '@/libs/auth'
 
 const Home = async () => {
@@ -21,7 +21,7 @@ const Home = async () => {
       <BackgroundAnimation />
 
       <Container pt="20">
-        <h1 className={clsx(h1(), AquaticoFont.className)}>Raid Studio</h1>
+        <h1 className={clsx(h1(), css({ fontFamily: 'aquatico' }))}>Raid Studio</h1>
 
         <p className={p()}>
           로스트아크 고정 파티원, 길드원 등 팀을 만들어 레이드 진행 상황을 공유 및 일정 관리를

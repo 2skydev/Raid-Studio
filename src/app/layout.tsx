@@ -4,6 +4,8 @@ import Header from '@/components/Header'
 import { ScrollArea } from '@/components/ScrollArea'
 
 import Providers from '@/app/providers'
+import AquaticoFont from '@/assets/fonts/Aquatico'
+import PretendardFont from '@/assets/fonts/Pretendard'
 import '@/styles/index.css'
 
 export const metadata: Metadata = {
@@ -14,7 +16,11 @@ export const metadata: Metadata = {
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html
+      lang="ko"
+      className={`${PretendardFont.variable} ${AquaticoFont.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <Providers>
           <div id="app">
