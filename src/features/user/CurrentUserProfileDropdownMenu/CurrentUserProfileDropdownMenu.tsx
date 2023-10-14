@@ -33,7 +33,7 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
       <DropdownMenuTrigger asChild>
         <Button size="sm" variant="ghost" lineHeight="1">
           <Avatar w="6" h="6">
-            <AvatarImage src={user.image} alt={user.name} />
+            <AvatarImage src={user.image} alt="profile" />
           </Avatar>
           {user.name}
         </Button>

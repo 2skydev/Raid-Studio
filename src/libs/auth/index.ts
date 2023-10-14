@@ -30,15 +30,15 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     signIn: async ({ user: providerUser }) => {
-      delete providerUser.email
-
       const user = await collections.users.findOne({
         id: providerUser.id,
       })
 
       if (!user) {
         await collections.users.insertOne({
-          ...providerUser,
+          id: providerUser.id,
+          image: providerUser.image,
+          name: null,
           characterName: null,
         })
       }
@@ -46,10 +46,9 @@ export const authOptions: AuthOptions = {
       return true
     },
     session: ({ session, token }) => {
-      // @ts-expect-error
-      delete session.user.email
-
-      session.user.id = token.id as string
+      session.user = {
+        id: token.id as string,
+      }
 
       return session
     },

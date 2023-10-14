@@ -95,7 +95,7 @@ const SquadListPage = () => {
                   >
                     {item.users.map(user => (
                       <Avatar w="8" h="8" key={user.name}>
-                        <AvatarImage src={user.image} alt={user.name} />
+                        <AvatarImage src={user.image} alt="profile" />
                       </Avatar>
                     ))}
 

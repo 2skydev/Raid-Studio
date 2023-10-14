@@ -24,7 +24,8 @@ import raidStudioClient from '@/libs/raidStudio/client'
 import { userProfileFormSchema, User } from '@/schemas/user'
 import { showAxiosErrorToast } from '@/utils/api'
 
-export interface UserProfileFormProps extends Omit<User, 'characterName'> {
+export interface UserProfileFormProps extends Omit<User, 'characterName' | 'name'> {
+  name: string
   className?: string
   children?: ReactNode
 }
@@ -71,7 +72,7 @@ const UserProfileForm = ({ className, id, image, name }: UserProfileFormProps) =
 
         <FormControl>
           <Avatar>
-            <AvatarImage src={image} alt={name} />
+            <AvatarImage src={image} alt="profile" />
           </Avatar>
         </FormControl>
       </FormItem>

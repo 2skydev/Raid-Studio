@@ -9,7 +9,9 @@ const MyProfilePage = async () => {
     return null
   }
 
-  return <UserProfileForm id={currentUser.id} name={currentUser.name} image={currentUser.image} />
+  return (
+    <UserProfileForm id={currentUser.id} name={currentUser.name || ''} image={currentUser.image} />
+  )
 }
 
 export default MyProfilePage
