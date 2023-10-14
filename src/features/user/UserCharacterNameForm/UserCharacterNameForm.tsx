@@ -33,10 +33,10 @@ import { Input } from '@/components/Input'
 import useCustomForm from '@/hooks/useCustomForm'
 import raidStudioClient from '@/libs/raidStudio/client'
 import { Character } from '@/schemas/character'
-import { userCharacterNameFormSchema, User } from '@/schemas/user'
+import { userCharacterNameFormSchema, UserCharacterNameFormValues } from '@/schemas/user'
 import { showAxiosErrorToast } from '@/utils/api'
 
-export interface UserCharacterNameFormProps extends Pick<User, 'characterName'> {
+export interface UserCharacterNameFormProps extends UserCharacterNameFormValues {
   className?: string
 }
 
