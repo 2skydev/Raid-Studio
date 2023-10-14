@@ -1,5 +1,5 @@
 import lostarkClient from '@/libs/lostark/client'
-import { Character } from '@/types/character'
+import { Character } from '@/schemas/character'
 
 export const getCharacters = async (characterName: string): Promise<Character[] | null> => {
   const { data } = await lostarkClient.get(`/characters/${characterName}/siblings`)

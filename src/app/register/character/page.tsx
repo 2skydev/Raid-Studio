@@ -24,7 +24,7 @@ import { useToast } from '@/components/Toast/useToast'
 
 import useCustomForm from '@/hooks/useCustomForm'
 import raidStudioClient from '@/libs/raidStudio/client'
-import { Character } from '@/types/character'
+import { Character } from '@/schemas/character'
 
 const RegisterCharacterPage = () => {
   const [loading, setLoading] = useState(false)

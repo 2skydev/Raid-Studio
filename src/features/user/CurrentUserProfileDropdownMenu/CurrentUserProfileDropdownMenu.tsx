@@ -17,7 +17,7 @@ import {
 } from '@/components/DropdownMenu'
 
 import useAPI from '@/hooks/useAPI'
-import { User } from '@/types/user'
+import { User } from '@/schemas/user'
 
 export interface CurrentUserProfileDropdownMenuProps {}
 

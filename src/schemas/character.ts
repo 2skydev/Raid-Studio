@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { userSchema } from '@/schemas/user'
+import { usersCollectionSchema } from '@/schemas/user'
 
 export const characterSchema = z.object({
   server: z.string(),
@@ -9,9 +9,10 @@ export const characterSchema = z.object({
   level: z.number(),
 })
 
-export const userCharactersSchema = z.object({
-  userId: userSchema.shape.id,
+export const charactersCollectionSchema = z.object({
+  userId: usersCollectionSchema.shape.id,
   characters: z.array(characterSchema),
 })
 
 export type Character = z.infer<typeof characterSchema>
+export type CharactersCollection = z.infer<typeof charactersCollectionSchema>

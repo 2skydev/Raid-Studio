@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const userSchema = z.object({
+export const usersCollectionSchema = z.object({
   id: z.string(),
   name: z
     .string({ invalid_type_error: '닉네임 형식이 올바르지 않습니다.' })
@@ -13,19 +13,20 @@ export const userSchema = z.object({
     .max(12, { message: '대표 캐릭터명은 최대 12자 이하로 입력해주세요' }),
 })
 
-export type User = z.infer<typeof userSchema>
-
 export const userProfileFormSchema = z.object({
-  name: userSchema.shape.name.trim(),
+  name: usersCollectionSchema.shape.name.trim(),
 })
 
 export const userCharacterNameFormSchema = z.object({
-  characterName: userSchema.shape.characterName.trim(),
+  characterName: usersCollectionSchema.shape.characterName.trim(),
 })
 
-export const usersAPIPatchBodySchema = userSchema
+export const usersAPIPatchBodySchema = usersCollectionSchema
   .pick({
     name: true,
     characterName: true,
   })
   .partial()
+
+export type User = z.infer<typeof usersCollectionSchema>
+export type UsersCollection = z.infer<typeof usersCollectionSchema>
