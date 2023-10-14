@@ -22,12 +22,14 @@ import Skeleton from '@/components/Skeleton'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/Tooltip'
 
 import CreateSquadDialog from '@/features/squad/CreateSquadDialog'
+import JoinSquadDialog from '@/features/squad/JoinSquadDialog'
 
 import useAPI from '@/hooks/useAPI'
 import { SquadWithOverview, squadWithOverviewSchema } from '@/schemas/squad'
 
 const SquadListPage = () => {
   const [openCreateSquadDialog, setOpenCreateSquadDialog] = useState(false)
+  const [openJoinSquadDialog, setOpenJoinSquadDialog] = useState(false)
 
   const { data, isValidating } = useAPI<SquadWithOverview[]>('/squads')
 
@@ -49,7 +51,7 @@ const SquadListPage = () => {
               공격대 생성
             </DropdownMenuItem>
 
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setOpenJoinSquadDialog(true)}>
               <LogInIcon className={icon()} />
               공격대 참여하기
             </DropdownMenuItem>
@@ -115,7 +117,11 @@ const SquadListPage = () => {
 
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setOpenJoinSquadDialog(true)}
+                    >
                       <SwordsIcon size="1.2rem" />
                     </Button>
                   </TooltipTrigger>
@@ -135,6 +141,7 @@ const SquadListPage = () => {
       </div>
 
       <CreateSquadDialog open={openCreateSquadDialog} onOpenChange={setOpenCreateSquadDialog} />
+      <JoinSquadDialog open={openJoinSquadDialog} onOpenChange={setOpenJoinSquadDialog} />
     </div>
   )
 }

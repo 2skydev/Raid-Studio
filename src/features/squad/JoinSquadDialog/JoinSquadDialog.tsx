@@ -26,27 +26,25 @@ import { Input } from '@/components/Input'
 
 import useCustomForm from '@/hooks/useCustomForm'
 import raidStudioClient from '@/libs/raidStudio/client'
-import { squadCreateFormSchema } from '@/schemas/squad'
+import { squadJoinFormSchema } from '@/schemas/squad'
 import { showAxiosErrorToast } from '@/utils/api'
 
-export interface CreateSquadDialogProps extends ComponentProps<typeof Dialog> {}
+export interface JoinSquadDialogProps extends ComponentProps<typeof Dialog> {}
 
-const CreateSquadDialog = (props: CreateSquadDialogProps) => {
+const JoinSquadDialog = (props: JoinSquadDialogProps) => {
   const form = useCustomForm({
-    resolver: zodResolver(squadCreateFormSchema),
+    resolver: zodResolver(squadJoinFormSchema),
     defaultValues: {
-      name: '',
+      code: '',
     },
-    onSubmit: async ({ name }) => {
+    onSubmit: async ({ code }) => {
       try {
-        await raidStudioClient.post('/squads', {
-          name,
-        })
+        await raidStudioClient.patch(`/squads/join/${code}`)
 
         props.onOpenChange?.(false)
       } catch (error) {
         showAxiosErrorToast(error, {
-          title: '공격대 생성 오류',
+          title: '공격대 참여 오류',
         })
       }
     },
@@ -56,23 +54,23 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
     <Dialog {...props}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>공격대 생성</DialogTitle>
-          <DialogDescription>공격대명은 중복될 수 없습니다.</DialogDescription>
+          <DialogTitle>공격대 참여</DialogTitle>
+          <DialogDescription>공격대 참여 코드를 사용하여 들어가기</DialogDescription>
         </DialogHeader>
 
         <Form my="4" form={form}>
           <FormField
             control={form.control}
-            name="name"
+            name="code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>공격대명</FormLabel>
+                <FormLabel>공격대 참여 코드</FormLabel>
 
                 <FormControl>
-                  <Input placeholder="공격대명을 입력해주세요" {...field} />
+                  <Input placeholder="공격대 참여 코드를 입력해주세요" {...field} />
                 </FormControl>
 
-                <FormDescription>공격대명은 중복될 수 없습니다.</FormDescription>
+                <FormDescription>공유받은 공격대 참여 코드를 입력해주세요</FormDescription>
 
                 <FormMessage />
               </FormItem>
@@ -85,7 +83,7 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
             취소
           </Button>
           <Button type="button" onClick={form.submit} useOnClickLoading>
-            생성하기
+            참여하기
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -93,4 +91,4 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
   )
 }
 
-export default CreateSquadDialog
+export default JoinSquadDialog

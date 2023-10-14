@@ -12,11 +12,15 @@ export const squadsCollectionSchema = z.object({
     .max(12, { message: '공격대명은 최대 12자 이하로 입력해주세요' }),
   userIds: z.array(usersCollectionSchema.shape.id),
   ownerUserId: usersCollectionSchema.shape.id,
-  code: z.string(),
+  code: z.string().min(1, { message: '공격대 참여 코드는 최소 1자 이상으로 입력해주세요' }),
 })
 
 export const squadCreateFormSchema = z.object({
   name: squadsCollectionSchema.shape.name.trim(),
+})
+
+export const squadJoinFormSchema = z.object({
+  code: squadsCollectionSchema.shape.code.trim(),
 })
 
 export const squadWithOverviewSchema = z.object({
