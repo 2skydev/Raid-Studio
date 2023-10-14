@@ -38,9 +38,14 @@ import { showAxiosErrorToast } from '@/utils/api'
 
 export interface UserCharacterNameFormProps extends UserCharacterNameFormValues {
   className?: string
+  simple?: boolean
 }
 
-const UserCharacterNameForm = ({ className, characterName }: UserCharacterNameFormProps) => {
+const UserCharacterNameForm = ({
+  className,
+  characterName,
+  simple,
+}: UserCharacterNameFormProps) => {
   const [loading, setLoading] = useState(false)
   const [openConformDialog, setOpenConformDialog] = useState(false)
   const [mainCharacter, setMainCharacter] = useState<Character | null>(null)
@@ -91,18 +96,20 @@ const UserCharacterNameForm = ({ className, characterName }: UserCharacterNameFo
   return (
     <>
       <Form className={clsx('UserCharacterNameForm', className)} form={form}>
-        <FormHeader title="대표 캐릭터" description="대표 캐릭터를 설정할 수 있습니다." />
+        {!simple && (
+          <FormHeader title="대표 캐릭터" description="대표 캐릭터를 설정할 수 있습니다." />
+        )}
 
         <FormField
           control={form.control}
           name="characterName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>대표 캐릭터 닉네임</FormLabel>
+              {!simple && <FormLabel>대표 캐릭터 닉네임</FormLabel>}
 
               <FormControl>
                 <Flex gap="2" alignItems="center">
-                  <Input placeholder="대표 캐릭터 닉네임을 입력해주세요" {...field} />
+                  <Input placeholder="대표 캐릭터명을 입력해주세요" {...field} />
 
                   <Button
                     whiteSpace="nowrap"
@@ -115,9 +122,11 @@ const UserCharacterNameForm = ({ className, characterName }: UserCharacterNameFo
                 </Flex>
               </FormControl>
 
-              <FormDescription>
-                내 로스트아크 대표 캐릭터 닉네임입니다. 내 다른 캐릭터를 불러올 때 사용됩니다.
-              </FormDescription>
+              {!simple && (
+                <FormDescription>
+                  내 로스트아크 대표 캐릭터 닉네임입니다. 내 다른 캐릭터를 불러올 때 사용됩니다.
+                </FormDescription>
+              )}
 
               <FormMessage />
             </FormItem>
