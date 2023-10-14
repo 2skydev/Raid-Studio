@@ -4,8 +4,11 @@ import fs from 'fs'
 import { readdir } from 'fs/promises'
 import inquirer from 'inquirer'
 import inquirerPrompt from 'inquirer-autocomplete-prompt'
+import * as prettier from 'prettier'
 
 inquirer.registerPrompt('autocomplete', inquirerPrompt)
+
+const prettierOptions = { ...(await prettier.resolveConfig(process.cwd())), parser: 'typescript' }
 
 const SRC_ROOT_PATH_ALIAS = '@'
 
@@ -139,14 +142,15 @@ const createPromptInput = options => {
   }
 }
 
-const editParentComponentExportFile = async parentComponentName => {
-  const parentComponentDir = `${COMPONENT_DIR}/${parentComponentName}`
+const editParentComponentExportFile = async componentDir => {
+  const [_, parentComponentName, ...rest] = componentDir.split('/').reverse()
+
+  const parentComponentDir = `${rest.reverse().join('/')}/${parentComponentName}`
   const parentComponentExportFile = `${parentComponentDir}/index.ts`
 
   const subComponentNames = await getDirectories(parentComponentDir)
 
   let texts = [
-    `// === Automatically generated file. Don't edit it. ===`,
     `import _${parentComponentName} from ${QUOTE}./${parentComponentName}${QUOTE}${SEMICOLON}`,
   ]
 
@@ -180,7 +184,10 @@ const editParentComponentExportFile = async parentComponentName => {
     ],
   )
 
-  fs.writeFileSync(parentComponentExportFile, texts.join('\n'))
+  fs.writeFileSync(
+    parentComponentExportFile,
+    await prettier.format(texts.join('\n'), prettierOptions),
+  )
 }
 
 const createComponentAndFileOpen = (dir, name) => {
@@ -208,13 +215,16 @@ const start = async () => {
 
   switch (type) {
     case 'feature': {
-      const { featureName, componentName } = await inquirer.prompt([
+      let { featureName, componentName } = await inquirer.prompt([
         createPromptInput({ name: 'featureName', label: 'Feature name (camelCase)' }),
         createPromptInput({
           name: 'componentName',
           label: 'Component name (PascalCase)',
         }),
       ])
+
+      featureName = camelCase(featureName)
+      componentName = pascalCase(componentName)
 
       const featureDir = `${FEATURES_DIR}/${featureName}`
       const componentDir = `${featureDir}/${componentName}`
@@ -235,12 +245,14 @@ const start = async () => {
     }
 
     case 'component': {
-      const { componentName } = await inquirer.prompt([
+      let { componentName } = await inquirer.prompt([
         createPromptInput({
           name: 'componentName',
           label: 'Component name (PascalCase)',
         }),
       ])
+
+      componentName = pascalCase(componentName)
 
       const componentDir = `${COMPONENT_DIR}/${componentName}`
 
@@ -257,28 +269,56 @@ const start = async () => {
 
     case 'sub-component': {
       const componentNames = await getDirectories(COMPONENT_DIR)
+      const features = await getDirectories(FEATURES_DIR)
 
-      const { parentComponentName } = await inquirer.prompt([
+      const featureComponentGroups = await Promise.all(
+        features.map(dirname => getDirectories(`${FEATURES_DIR}/${dirname}`)),
+      )
+
+      const featureComponentNames = features.reduce((acc, featureName, index) => {
+        const featureComponentGroup = featureComponentGroups[index]
+
+        return [
+          ...acc,
+          ...featureComponentGroup.map(
+            componentName => `${componentName} (features/${featureName})`,
+          ),
+        ]
+      }, [])
+
+      const allComponentNames = [...componentNames, ...featureComponentNames]
+
+      let { parentComponentName } = await inquirer.prompt([
         {
           type: 'autocomplete',
           name: 'parentComponentName',
           message: 'Choose component',
           source: (_, input) => {
-            return componentNames.filter(name =>
+            return allComponentNames.filter(name =>
               name.toLowerCase().includes((input || '').toLowerCase()),
             )
           },
         },
       ])
 
-      const { componentName } = await inquirer.prompt([
+      let { componentName } = await inquirer.prompt([
         createPromptInput({
           name: 'componentName',
           label: 'Sub component name (PascalCase)',
         }),
       ])
 
-      const componentDir = `${COMPONENT_DIR}/${parentComponentName}/${componentName}`
+      componentName = pascalCase(componentName)
+
+      const featureName = parentComponentName.match(/\(features\/([a-z]+)\)$/)?.[1]
+
+      if (featureName) {
+        parentComponentName = parentComponentName.split(' (')[0]
+      }
+
+      const componentDir = featureName
+        ? `${FEATURES_DIR}/${featureName}/${parentComponentName}/${componentName}`
+        : `${COMPONENT_DIR}/${parentComponentName}/${componentName}`
 
       // check component dir already exists
       if (fs.existsSync(componentDir)) {
@@ -287,7 +327,7 @@ const start = async () => {
       }
 
       createComponentAndFileOpen(componentDir, componentName)
-      await editParentComponentExportFile(parentComponentName)
+      await editParentComponentExportFile(componentDir)
 
       break
     }
