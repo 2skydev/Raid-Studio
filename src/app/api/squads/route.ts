@@ -7,9 +7,9 @@ import { squadCreateFormSchema } from '@/schemas/squad'
 import { createCustomErrorResponse, createTryCatchErrorResponse } from '@/utils/api'
 
 export async function GET(request: Request) {
-  const squads = await RaidStudioAPI.squads.getSquads()
+  const squadsWithOverview = await RaidStudioAPI.squads.getSquadsWithOverview()
 
-  return Response.json(squads)
+  return Response.json(squadsWithOverview)
 }
 
 export async function POST(request: Request) {
@@ -41,8 +41,9 @@ export async function POST(request: Request) {
 
     await collections.squads.insertOne({
       name,
-      userIds: [userId],
       code: nanoid(),
+      userIds: [userId],
+      ownerUserId: userId,
     })
 
     return Response.json({

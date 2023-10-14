@@ -8,6 +8,7 @@ import { ThemeProvider } from 'next-themes'
 import { token } from '@styled-system/tokens'
 
 import { Toaster } from '@/components/Toast/Toaster'
+import { TooltipProvider } from '@/components/Tooltip'
 
 const progressBarStyleString = `
 #nprogress {
@@ -33,7 +34,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
       <AppProgressBar options={{ showSpinner: false }} style={progressBarStyleString} />
       <Toaster />
 
-      {children}
+      <TooltipProvider>{children}</TooltipProvider>
     </ThemeProvider>
   )
 }

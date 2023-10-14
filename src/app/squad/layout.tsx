@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation'
 import { css } from '@styled-system/css'
 import { Container, Divider } from '@styled-system/jsx'
 
-import { ScrollArea } from '@/components/ScrollArea'
-
 import LayoutScaleMotion from '@/features/motion/LayoutScaleMotion'
 import PageContentMotion from '@/features/motion/PageContentMotion'
 
@@ -15,7 +13,7 @@ const SquadLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <LayoutScaleMotion className={css({ h: 'mainHeight' })}>
-      <Container py="8" h="full">
+      <Container maxW="4xl" py="8" h="full">
         <h1 className={css({ fontSize: '2xl', fontWeight: 'bold' })}>전체 공격대 목록</h1>
 
         <p className={css({ fontWeight: '500', color: 'muted.foreground' })}>
