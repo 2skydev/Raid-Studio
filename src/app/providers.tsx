@@ -30,7 +30,7 @@ const progressBarStyleString = `
 
 const Providers = ({ children }: { children: ReactNode }) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <AppProgressBar options={{ showSpinner: false }} style={progressBarStyleString} />
       <Toaster />
 
