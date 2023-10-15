@@ -15,12 +15,12 @@ const RedirectRegisterPage = ({ children }: RedirectRegisterPageProps) => {
   const pathname = usePathname()
   const user = useAtomValue(currentUserAtom)
 
-  if (user && !pathname.startsWith('/register')) {
-    if (!user.name) {
+  if (user) {
+    if (!user.name && pathname !== '/register/step1') {
       redirect('/register/step1')
     }
 
-    if (!user.characterName) {
+    if (user.name && !user.characterName && pathname !== '/register/step2') {
       redirect('/register/step2')
     }
   }
