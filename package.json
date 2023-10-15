@@ -50,6 +50,7 @@
   "devDependencies": {
     "@pandacss/dev": "^0.15.5",
     "@shadow-panda/preset": "^0.7.0",
+    "@swc-jotai/react-refresh": "^0.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/lodash": "^4.14.199",
     "@types/node": "^20",
