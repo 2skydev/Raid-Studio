@@ -5,6 +5,8 @@ import { css } from '@styled-system/css'
 import Header from '@/components/Header'
 import { ScrollArea } from '@/components/ScrollArea'
 
+import RedirectRegisterPage from '@/features/auth/RedirectRegisterPage'
+
 import Providers from '@/app/providers'
 import AquaticoFont from '@/assets/fonts/Aquatico'
 import PretendardFont from '@/assets/fonts/Pretendard'
@@ -25,13 +27,15 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     >
       <body className={css({ fontFamily: 'pretendard' })}>
         <Providers>
-          <div id="app">
-            <ScrollArea h="100vh" type="always">
-              <Header />
+          <RedirectRegisterPage>
+            <div id="app">
+              <ScrollArea h="100vh" type="always">
+                <Header />
 
-              {children}
-            </ScrollArea>
-          </div>
+                {children}
+              </ScrollArea>
+            </div>
+          </RedirectRegisterPage>
         </Providers>
       </body>
     </html>

@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react'
 
+import { Provider as JotaiProvider } from 'jotai'
 import { AppProgressBar } from 'next-nprogress-bar'
 import { ThemeProvider } from 'next-themes'
 
@@ -9,6 +10,8 @@ import { token } from '@styled-system/tokens'
 
 import { Toaster } from '@/components/Toast/Toaster'
 import { TooltipProvider } from '@/components/Tooltip'
+
+import AuthProvider from '@/features/auth/AuthProvider'
 
 const progressBarStyleString = `
 #nprogress {
@@ -31,10 +34,15 @@ const progressBarStyleString = `
 const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <AppProgressBar options={{ showSpinner: false }} style={progressBarStyleString} />
-      <Toaster />
-
-      <TooltipProvider>{children}</TooltipProvider>
+      <JotaiProvider>
+        <TooltipProvider>
+          <AuthProvider>
+            <AppProgressBar options={{ showSpinner: false }} style={progressBarStyleString} />
+            <Toaster />
+            {children}
+          </AuthProvider>
+        </TooltipProvider>
+      </JotaiProvider>
     </ThemeProvider>
   )
 }
