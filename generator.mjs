@@ -68,24 +68,38 @@ const createIndexFileText = name => {
   ].join('\n')
 }
 
-const createComponentFileText = name => {
+const createComponentFileText = (name, useStyled = false) => {
+  // prettier-ignore
   return [
     `import { ReactNode } from ${QUOTE}react${QUOTE}${SEMICOLON}`,
     ``,
-    `import clsx from ${QUOTE}clsx${QUOTE}${SEMICOLON}`,
-    ``,
-    `import * as Styled from ${QUOTE}./${name}.styled${QUOTE}${SEMICOLON}`,
-    ``,
+    ...(useStyled
+      ? [
+          `import clsx from ${QUOTE}clsx${QUOTE}${SEMICOLON}`,
+          ``,
+          `import * as Styled from ${QUOTE}./${name}.styled${QUOTE}${SEMICOLON}`,
+          ``
+        ]
+      : []
+    ),
     `export interface ${name}Props {`,
-    `  className?: string${SEMICOLON}`,
+    ...(useStyled
+      ? [`  className?: string${SEMICOLON}`]
+      : []
+    ),
     `  children?: ReactNode${SEMICOLON}`,
     `}`,
     ``,
-    `const ${name} = ({ className, children }: ${name}Props) => {`,
+    `const ${name} = ({ ${useStyled ? 'className, ' : ''}children }: ${name}Props) => {`,
     `  return (`,
-    `    <Styled.Root className={clsx(${QUOTE}${name}${QUOTE}, className)}>`,
-    `      {children}`,
-    `    </Styled.Root>`,
+    ...(useStyled
+      ? [
+          `    <Styled.Root className={clsx(${QUOTE}${name}${QUOTE}, className)}>`,
+          `      {children}`,
+          `    </Styled.Root>`,
+        ]
+      : [``]
+    ),
     `  )${SEMICOLON}`,
     `}${SEMICOLON}`,
     ``,
@@ -190,10 +204,10 @@ const editParentComponentExportFile = async componentDir => {
   )
 }
 
-const createComponentAndFileOpen = (dir, name) => {
+const createComponentAndFileOpen = (dir, name, useStyled = false) => {
   fs.mkdirSync(dir, { recursive: true })
-  fs.writeFileSync(`${dir}/${name}.styled.ts`, createStyledFileText())
-  fs.writeFileSync(`${dir}/${name}.tsx`, createComponentFileText(name))
+  if (useStyled) fs.writeFileSync(`${dir}/${name}.styled.ts`, createStyledFileText())
+  fs.writeFileSync(`${dir}/${name}.tsx`, createComponentFileText(name, useStyled))
   fs.writeFileSync(`${dir}/index.ts`, createIndexFileText(name))
 
   console.log(`🎉 Component [${name}] created`)
@@ -215,12 +229,18 @@ const start = async () => {
 
   switch (type) {
     case 'feature': {
-      let { featureName, componentName } = await inquirer.prompt([
+      let { featureName, componentName, useStyled } = await inquirer.prompt([
         createPromptInput({ name: 'featureName', label: 'Feature name (camelCase)' }),
         createPromptInput({
           name: 'componentName',
           label: 'Component name (PascalCase)',
         }),
+        {
+          type: 'boolean',
+          name: 'useStyled',
+          message: `Use styled file?`,
+          default: false,
+        },
       ])
 
       featureName = camelCase(featureName)
@@ -240,16 +260,22 @@ const start = async () => {
         fs.mkdirSync(featureDir, { recursive: true })
       }
 
-      createComponentAndFileOpen(componentDir, componentName)
+      createComponentAndFileOpen(componentDir, componentName, useStyled)
       break
     }
 
     case 'component': {
-      let { componentName } = await inquirer.prompt([
+      let { componentName, useStyled } = await inquirer.prompt([
         createPromptInput({
           name: 'componentName',
           label: 'Component name (PascalCase)',
         }),
+        {
+          type: 'boolean',
+          name: 'useStyled',
+          message: `Use styled file?`,
+          default: false,
+        },
       ])
 
       componentName = pascalCase(componentName)
@@ -262,7 +288,7 @@ const start = async () => {
         process.exit(0)
       }
 
-      createComponentAndFileOpen(componentDir, componentName)
+      createComponentAndFileOpen(componentDir, componentName, useStyled)
 
       break
     }
@@ -301,11 +327,17 @@ const start = async () => {
         },
       ])
 
-      let { componentName } = await inquirer.prompt([
+      let { componentName, useStyled } = await inquirer.prompt([
         createPromptInput({
           name: 'componentName',
           label: 'Sub component name (PascalCase)',
         }),
+        {
+          type: 'boolean',
+          name: 'useStyled',
+          message: `Use styled file?`,
+          default: false,
+        },
       ])
 
       componentName = pascalCase(componentName)
@@ -326,7 +358,7 @@ const start = async () => {
         process.exit(0)
       }
 
-      createComponentAndFileOpen(componentDir, componentName)
+      createComponentAndFileOpen(componentDir, componentName, useStyled)
       await editParentComponentExportFile(componentDir)
 
       break
