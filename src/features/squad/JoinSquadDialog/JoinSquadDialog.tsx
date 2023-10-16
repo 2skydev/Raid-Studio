@@ -3,6 +3,7 @@
 import { ComponentProps } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next-nprogress-bar'
 
 import Button from '@/components/Button'
 import {
@@ -32,6 +33,8 @@ import { showAxiosErrorToast } from '@/utils/api'
 export interface JoinSquadDialogProps extends ComponentProps<typeof Dialog> {}
 
 const JoinSquadDialog = (props: JoinSquadDialogProps) => {
+  const router = useRouter()
+
   const form = useCustomForm({
     resolver: zodResolver(squadJoinFormSchema),
     defaultValues: {
@@ -41,7 +44,11 @@ const JoinSquadDialog = (props: JoinSquadDialogProps) => {
       try {
         await raidStudioClient.patch(`/squads/join/${code}`)
 
+        form.reset()
+
         props.onOpenChange?.(false)
+
+        router.push('/')
       } catch (error) {
         showAxiosErrorToast(error, {
           title: '공격대 참여 오류',

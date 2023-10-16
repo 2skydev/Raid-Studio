@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect } from 'react'
 
-import { useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { Loader2Icon } from 'lucide-react'
 
 import { css } from '@styled-system/css'
@@ -16,14 +16,16 @@ export interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { data: user, isLoading } = useAPI<User>('/users/me')
-  const setCurrentUser = useSetAtom(currentUserAtom)
+  const { data: user, isLoading } = useAPI<User>('/users/me', {
+    revalidateIfStale: false,
+  })
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom)
 
   useEffect(() => {
     if (!isLoading) setCurrentUser(user || null)
   }, [user, isLoading])
 
-  if (isLoading)
+  if (isLoading || currentUser === undefined)
     return (
       <div
         className={css({

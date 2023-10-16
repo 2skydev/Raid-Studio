@@ -39,12 +39,14 @@ import { showAxiosErrorToast } from '@/utils/api'
 export interface UserCharacterNameFormProps extends UserCharacterNameFormValues {
   className?: string
   simple?: boolean
+  onUpdate?: (characterName: string) => void
 }
 
 const UserCharacterNameForm = ({
   className,
   characterName,
   simple,
+  onUpdate,
 }: UserCharacterNameFormProps) => {
   const [loading, setLoading] = useState(false)
   const [openConformDialog, setOpenConformDialog] = useState(false)
@@ -86,6 +88,8 @@ const UserCharacterNameForm = ({
       })
 
       setOpenConformDialog(false)
+
+      onUpdate?.(mainCharacter!.name)
     } catch (error) {
       showAxiosErrorToast(error, {
         title: '대표 캐릭터 업데이트 오류',

@@ -3,6 +3,7 @@
 import { ComponentProps } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next-nprogress-bar'
 
 import Button from '@/components/Button'
 import {
@@ -32,6 +33,8 @@ import { showAxiosErrorToast } from '@/utils/api'
 export interface CreateSquadDialogProps extends ComponentProps<typeof Dialog> {}
 
 const CreateSquadDialog = (props: CreateSquadDialogProps) => {
+  const router = useRouter()
+
   const form = useCustomForm({
     resolver: zodResolver(squadCreateFormSchema),
     defaultValues: {
@@ -43,7 +46,11 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
           name,
         })
 
+        form.reset()
+
         props.onOpenChange?.(false)
+
+        router.push('/')
       } catch (error) {
         showAxiosErrorToast(error, {
           title: '공격대 생성 오류',

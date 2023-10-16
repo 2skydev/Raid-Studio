@@ -1,5 +1,6 @@
 'use client'
 
+import { useAtomValue } from 'jotai'
 import { LogOutIcon, SettingsIcon, UsersIcon } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next-nprogress-bar'
@@ -16,15 +17,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/DropdownMenu'
 
-import useAPI from '@/hooks/useAPI'
-import { User } from '@/schemas/user'
+import { currentUserAtom } from '@/stores/currentUserAtom'
 
 export interface CurrentUserProfileDropdownMenuProps {}
 
 const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps) => {
   const router = useRouter()
 
-  const { data: user } = useAPI<User>('/users/me')
+  const user = useAtomValue(currentUserAtom)
 
   if (!user) return null
 

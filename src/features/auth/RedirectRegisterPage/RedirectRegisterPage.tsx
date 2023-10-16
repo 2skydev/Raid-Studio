@@ -1,9 +1,10 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 
 import { useAtomValue } from 'jotai'
-import { redirect, usePathname } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
+import { usePathname } from 'next/navigation'
 
 import { currentUserAtom } from '@/stores/currentUserAtom'
 
@@ -12,18 +13,17 @@ export interface RedirectRegisterPageProps {
 }
 
 const RedirectRegisterPage = ({ children }: RedirectRegisterPageProps) => {
+  const router = useRouter()
   const pathname = usePathname()
   const user = useAtomValue(currentUserAtom)
 
-  if (user) {
-    if (!user.name && pathname !== '/register/step1') {
-      redirect('/register/step1')
+  useEffect(() => {
+    if (user && (!user.name || !user.characterName) && pathname !== '/register/steps') {
+      router.replace('/register/steps')
     }
+  }, [user, pathname])
 
-    if (user.name && !user.characterName && pathname !== '/register/step2') {
-      redirect('/register/step2')
-    }
-  }
+  if (user && (!user.name || !user.characterName) && pathname !== '/register/steps') return null
 
   return children
 }
