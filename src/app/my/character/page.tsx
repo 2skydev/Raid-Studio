@@ -1,15 +1,15 @@
+'use client'
+
+import { useAtomValue } from 'jotai'
+
 import UserCharacterNameForm from '@/features/user/UserCharacterNameForm'
 
-import RaidStudioAPI from '@/libs/raidStudio/api'
+import { currentUserAtom } from '@/stores/currentUserAtom'
 
-const MyCharacterPage = async () => {
-  const currentUser = await RaidStudioAPI.users.getCurrentUser()
+const MyCharacterPage = () => {
+  const user = useAtomValue(currentUserAtom)!
 
-  if (!currentUser) {
-    return null
-  }
-
-  return <UserCharacterNameForm characterName={currentUser.characterName || ''} />
+  return <UserCharacterNameForm characterName={user.characterName || ''} />
 }
 
 export default MyCharacterPage

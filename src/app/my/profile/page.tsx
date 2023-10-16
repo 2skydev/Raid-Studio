@@ -1,17 +1,15 @@
+'use client'
+
+import { useAtomValue } from 'jotai'
+
 import UserProfileForm from '@/features/user/UserProfileForm'
 
-import RaidStudioAPI from '@/libs/raidStudio/api'
+import { currentUserAtom } from '@/stores/currentUserAtom'
 
-const MyProfilePage = async () => {
-  const currentUser = await RaidStudioAPI.users.getCurrentUser()
+const MyProfilePage = () => {
+  const user = useAtomValue(currentUserAtom)!
 
-  if (!currentUser) {
-    return null
-  }
-
-  return (
-    <UserProfileForm id={currentUser.id} name={currentUser.name || ''} image={currentUser.image} />
-  )
+  return <UserProfileForm id={user.id} name={user.name || ''} image={user.image} />
 }
 
 export default MyProfilePage
