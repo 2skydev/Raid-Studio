@@ -31,7 +31,8 @@ import raidStudioClient from '@/libs/raidStudio/client'
 import { squadCreateFormSchema } from '@/schemas/squad'
 import { showAxiosErrorToast } from '@/utils/api'
 
-export interface CreateSquadDialogProps extends ComponentProps<typeof AuthenticatedOnlyDialog> {}
+export interface CreateSquadDialogProps
+  extends Omit<ComponentProps<typeof AuthenticatedOnlyDialog>, 'children'> {}
 
 const CreateSquadDialog = (props: CreateSquadDialogProps) => {
   const router = useRouter()
