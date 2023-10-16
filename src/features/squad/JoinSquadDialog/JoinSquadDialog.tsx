@@ -7,7 +7,6 @@ import { useRouter } from 'next-nprogress-bar'
 
 import Button from '@/components/Button'
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -25,12 +24,14 @@ import {
 } from '@/components/Form'
 import { Input } from '@/components/Input'
 
+import AuthenticatedOnlyDialog from '@/features/auth/AuthenticatedOnlyDialog'
+
 import useCustomForm from '@/hooks/useCustomForm'
 import raidStudioClient from '@/libs/raidStudio/client'
 import { squadJoinFormSchema } from '@/schemas/squad'
 import { showAxiosErrorToast } from '@/utils/api'
 
-export interface JoinSquadDialogProps extends ComponentProps<typeof Dialog> {}
+export interface JoinSquadDialogProps extends ComponentProps<typeof AuthenticatedOnlyDialog> {}
 
 const JoinSquadDialog = (props: JoinSquadDialogProps) => {
   const router = useRouter()
@@ -58,7 +59,7 @@ const JoinSquadDialog = (props: JoinSquadDialogProps) => {
   })
 
   return (
-    <Dialog {...props}>
+    <AuthenticatedOnlyDialog {...props}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>공격대 참여</DialogTitle>
@@ -94,7 +95,7 @@ const JoinSquadDialog = (props: JoinSquadDialogProps) => {
           </Button>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
+    </AuthenticatedOnlyDialog>
   )
 }
 
