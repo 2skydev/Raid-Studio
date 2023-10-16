@@ -1,5 +1,14 @@
 # RAID STUDIO
+
+RAID STUDIO의 주 목적은 로스트아크의 레이드 클리어 현황을 고정 파티와 공유입니다. 이외에도 현재 특정 레이드 참여 가능한 고정 공대원 찾기, Discord 봇을 이용한 참여 가능 여부 확인 등 여러가지의 유용한 기능을 제공합니다.
+
 ![image](https://github.com/2skydev/Raid-Studio/assets/43225384/68c0553f-fd83-4fc9-b0a6-f7f7c34dcefa)
+
+<br />
+
+## Announcement
+
+!! 해당 프로젝트는 아직 개발중인 프로젝트입니다. !!
 
 <br />
 
@@ -43,7 +52,7 @@ pnpm i
 pnpm dev
 ```
 
-페이지, 컴포넌트 등 제너레이터 실행
+페이지, 컴포넌트 파일 생성기
 
 ```bash
 pnpm g
