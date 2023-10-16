@@ -24,7 +24,7 @@ export async function PATCH(request: Request) {
   try {
     const body = usersAPIPatchBodySchema.parse(await request.json())
 
-    if (body.characterName) {
+    if (body.characterName && body.characterName !== user.characterName) {
       const characters = await LostArkAPI.characters.getCharacters(body.characterName)
 
       if (!characters) {
@@ -43,6 +43,16 @@ export async function PATCH(request: Request) {
           upsert: true,
         },
       )
+    }
+
+    if (body.name && body.name !== user.name) {
+      const duplicateUser = await collections.users.findOne({
+        name: body.name,
+      })
+
+      if (duplicateUser) {
+        return createCustomErrorResponse('이미 사용중인 닉네임입니다.', 400)
+      }
     }
 
     await collections.users.updateOne(
