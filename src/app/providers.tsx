@@ -23,7 +23,7 @@ const progressBarStyleString = `
 
   position: fixed;
   z-index: ${token('zIndex.pageProgressBar')};
-  top: ${token('sizes.headerHeight')};
+  top: calc(${token('sizes.headerHeight')} + 1px);
   left: 0;
 
   width: 100%;
