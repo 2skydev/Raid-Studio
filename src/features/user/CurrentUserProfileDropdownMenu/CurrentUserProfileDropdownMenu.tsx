@@ -1,7 +1,7 @@
 'use client'
 
 import { useAtomValue } from 'jotai'
-import { LogOutIcon, SettingsIcon, UsersIcon } from 'lucide-react'
+import { LogOutIcon, SettingsIcon, UserCircle2Icon, UserCog2Icon, UsersIcon } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next-nprogress-bar'
 
@@ -31,30 +31,23 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="sm" variant="ghost" lineHeight="1">
-          <Avatar w="6" h="6">
+        <Button variant="ghost" lineHeight="1">
+          <Avatar w="5" h="5">
             <AvatarImage src={user.image} alt="profile" />
           </Avatar>
           {user.name}
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent w="40">
+      <DropdownMenuContent w="40" align="start">
         <DropdownMenuItem onClick={() => router.push('/my/profile')}>
-          <SettingsIcon className={icon()} />
-          설정
+          <UserCircle2Icon className={icon()} />
+          프로필 설정
         </DropdownMenuItem>
 
-        <DropdownMenuSeparator />
-
-        <DropdownMenuItem>
-          <UsersIcon className={icon()} />팀 목록
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <UsersIcon className={icon()} />팀 초대하기
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <UsersIcon className={icon()} />팀 생성
+        <DropdownMenuItem onClick={() => router.push('/my/character')}>
+          <UserCog2Icon className={icon()} />
+          대표 캐릭터 변경
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

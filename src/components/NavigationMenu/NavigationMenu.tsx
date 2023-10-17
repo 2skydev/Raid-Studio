@@ -26,11 +26,21 @@ BaseNavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
 const BaseNavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
->(({ children, ...props }, ref) => (
-  <NavigationMenuPrimitive.Trigger ref={ref} {...props}>
-    {children} <ChevronDown aria-hidden="true" />
-  </NavigationMenuPrimitive.Trigger>
-))
+>(({ children, ...props }, ref) => {
+  if (props.asChild) {
+    return (
+      <NavigationMenuPrimitive.Trigger ref={ref} {...props}>
+        {children}
+      </NavigationMenuPrimitive.Trigger>
+    )
+  }
+
+  return (
+    <NavigationMenuPrimitive.Trigger ref={ref} {...props}>
+      {children} <ChevronDown aria-hidden="true" />
+    </NavigationMenuPrimitive.Trigger>
+  )
+})
 BaseNavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName
 
 const ViewportWrapper = withContext(styled('div'), 'viewportWrapper')

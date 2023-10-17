@@ -14,3 +14,26 @@ export const getCurrentUser = async () => {
 
   return omit(user, ['_id'])
 }
+
+export const getMySquads = async () => {
+  const session = await getServerSession()
+
+  if (!session) return null
+
+  const userId = session.user.id
+
+  const cursor = collections.squads.find(
+    { userIds: userId },
+    {
+      projection: {
+        _id: false,
+        id: {
+          $toString: '$_id',
+        },
+        name: true,
+      },
+    },
+  )
+
+  return await cursor.toArray()
+}

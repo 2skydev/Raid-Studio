@@ -41,5 +41,13 @@ export const squadWithOverviewSchema = z.object({
   }),
 })
 
+export const mySquads = z.array(
+  z.object({
+    id: z.string(),
+    name: squadsCollectionSchema.shape.name,
+  }),
+)
+
 export type SquadsCollection = z.infer<typeof squadsCollectionSchema>
 export type SquadWithOverview = z.infer<typeof squadWithOverviewSchema>
+export type MySquads = z.infer<typeof mySquads>

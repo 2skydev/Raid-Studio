@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import clsx from 'clsx'
 import { GithubIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -8,13 +10,10 @@ import { Flex } from '@styled-system/jsx'
 
 import Button from '@/components/Button'
 import CommandMenu from '@/components/CommandMenu'
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-} from '@/components/NavigationMenu'
+import HeaderNavigationMenu from '@/components/HeaderNavigationMenu'
+import Skeleton from '@/components/Skeleton'
 
+import MySquadSelect from '@/features/squad/MySquadSelect'
 import ThemeToggleButton from '@/features/theme/ThemeToggleButton'
 import CurrentUserProfileDropdownMenu from '@/features/user/CurrentUserProfileDropdownMenu'
 
@@ -30,35 +29,33 @@ const Header = ({ className }: HeaderProps) => {
   return (
     <Styled.Root className={clsx('Header', className)}>
       <Styled.Wrap>
-        <Link href="/" className={css({ fontFamily: 'aquatico' })}>
-          <Flex
-            alignItems="center"
-            gap="2"
-            _light={{
-              '& img': {
-                filter: 'invert(1)',
-              },
-            }}
-          >
-            <Image src={logoImage} width={22} height={22} alt="logo" />
-            <span className={css({ leading: '1', mt: '0.5' })}>Raid Studio</span>
-          </Flex>
-        </Link>
-
         <Flex gap="1" alignItems="center">
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link href="/squad/list">전체 공격대 목록</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          <Link href="/" className={css({ fontFamily: 'aquatico', mr: '6' })}>
+            <Flex
+              alignItems="center"
+              gap="2"
+              _light={{
+                '& img': {
+                  filter: 'invert(1)',
+                },
+              }}
+            >
+              <Image src={logoImage} width={22} height={22} alt="logo" />
+              <span className={css({ leading: '1', mt: '0.5' })}>Raid Studio</span>
+            </Flex>
+          </Link>
 
-          <CommandMenu />
+          <Suspense fallback={<Skeleton w="180px" h="10" />}>
+            <MySquadSelect />
+          </Suspense>
 
           <CurrentUserProfileDropdownMenu />
+        </Flex>
+
+        <Flex gap="1" alignItems="center">
+          <HeaderNavigationMenu />
+
+          <CommandMenu />
 
           <ThemeToggleButton />
 
