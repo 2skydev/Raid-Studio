@@ -22,13 +22,14 @@ const menus = [
         title: '내 캐릭터 레이드 관리',
         url: '/studio/characters',
       },
+    ],
+  },
+  {
+    title: '내 공격대',
+    items: [
       {
-        title: '내 캐릭터 레이드 관리 2',
-        url: '/studio/characters2',
-      },
-      {
-        title: '메뉴3',
-        url: '/overview',
+        title: '공격대 멤버 관리',
+        url: '/studio/squad/members',
       },
     ],
   },
@@ -38,35 +39,37 @@ const Sidebar = ({ className }: SidebarProps) => {
   const pathname = usePathname()
 
   return (
-    <Accordion
-      className={clsx('Sidebar', className)}
-      type="multiple"
-      w="full"
-      defaultValue={menus.map(menu => menu.title)}
-      asChild
-    >
-      <ul>
-        {menus.map(menu => (
-          <AccordionItem key={menu.title} value={menu.title} borderBottom="none" asChild>
-            <li>
-              <Styled.MenuAccordionTrigger>{menu.title}</Styled.MenuAccordionTrigger>
+    <div>
+      <Accordion
+        className={clsx('Sidebar', className)}
+        type="multiple"
+        w="full"
+        defaultValue={menus.map(menu => menu.title)}
+        asChild
+      >
+        <ul>
+          {menus.map(menu => (
+            <AccordionItem key={menu.title} value={menu.title} borderBottom="none" asChild>
+              <li>
+                <Styled.MenuAccordionTrigger>{menu.title}</Styled.MenuAccordionTrigger>
 
-              <AccordionContent>
-                <Styled.MenuItemsGroup>
-                  {menu.items.map(item => (
-                    <li key={item.title}>
-                      <Styled.MenuLink href={item.url} active={pathname === item.url}>
-                        {item.title}
-                      </Styled.MenuLink>
-                    </li>
-                  ))}
-                </Styled.MenuItemsGroup>
-              </AccordionContent>
-            </li>
-          </AccordionItem>
-        ))}
-      </ul>
-    </Accordion>
+                <AccordionContent>
+                  <Styled.MenuItemsGroup>
+                    {menu.items.map(item => (
+                      <li key={item.title}>
+                        <Styled.MenuLink href={item.url} active={pathname === item.url}>
+                          {item.title}
+                        </Styled.MenuLink>
+                      </li>
+                    ))}
+                  </Styled.MenuItemsGroup>
+                </AccordionContent>
+              </li>
+            </AccordionItem>
+          ))}
+        </ul>
+      </Accordion>
+    </div>
   )
 }
 

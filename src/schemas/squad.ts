@@ -48,6 +48,16 @@ export const mySquads = z.array(
   }),
 )
 
+export const squadMembersSchema = z.array(
+  usersCollectionSchema.pick({
+    id: true,
+    image: true,
+    name: true,
+    characterName: true,
+  }),
+)
+
 export type SquadsCollection = z.infer<typeof squadsCollectionSchema>
 export type SquadWithOverview = z.infer<typeof squadWithOverviewSchema>
 export type MySquads = z.infer<typeof mySquads>
+export type SquadMembers = z.infer<typeof squadMembersSchema>

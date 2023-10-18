@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 
 import collections from '@/libs/db/collections'
-import { SquadWithOverview } from '@/schemas/squad'
+import { SquadMembers, SquadWithOverview } from '@/schemas/squad'
 
 export const getSquadsWithOverview = async () => {
   const cursor = collections.squads.aggregate([
@@ -46,7 +46,7 @@ export const getSquadsWithOverview = async () => {
   return (await cursor.toArray()) as SquadWithOverview[]
 }
 
-export const getSquadMembers = async (squadId: string) => {
+export const getSquadMembers = async (squadId: string): Promise<SquadMembers | null> => {
   const cursor = await collections.squads.aggregate([
     {
       $match: {
@@ -58,7 +58,7 @@ export const getSquadMembers = async (squadId: string) => {
         from: 'users',
         localField: 'userIds',
         foreignField: 'id',
-        pipeline: [{ $project: { _id: 0, image: 1, name: 1, characterName: 1 } }],
+        pipeline: [{ $project: { _id: 0, id: 1, image: 1, name: 1, characterName: 1 } }],
         as: 'users',
       },
     },
@@ -66,8 +66,6 @@ export const getSquadMembers = async (squadId: string) => {
       $project: {
         _id: 0,
         users: 1,
-        ownerUserId: 1,
-        count: { $size: '$userIds' },
       },
     },
   ])
@@ -76,10 +74,38 @@ export const getSquadMembers = async (squadId: string) => {
 
   if (!data) return null
 
-  const squadMembers = {
-    count: data.count,
-    users: data.users,
-  }
+  return data.users
+}
 
-  return squadMembers
+export const getSquadCode = async (squadId: string): Promise<string | null> => {
+  const squad = await collections.squads.findOne(
+    {
+      _id: new ObjectId(squadId),
+    },
+    {
+      projection: {
+        code: 1,
+      },
+    },
+  )
+
+  if (!squad) return null
+
+  return squad.code
+}
+
+export const isAccessibleSquad = async (squadId: string, userId: string): Promise<boolean> => {
+  const squad = await collections.squads.findOne(
+    {
+      _id: new ObjectId(squadId),
+      userIds: userId,
+    },
+    {
+      projection: {
+        _id: 1,
+      },
+    },
+  )
+
+  return Boolean(squad)
 }
