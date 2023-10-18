@@ -398,3 +398,10 @@ export const RAIDS: Record<string, Raid> = {
     ],
   },
 }
+
+export const RAIDS_ARRAY_ORDER_BY_GOLD_DESC = Object.values(RAIDS).sort((a, b) => {
+  const aGold = a.steps.reduce((acc, cur) => acc + cur.gold, 0)
+  const bGold = b.steps.reduce((acc, cur) => acc + cur.gold, 0)
+
+  return bGold - aGold
+})

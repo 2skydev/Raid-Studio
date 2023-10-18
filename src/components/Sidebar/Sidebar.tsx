@@ -20,7 +20,7 @@ const menus = [
     items: [
       {
         title: '내 캐릭터 레이드 관리',
-        url: '/studio/characters',
+        url: '/studio/my/characters',
       },
     ],
   },

@@ -20,32 +20,32 @@ import logoImage from '@/assets/images/logo.png'
 
 const studioSubMenus = [
   {
-    url: '/studio/characters',
+    url: '/studio/my/characters',
     title: '클리어 관리',
     description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
   },
   {
-    url: '/studio/characters',
+    url: '/studio/my/characters',
     title: '클리어 관리',
     description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
   },
   {
-    url: '/studio/characters',
+    url: '/studio/my/characters',
     title: '클리어 관리',
     description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
   },
   {
-    url: '/studio/characters',
+    url: '/studio/my/characters',
     title: '클리어 관리',
     description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
   },
   {
-    url: '/studio/characters',
+    url: '/studio/my/characters',
     title: '클리어 관리',
     description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
   },
   {
-    url: '/studio/characters',
+    url: '/studio/my/characters',
     title: '클리어 관리',
     description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
   },

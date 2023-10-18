@@ -37,3 +37,17 @@ export const getMySquads = async () => {
 
   return await cursor.toArray()
 }
+
+export const getMyCharacters = async () => {
+  const session = await getServerSession()
+
+  if (!session) return null
+
+  const userId = session.user.id
+
+  const data = await collections.characters.findOne({ userId })
+
+  if (!data) return null
+
+  return data.characters
+}

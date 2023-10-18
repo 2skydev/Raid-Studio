@@ -32,7 +32,7 @@ const Home = async () => {
 
         {Boolean(session) ? (
           <Button asChild>
-            <Link href="/studio/characters">Studio로 이동</Link>
+            <Link href="/studio/my/characters">Studio로 이동</Link>
           </Button>
         ) : (
           <SignInDiscordButton />
