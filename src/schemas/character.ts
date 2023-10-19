@@ -14,5 +14,11 @@ export const charactersCollectionSchema = z.object({
   characters: z.array(characterSchema),
 })
 
+export const charactersWithUserSchema = z.object({
+  user: usersCollectionSchema,
+  characters: z.array(characterSchema),
+})
+
 export type Character = z.infer<typeof characterSchema>
 export type CharactersCollection = z.infer<typeof charactersCollectionSchema>
+export type CharactersWithUser = z.infer<typeof charactersWithUserSchema>

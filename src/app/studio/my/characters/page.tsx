@@ -1,34 +1,21 @@
 'use client'
 
-import { useMemo } from 'react'
-
 import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
 
 import { Badge } from '@/components/Badge'
 import Skeleton from '@/components/Skeleton'
 
-import CharacterClassIcon from '@/features/character/CharacterClassIcon'
+import CharacterCard from '@/features/character/CharacterCard'
+import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 
 import useAPI from '@/hooks/useAPI'
 import { Character } from '@/schemas/character'
 import { CharacterClassName } from '@/types/character'
-import { getWeekGold } from '@/utils/character'
 
 const StudioCharactersPage = () => {
   const { data, isLoading } = useAPI<Character[]>('/users/me/characters')
 
-  const characters = useMemo(() => {
-    const clone = [...(data || [])]
-
-    clone.sort((a, b) => {
-      return b.level - a.level
-    })
-
-    return clone
-  }, [data])
-
-  const weekGold = useMemo(() => getWeekGold(characters), [characters])
+  const { characters, weekGold } = useCharactersDetail(data || [])
 
   return (
     <div>
@@ -57,35 +44,12 @@ const StudioCharactersPage = () => {
           {!isLoading &&
             characters.map(item => {
               return (
-                <div
+                <CharacterCard
                   key={item.name}
-                  className={css({ w: '80', rounded: 'md', border: 'base', p: '4' })}
-                >
-                  <Flex alignItems="center">
-                    <CharacterClassIcon
-                      characterClassName={item.class as CharacterClassName}
-                      width={26}
-                      height={26}
-                    />
-
-                    <div className={css({ ml: '3' })}>
-                      <div
-                        className={css({ fontSize: 'sm', fontWeight: 'medium', leading: 'tight' })}
-                      >
-                        {item.name}
-                      </div>
-                      <div
-                        className={css({
-                          fontSize: 'xs',
-                          color: 'muted.foreground',
-                          leading: 'tight',
-                        })}
-                      >
-                        {item.class} / {item.level}
-                      </div>
-                    </div>
-                  </Flex>
-                </div>
+                  name={item.name}
+                  level={item.level}
+                  characterClassName={item.class as CharacterClassName}
+                />
               )
             })}
         </div>

@@ -28,7 +28,11 @@ const menus = [
     title: '내 공격대',
     items: [
       {
-        title: '공격대 멤버 관리',
+        title: '모든 캐릭터',
+        url: '/studio/squad/characters',
+      },
+      {
+        title: '멤버 관리',
         url: '/studio/squad/members',
       },
     ],

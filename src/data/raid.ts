@@ -1,5 +1,15 @@
 import { Raid } from '@/types/raid'
 
+/**
+ * 레이드 초기화 기준 날짜 (로스트아크 서버 기준)
+ * @description 2주 쿨타임 레이드 같은 경우에 사용됩니다.
+ */
+export const RAID_RESET_REFERENCE_DATE = '2023-10-11'
+
+/**
+ * 전체 레이드 목록 (어비스 던전 포함)
+ * @description 레이드 정보를 수정하려면 이곳을 수정하세요. 정렬 필요 없음.
+ */
 export const RAIDS: Record<string, Raid> = {
   발탄_노말: {
     id: '발탄_노말',

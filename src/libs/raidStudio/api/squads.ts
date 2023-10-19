@@ -3,6 +3,22 @@ import { ObjectId } from 'mongodb'
 import collections from '@/libs/db/collections'
 import { SquadMembers, SquadWithOverview } from '@/schemas/squad'
 
+export const isAccessibleSquad = async (squadId: string, userId: string): Promise<boolean> => {
+  const squad = await collections.squads.findOne(
+    {
+      _id: new ObjectId(squadId),
+      userIds: userId,
+    },
+    {
+      projection: {
+        _id: 1,
+      },
+    },
+  )
+
+  return Boolean(squad)
+}
+
 export const getSquadsWithOverview = async () => {
   const cursor = collections.squads.aggregate([
     {
@@ -94,18 +110,63 @@ export const getSquadCode = async (squadId: string): Promise<string | null> => {
   return squad.code
 }
 
-export const isAccessibleSquad = async (squadId: string, userId: string): Promise<boolean> => {
-  const squad = await collections.squads.findOne(
+export const getSquadCharacters = async (squadId: string) => {
+  const cursor = collections.squads.aggregate([
     {
-      _id: new ObjectId(squadId),
-      userIds: userId,
-    },
-    {
-      projection: {
-        _id: 1,
+      $match: {
+        _id: new ObjectId(squadId),
       },
     },
-  )
+    {
+      $lookup: {
+        from: 'characters',
+        localField: 'userIds',
+        foreignField: 'userId',
+        pipeline: [
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'userId',
+              foreignField: 'id',
+              pipeline: [
+                {
+                  $project: {
+                    _id: 0,
+                    id: 1,
+                    image: 1,
+                    name: 1,
+                    characterName: 1,
+                  },
+                },
+              ],
+              as: 'user',
+            },
+          },
+          {
+            $unwind: '$user',
+          },
+          {
+            $project: {
+              _id: 0,
+              user: 1,
+              characters: 1,
+            },
+          },
+        ],
+        as: 'characters',
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        characters: 1,
+      },
+    },
+  ])
 
-  return Boolean(squad)
+  const data = (await cursor.toArray())[0]
+
+  if (!data) return null
+
+  return data.characters
 }

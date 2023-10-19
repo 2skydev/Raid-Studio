@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { characterSchema } from '@/schemas/character'
 import { usersCollectionSchema } from '@/schemas/user'
 
 export const squadsCollectionSchema = z.object({
