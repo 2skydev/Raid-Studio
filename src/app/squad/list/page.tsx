@@ -99,7 +99,7 @@ const SquadListPage = () => {
                       </Avatar>
                     ))}
 
-                    {item.users.length > 5 && (
+                    {item.userCount > 5 && (
                       <Avatar
                         w="8"
                         h="8"
@@ -108,6 +108,7 @@ const SquadListPage = () => {
                         justifyContent="center"
                         fontSize="xs"
                         lineHeight="1"
+                        pt="0.5"
                       >
                         +{item.userCount - 5}
                       </Avatar>
