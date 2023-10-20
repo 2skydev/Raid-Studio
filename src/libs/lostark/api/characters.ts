@@ -6,10 +6,12 @@ export const getCharacters = async (characterName: string): Promise<Character[] 
 
   if (!data) return null
 
-  return data.map((character: any) => ({
-    server: character.ServerName,
-    name: character.CharacterName,
-    level: +character.ItemMaxLevel.replace(',', ''),
-    class: character.CharacterClassName,
-  }))
+  return data
+    .map((character: any) => ({
+      server: character.ServerName,
+      name: character.CharacterName,
+      level: +character.ItemMaxLevel.replace(',', ''),
+      class: character.CharacterClassName,
+    }))
+    .filter((character: any) => character.level >= 1415)
 }

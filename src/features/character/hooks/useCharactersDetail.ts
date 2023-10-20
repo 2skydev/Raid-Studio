@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 
-import { Character } from '@/schemas/character'
+import { CharacterWithClears } from '@/schemas/character'
 import { getWeekGold } from '@/utils/character'
 
-const useCharactersDetail = (data: Character[]) => {
+const useCharactersDetail = (data: CharacterWithClears[]) => {
   const characters = useMemo(() => {
     const clone = [...(data || [])]
 

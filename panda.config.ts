@@ -65,6 +65,8 @@ export default defineConfig({
     recipes: {
       // Load toast variant styles since it cannot be statically analyzed
       toast: [{ variant: ['*'] }],
+
+      badge: [{ variant: ['secondary'] }],
     },
   },
 })

@@ -2,6 +2,7 @@ import { omit } from 'lodash'
 
 import { getServerSession } from '@/libs/auth'
 import collections from '@/libs/db/collections'
+import { CharacterWithClears } from '@/schemas/character'
 
 export const getCurrentUser = async () => {
   const session = await getServerSession()
@@ -38,7 +39,7 @@ export const getMySquads = async () => {
   return await cursor.toArray()
 }
 
-export const getMyCharacters = async () => {
+export const getMyCharacters = async (): Promise<CharacterWithClears[] | null> => {
   const session = await getServerSession()
 
   if (!session) return null
@@ -49,5 +50,16 @@ export const getMyCharacters = async () => {
 
   if (!data) return null
 
-  return data.characters
+  const clears = await collections.clears
+    .find({ userId }, { projection: { _id: 0, userId: 0, cooldownWeek: 0 }, sort: { step: 1 } })
+    .toArray()
+
+  return data.characters.map(character => {
+    const characterClears = clears.filter(clear => clear.characterName === character.name)
+
+    return {
+      ...character,
+      clears: characterClears.map(clear => omit(clear, ['characterName'])),
+    }
+  })
 }

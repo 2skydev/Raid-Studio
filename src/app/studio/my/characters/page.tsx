@@ -1,5 +1,7 @@
 'use client'
 
+import { useAtomValue } from 'jotai'
+
 import { css } from '@styled-system/css'
 
 import { Badge } from '@/components/Badge'
@@ -9,13 +11,90 @@ import CharacterCard from '@/features/character/CharacterCard'
 import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 
 import useAPI from '@/hooks/useAPI'
-import { Character } from '@/schemas/character'
+import raidStudioClient from '@/libs/raidStudio/client'
+import { CharacterWithClears } from '@/schemas/character'
+import { currentUserAtom } from '@/stores/currentUserAtom'
 import { CharacterClassName } from '@/types/character'
+import { showAxiosErrorToast } from '@/utils/api'
 
 const StudioCharactersPage = () => {
-  const { data, isLoading } = useAPI<Character[]>('/users/me/characters')
+  const user = useAtomValue(currentUserAtom)!
+
+  const { data, isLoading, mutate } = useAPI<CharacterWithClears[]>('/users/me/characters')
 
   const { characters, weekGold } = useCharactersDetail(data || [])
+
+  const handleClear = async (characterName: string, raidId: string, step: number) => {
+    try {
+      const afterData = characters.map(character => {
+        if (character.name !== characterName) return character
+
+        // 데이터 삭제
+        if (!step) {
+          const clears = character.clears.filter(clear => clear.raidId !== raidId)
+
+          return {
+            ...character,
+            clears,
+          }
+        }
+
+        // 데이터 수정
+        if (character.clears.some(clear => clear.raidId === raidId)) {
+          const clears = character.clears.map(clear => {
+            if (clear.raidId !== raidId) return clear
+
+            return {
+              ...clear,
+              step,
+              createdAt: new Date().toISOString(),
+            }
+          })
+
+          return {
+            ...character,
+            clears,
+          }
+        } else {
+          // 데이터 추가
+          return {
+            ...character,
+            clears: [
+              ...character.clears,
+              {
+                raidId,
+                step,
+                createdAt: new Date().toISOString(),
+              },
+            ],
+          }
+        }
+      })
+
+      if (step) {
+        await raidStudioClient.put('/clears', {
+          userId: user.id,
+          characterName,
+          raidId,
+          step,
+        })
+      } else {
+        await raidStudioClient.delete('/clears', {
+          data: {
+            userId: user.id,
+            characterName,
+            raidId,
+          },
+        })
+      }
+
+      mutate(afterData, {
+        revalidate: false,
+      })
+    } catch (error) {
+      showAxiosErrorToast(error)
+    }
+  }
 
   return (
     <div>
@@ -49,6 +128,8 @@ const StudioCharactersPage = () => {
                   name={item.name}
                   level={item.level}
                   characterClassName={item.class as CharacterClassName}
+                  clears={item.clears}
+                  onClear={handleClear}
                 />
               )
             })}

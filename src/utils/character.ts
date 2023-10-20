@@ -1,4 +1,4 @@
-import { RAIDS_ARRAY_ORDER_BY_GOLD_DESC } from '@/data/raid'
+import { RAIDS_ARRAY_ORDER_BY_GOLD_DESC } from '@/assets/data/raid'
 import { Character } from '@/schemas/character'
 import { Raid } from '@/types/raid'
 
