@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { css } from '@styled-system/css'
 import { Flex } from '@styled-system/jsx'
 import { icon, muted } from '@styled-system/recipes'
+import { token } from '@styled-system/tokens'
 
 import { Avatar, AvatarImage } from '@/components/Avatar'
 import Button from '@/components/Button'
@@ -74,6 +75,7 @@ const SquadListPage = () => {
                   py: '4',
                   border: 'base',
                   borderRadius: 'md',
+                  h: '20',
                 })}
               >
                 <Flex gap="6" alignItems="center">
@@ -87,26 +89,23 @@ const SquadListPage = () => {
                   <div
                     className={css({
                       display: 'flex',
-                      '& > .avatar__root': {
-                        border: 'base',
-                      },
-                      spaceX: '-4',
+                      spaceX: '-2',
                     })}
                   >
                     {item.users.map(user => (
-                      <Avatar w="8" h="8" key={user.name}>
+                      <Avatar border="3px solid token(colors.background)" key={user.name}>
                         <AvatarImage src={user.image} alt="profile" />
                       </Avatar>
                     ))}
 
                     {item.userCount > 5 && (
                       <Avatar
-                        w="8"
-                        h="8"
-                        bg="background"
+                        border="3px solid token(colors.background)"
+                        bg="muted"
                         alignItems="center"
                         justifyContent="center"
                         fontSize="xs"
+                        fontWeight="bold"
                         lineHeight="1"
                         pt="0.5"
                       >
@@ -133,9 +132,8 @@ const SquadListPage = () => {
             ))}
           {isValidating && (
             <>
-              <Skeleton w="full" h="12" />
-              <Skeleton w="full" h="12" />
-              <Skeleton w="full" h="12" />
+              <Skeleton w="full" h="20" />
+              <Skeleton w="full" h="20" />
             </>
           )}
         </div>
