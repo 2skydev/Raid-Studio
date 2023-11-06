@@ -39,7 +39,7 @@ export const deleteCharacterRaidClear = async ({
   characterName,
   raidId,
 }: ClearsAPIDeleteBody) => {
-  await collections.clears.deleteOne({
+  await collections.clears.deleteMany({
     userId,
     characterName,
     raidId,

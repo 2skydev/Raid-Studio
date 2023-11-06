@@ -31,18 +31,7 @@ export async function PATCH(request: Request) {
         return createCustomErrorResponse('캐릭터를 찾을 수 없습니다.', 404)
       }
 
-      await collections.characters.replaceOne(
-        {
-          userId: user.id,
-        },
-        {
-          userId: user.id,
-          characters,
-        },
-        {
-          upsert: true,
-        },
-      )
+      await RaidStudioAPI.users.mergeAndUpSertCharacters(user.id, characters)
     }
 
     if (body.name && body.name !== user.name) {

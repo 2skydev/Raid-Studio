@@ -1,20 +1,36 @@
 import { useMemo } from 'react'
 
-import { CharacterWithClears } from '@/schemas/character'
-import { getWeekGold } from '@/utils/character'
+import { Character, CharacterWithClears } from '@/schemas/character'
+import { BestGoldRaidStats, getBestGoldRaidStatsByCharacter } from '@/utils/character'
 
 const useCharactersDetail = (data: CharacterWithClears[]) => {
   const characters = useMemo(() => {
-    const clone = [...(data || [])]
+    const items = (data || []).map(character => {
+      let fixedRaidIds = character.fixedRaidIds
 
-    clone.sort((a, b) => {
+      const stats = getBestGoldRaidStatsByCharacter(character)
+
+      if (!fixedRaidIds.length) {
+        fixedRaidIds = stats.raidIds
+      }
+
+      return {
+        ...character,
+        fixedRaidIds,
+        stats,
+      }
+    })
+
+    items.sort((a, b) => {
       return b.level - a.level
     })
 
-    return clone.filter(character => character.level >= 1415)
+    return items
   }, [data])
 
-  const weekGold = useMemo(() => getWeekGold(characters), [characters])
+  const weekGold = characters.slice(0, 6).reduce((acc, character) => {
+    return acc + character.stats.totalGold
+  }, 0)
 
   return {
     characters,

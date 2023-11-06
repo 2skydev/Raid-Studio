@@ -15,11 +15,8 @@ export interface CharacterCardListWithUserProps {
   characters: Character[]
 }
 
-const CharacterCardListWithUser = ({
-  user,
-  characters: charactersProp,
-}: CharacterCardListWithUserProps) => {
-  const { characters, weekGold } = useCharactersDetail(charactersProp)
+const CharacterCardListWithUser = ({ user, characters }: CharacterCardListWithUserProps) => {
+  const { characters: _characters, weekGold } = useCharactersDetail(characters)
 
   return (
     <div className={css({ mt: '8' })}>
@@ -35,7 +32,7 @@ const CharacterCardListWithUser = ({
       </div>
 
       <div className={css({ display: 'flex', flexWrap: 'wrap', gap: '4' })}>
-        {characters.map(item => {
+        {_characters.map(item => {
           return (
             <CharacterCard
               key={item.name}

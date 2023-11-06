@@ -7,7 +7,8 @@ import { css } from '@styled-system/css'
 import { Badge } from '@/components/Badge'
 import Skeleton from '@/components/Skeleton'
 
-import CharacterCard from '@/features/character/CharacterCard'
+import CharacterCardWithRaidTodoList from '@/features/character/CharacterCardWithRaidTodoList'
+import MyCharactersReloadButton from '@/features/character/MyCharactersReloadButton'
 import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 
 import useAPI from '@/hooks/useAPI'
@@ -104,7 +105,9 @@ const StudioCharactersPage = () => {
       </p>
 
       <div className={css({ mt: '6' })}>
-        <div className={css({ display: 'flex', mb: '6' })}>
+        <div className={css({ display: 'flex', alignItems: 'center', gap: '2', mb: '6' })}>
+          <MyCharactersReloadButton variant="outline" mr="4" />
+
           {isLoading && <Skeleton w="40" h="6" rounded="full" />}
 
           {!isLoading && (
@@ -114,7 +117,9 @@ const StudioCharactersPage = () => {
           )}
         </div>
 
-        <div className={css({ display: 'flex', flexWrap: 'wrap', gap: '4' })}>
+        <div
+          className={css({ display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', gap: '4' })}
+        >
           {isLoading &&
             Array(9)
               .fill(0)
@@ -123,13 +128,14 @@ const StudioCharactersPage = () => {
           {!isLoading &&
             characters.map(item => {
               return (
-                <CharacterCard
+                <CharacterCardWithRaidTodoList
                   key={item.name}
                   name={item.name}
                   level={item.level}
                   characterClassName={item.class as CharacterClassName}
                   clears={item.clears}
-                  onClear={handleClear}
+                  fixedRaidIds={item.fixedRaidIds}
+                  onClear={(...args) => handleClear(item.name, ...args)}
                 />
               )
             })}

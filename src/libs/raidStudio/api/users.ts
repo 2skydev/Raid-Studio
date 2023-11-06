@@ -2,7 +2,7 @@ import { omit } from 'lodash'
 
 import { getServerSession } from '@/libs/auth'
 import collections from '@/libs/db/collections'
-import { CharacterWithClears } from '@/schemas/character'
+import { Character, CharacterWithClears, LostArkCharacter } from '@/schemas/character'
 
 export const getCurrentUser = async () => {
   const session = await getServerSession()
@@ -62,4 +62,27 @@ export const getMyCharacters = async (): Promise<CharacterWithClears[] | null> =
       clears: characterClears.map(clear => omit(clear, ['characterName'])),
     }
   })
+}
+
+export const mergeAndUpSertCharacters = async (
+  userId: string,
+  baseCharacters: (LostArkCharacter | Character)[],
+) => {
+  const data = await collections.characters.findOne({ userId })
+
+  const characters = baseCharacters.map(baseCharacter => {
+    const character = (data?.characters || []).find(
+      character => character.name === baseCharacter.name,
+    )
+
+    return {
+      fixedRaidIds: [],
+      ...character,
+      ...baseCharacter,
+    }
+  })
+
+  await collections.characters.replaceOne({ userId }, { userId, characters }, { upsert: true })
+
+  return true
 }

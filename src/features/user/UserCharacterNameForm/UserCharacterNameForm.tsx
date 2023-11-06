@@ -32,7 +32,7 @@ import { Input } from '@/components/Input'
 
 import useCustomForm from '@/hooks/useCustomForm'
 import raidStudioClient from '@/libs/raidStudio/client'
-import { Character } from '@/schemas/character'
+import { LostArkCharacter } from '@/schemas/character'
 import { userCharacterNameFormSchema, UserCharacterNameFormValues } from '@/schemas/user'
 import { showAxiosErrorToast } from '@/utils/api'
 
@@ -50,7 +50,7 @@ const UserCharacterNameForm = ({
 }: UserCharacterNameFormProps) => {
   const [loading, setLoading] = useState(false)
   const [openConformDialog, setOpenConformDialog] = useState(false)
-  const [mainCharacter, setMainCharacter] = useState<Character | null>(null)
+  const [mainCharacter, setMainCharacter] = useState<LostArkCharacter | null>(null)
 
   const form = useCustomForm({
     resolver: zodResolver(userCharacterNameFormSchema),
@@ -63,7 +63,7 @@ const UserCharacterNameForm = ({
       try {
         setLoading(true)
 
-        const { data } = await raidStudioClient.get<Character[]>(
+        const { data } = await raidStudioClient.get<LostArkCharacter[]>(
           `/lostark/characters/${values.characterName}`,
         )
 
