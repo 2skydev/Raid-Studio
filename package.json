@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write ./src",
-    "g": "node generator.mjs"
+    "g": "node generator.mjs",
+    "g-type": "supabase gen types typescript --project-id clashopelrjolblraaff > src/types/database-generated.types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -29,6 +30,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@shadow-panda/style-context": "^0.7.0",
+    "@supabase/supabase-js": "^2.38.4",
     "@tanstack/react-table": "^8.10.7",
     "axios": "^1.5.1",
     "clsx": "^2.0.0",
@@ -70,6 +72,7 @@
     "inquirer": "^9.2.11",
     "inquirer-autocomplete-prompt": "^3.0.1",
     "prettier": "^3.0.3",
+    "supabase": "^1.110.1",
     "typescript": "^5"
   }
 }
