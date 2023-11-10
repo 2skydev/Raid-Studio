@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import { SwordsIcon, LogInIcon, PlusIcon } from 'lucide-react'
-import { z } from 'zod'
+import useSWR from 'swr'
 
 import { css } from '@styled-system/css'
 import { Flex } from '@styled-system/jsx'
@@ -24,16 +24,42 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/Tooltip'
 import CreateSquadDialog from '@/features/squad/CreateSquadDialog'
 import JoinSquadDialog from '@/features/squad/JoinSquadDialog'
 
-import useAPI from '@/hooks/useAPI'
-import { SquadWithOverview, squadWithOverviewSchema } from '@/schemas/squad'
+import { supabase } from '@/lib/supabase'
 
 const SquadListPage = () => {
   const [openCreateSquadDialog, setOpenCreateSquadDialog] = useState(false)
   const [openJoinSquadDialog, setOpenJoinSquadDialog] = useState(false)
 
-  const { data, isValidating } = useAPI<SquadWithOverview[]>('/squads')
+  const { data: squads, isValidating } = useSWR('all_squads', async () => {
+    const { data } = await supabase
+      .from('squads_public_view')
+      .select(
+        `
+          name,
+          created_at,
+          users: squad_users (
+            role,
+            profile: profiles (
+              nickname,
+              photo,
+              main_character_name
+            )
+          ),
+          userCount: squad_users (count)
+        `,
+      )
+      .limit(5, { foreignTable: 'users' })
+      .order('role', { foreignTable: 'users' })
 
-  const squads = data && z.array(squadWithOverviewSchema).parse(data)
+    return data?.map(squad => ({
+      ...squad,
+      owner: squad.users.find(user => user.role === 'owner')?.profile,
+      // @ts-ignore
+      userCount: squad.userCount[0].count,
+    }))
+  })
+
+  console.log(squads)
 
   return (
     <div>
@@ -65,7 +91,7 @@ const SquadListPage = () => {
             squads &&
             squads.map(item => (
               <div
-                key={item.id}
+                key={item.name}
                 className={css({
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -80,7 +106,7 @@ const SquadListPage = () => {
                   <div>
                     <h3>{item.name}</h3>
                     <p className={muted()}>
-                      공대장: {item.owner.name} / {item.owner.characterName}
+                      공대장: {item.owner?.nickname} / {item.owner?.main_character_name}
                     </p>
                   </div>
 
@@ -94,8 +120,8 @@ const SquadListPage = () => {
                     })}
                   >
                     {item.users.map(user => (
-                      <Avatar w="8" h="8" key={user.name}>
-                        <AvatarImage src={user.image} alt="profile" />
+                      <Avatar w="8" h="8" key={user.profile!.nickname}>
+                        <AvatarImage src={user.profile!.photo} alt="profile" />
                       </Avatar>
                     ))}
 
@@ -127,7 +153,7 @@ const SquadListPage = () => {
                     </Button>
                   </TooltipTrigger>
 
-                  <TooltipContent>이 공격대 참가하기</TooltipContent>
+                  <TooltipContent>이 공격대 참여하기</TooltipContent>
                 </Tooltip>
               </div>
             ))}

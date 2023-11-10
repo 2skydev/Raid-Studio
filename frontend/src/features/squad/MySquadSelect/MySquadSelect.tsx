@@ -20,7 +20,7 @@ const MySquadSelect = ({ children }: MySquadSelectProps) => {
   return (
     <Select value={selectedSquadId} onValueChange={setSelectedSquadId}>
       <SelectTrigger focusRingColor="transparent" w="180px" h="10">
-        <SelectValue placeholder="참가된 공격대 없음" />
+        <SelectValue placeholder="참여된 공격대 없음" />
       </SelectTrigger>
 
       <SelectContent>

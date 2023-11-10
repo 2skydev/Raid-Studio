@@ -5,6 +5,8 @@ import { ComponentProps } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next-nprogress-bar'
 
+import { css } from '@styled-system/css'
+
 import Button from '@/components/Button'
 import {
   DialogContent,
@@ -27,9 +29,10 @@ import { Input } from '@/components/Input'
 import AuthenticatedOnlyDialog from '@/features/auth/AuthenticatedOnlyDialog'
 
 import useCustomForm from '@/hooks/useCustomForm'
-import raidStudioClient from '@/libs/raidStudio/client'
-import { squadCreateFormSchema } from '@/schemas/squad'
-import { showAxiosErrorToast } from '@/utils/api'
+import { supabase } from '@/lib/supabase'
+import { SquadFormSchema } from '@/schemas/squad'
+import { userAtom } from '@/stores/userAtom'
+import { showFunctionsInvokeErrorToast } from '@/utils/api'
 
 export interface CreateSquadDialogProps
   extends Omit<ComponentProps<typeof AuthenticatedOnlyDialog>, 'children'> {}
@@ -38,26 +41,29 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
   const router = useRouter()
 
   const form = useCustomForm({
-    resolver: zodResolver(squadCreateFormSchema),
+    resolver: zodResolver(SquadFormSchema),
     defaultValues: {
-      name: '',
+      name: '테스트 공격대 8',
     },
     onSubmit: async ({ name }) => {
-      try {
-        await raidStudioClient.post('/squads', {
+      const { error } = await supabase.functions.invoke('apis/squads', {
+        method: 'POST',
+        body: {
           name,
-        })
+        },
+      })
 
-        form.reset()
-
-        props.onOpenChange?.(false)
-
-        router.push('/')
-      } catch (error) {
-        showAxiosErrorToast(error, {
+      if (error) {
+        return await showFunctionsInvokeErrorToast(error, {
           title: '공격대 생성 오류',
         })
       }
+
+      form.reset()
+
+      props.onOpenChange?.(false)
+
+      router.push('/studio/squad/members')
     },
   })
 
@@ -66,7 +72,7 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>공격대 생성</DialogTitle>
-          <DialogDescription>공격대명은 중복될 수 없습니다.</DialogDescription>
+          <DialogDescription>새로운 공격대를 생성하여 팀원들을 초대합니다.</DialogDescription>
         </DialogHeader>
 
         <Form my="4" form={form}>
@@ -81,7 +87,18 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
                   <Input placeholder="공격대명을 입력해주세요" {...field} />
                 </FormControl>
 
-                <FormDescription>공격대명은 중복될 수 없습니다.</FormDescription>
+                <FormDescription>
+                  <ul
+                    className={css({
+                      ml: '6',
+                      listStyle: 'disc',
+                    })}
+                  >
+                    <li>영어, 한글, 공백만 사용가능</li>
+                    <li>1 ~ 12자</li>
+                    <li>중복 불가</li>
+                  </ul>
+                </FormDescription>
 
                 <FormMessage />
               </FormItem>

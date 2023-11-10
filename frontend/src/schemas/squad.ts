@@ -6,9 +6,6 @@ export const SquadFormSchema = z.object({
   name: z.string().regex(/^[a-zA-Z0-9가-힣\s]{1,12}$/, {
     message: '공백, 영문, 숫자, 한글, 1 ~ 12글자',
   }),
-  code: z.string().regex(/^[a-zA-Z0-9가-힣\s\_\-]{1,30}$/, {
-    message: '공백, 영문, 숫자, 한글, _, -, 1 ~ 30글자',
-  }),
 })
 
 export const squadsCollectionSchema = z.object({

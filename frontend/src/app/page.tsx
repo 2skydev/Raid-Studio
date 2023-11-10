@@ -5,13 +5,14 @@ import { useAtomValue } from 'jotai'
 import Link from 'next/link'
 
 import { css } from '@styled-system/css'
-import { Container } from '@styled-system/jsx'
+import { Container, Flex } from '@styled-system/jsx'
 import { h1, p } from '@styled-system/recipes'
 
 import BackgroundAnimation from '@/components/BackgroundAnimation'
 import Button from '@/components/Button'
 
 import SignInDiscordButton from '@/features/auth/SignInDiscordButton'
+import SignInTestUserButton from '@/features/auth/SignInTestUserButton'
 import PageContentMotion from '@/features/motion/PageContentMotion'
 
 import { userAtom } from '@/stores/userAtom'
@@ -38,7 +39,10 @@ const Home = () => {
             <Link href="/studio/my/characters">Studio로 이동</Link>
           </Button>
         ) : (
-          <SignInDiscordButton />
+          <Flex gap="2">
+            <SignInDiscordButton />
+            <SignInTestUserButton />
+          </Flex>
         )}
       </Container>
     </PageContentMotion>

@@ -88,10 +88,10 @@ const SquadMemberManageDataTable = ({ data, code, isLoading }: SquadMemberManage
 
             <PopoverContent w="80">
               <h2 className={css({ fontSize: 'md', fontWeight: 'medium' })}>
-                참가 코드로 초대하기
+                참여 코드로 초대하기
               </h2>
               <p className={css({ fontSize: 'sm', color: 'muted.foreground' })}>
-                참가 코드로 공격대 목록에서 참가 할 수 있습니다.
+                참여 코드로 공격대 목록에서 참여 할 수 있습니다.
               </p>
               <div
                 className={css({

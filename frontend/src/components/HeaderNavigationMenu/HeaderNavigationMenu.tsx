@@ -141,11 +141,11 @@ const HeaderNavigationMenu = ({}: HeaderNavigationMenuProps) => {
               </li>
 
               <ListItem className={css({ wordBreak: 'keep-all' })} href="/" title="가이드">
-                공격대 생성, 참가 등 여러가지 기능에 대한 가이드를 제공합니다.
+                공격대 생성, 참여 등 여러가지 기능에 대한 가이드를 제공합니다.
               </ListItem>
 
               <ListItem href="/" title="FAQs">
-                &quot;참가 코드를 얻는 방법&quot; 같은 자주 묻는 질문들을 확인할 수 있습니다.
+                &quot;참여 코드를 얻는 방법&quot; 같은 자주 묻는 질문들을 확인할 수 있습니다.
               </ListItem>
 
               <ListItem href="/" title="문의하기">

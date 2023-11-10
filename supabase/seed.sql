@@ -85,16 +85,15 @@ INSERT INTO
 INSERT INTO
   public.squads (
     name,
-    code,
-    owner_id
+    code
   )
-VALUES
-  (
-    '테스트 공격대 8', 'test-code8', (select id from public.profiles limit 1)
-  ),
-  (
-    '테스트 공격대 10', 'test-code10', (select id from public.profiles limit 1 offset 1)
-  );
+  VALUES
+    (
+      '테스트 공격대 8', 'wzNF0YAHW-t9s73hCstQ2'
+    ),
+    (
+      '테스트 공격대 10', 'vxA1CwSTZuWKbf0PqmJYd'
+    );
 
 -- 테스트용 공격대 유저 생성
 INSERT INTO
@@ -120,6 +119,13 @@ INSERT INTO
     from
       public.profiles
   );
+
+UPDATE
+  public.squad_users
+  SET
+    role = 'owner'
+  WHERE
+    id IN (1, 9);
 
 -- 테스트용 캐릭터 생성
 with temp_characters (server, name, level, class, n) as (
@@ -232,6 +238,7 @@ INSERT INTO
       on n = substring(nickname, 5)
   );
 
+-- 테스트용 캐릭터 생성 후 프로필 업데이트
 UPDATE
   public.profiles as p
 SET

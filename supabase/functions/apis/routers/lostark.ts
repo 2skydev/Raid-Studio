@@ -6,10 +6,10 @@ export const lostarkRouter = new Router<State>()
 lostarkRouter.get(`/characters/:characterName`, async (ctx) => {
   const { characterName } = ctx.params
 
-  const user = await ctx.state.supabase.auth.getUser()
+  const { data: { user } } = await ctx.state.supabase.auth.getUser()
 
-  if (!user.data.user) {
-    return ctx.throw(401, 'Unauthorized')
+  if (!user) {
+    return ctx.throw(401, '로그인 후 이용해주세요.')
   }
 
   const data = await fetch(
