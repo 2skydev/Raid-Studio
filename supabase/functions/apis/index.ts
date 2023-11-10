@@ -4,8 +4,6 @@ import { routes } from './routers/index.ts'
 import { createClient } from 'supabase'
 import { Database } from '../_shared/types/database.types.ts'
 
-const origins = ['http://localhost:3000', 'https://raidstudio.2skydev.com']
-
 export interface State {
   supabase: ReturnType<typeof createClient<Database>>
 }
@@ -13,15 +11,20 @@ export interface State {
 const app = new Application<State>()
 
 app.use((ctx, next) => {
-  const origin = ctx.request.url.origin
-
-  if (!origins.includes(origin)) return next()
-
-  ctx.response.headers.set('Access-Control-Allow-Origin', origin)
+  ctx.response.headers.set(
+    'Access-Control-Allow-Origin',
+    Deno.env.get('IS_DEV') ? '*' : 'https://raidstudio.2skydev.com',
+  )
   ctx.response.headers.set(
     'Access-Control-Allow-Headers',
     'authorization, x-client-info, apikey, content-type',
   )
+
+  if (ctx.request.method === 'OPTIONS') {
+    ctx.response.status = 200
+    ctx.response.body = 'ok'
+    return
+  }
 
   return next()
 })
@@ -30,9 +33,8 @@ app.use((ctx, next) => {
   const Authorization = ctx.request.headers.get('Authorization')!
 
   const supabase = createClient<Database>(
-    Deno.env.get('DEV_ONLY_SUPABASE_URL') ?? Deno.env.get('SUPABASE_URL') ?? '',
-    Deno.env.get('DEV_ONLY_SUPABASE_ANON_KEY') ??
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+    Deno.env.get('SUPABASE_URL') ?? '',
+    Deno.env.get('SUPABASE_ANON_KEY') ?? '',
     { global: { headers: { Authorization } } },
   )
 

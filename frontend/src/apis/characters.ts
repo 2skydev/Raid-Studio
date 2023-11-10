@@ -5,7 +5,9 @@ import { LostArkCharacter, lostArkCharacterSchema } from '@/schemas/character'
 import { Tables } from '@/types/database.types'
 
 export const getLostArkCharacters = async (characterName: string) => {
-  const { data } = await supabase.functions.invoke(`apis/lostark/characters/${characterName}`)
+  const { data } = await supabase.functions.invoke(`apis/lostark/characters/${characterName}`, {
+    method: 'GET',
+  })
 
   return z.array(lostArkCharacterSchema).parse(data)
 }
