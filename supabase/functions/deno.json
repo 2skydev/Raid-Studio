@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": [
+      "deno.window",
+      "deno.ns",
+      "esnext"
+    ],
+    "strict": true
+  },
+  "fmt": {
+    "singleQuote": true,
+    "semiColons": false
+  },
+  "lint": {
+    "rules": {
+      "exclude": [
+        "no-explicit-any"
+      ]
+    }
+  }
+}
