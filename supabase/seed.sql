@@ -90,10 +90,10 @@ INSERT INTO
   )
 VALUES
   (
-    '테스트 공격대-8', 'test-code8', (select id from public.profiles limit 1)
+    '테스트 공격대 8', 'test-code8', (select id from public.profiles limit 1)
   ),
   (
-    '테스트 공격대-10', 'test-code10', (select id from public.profiles limit 1 offset 1)
+    '테스트 공격대 10', 'test-code10', (select id from public.profiles limit 1 offset 1)
   );
 
 -- 테스트용 공격대 유저 생성
