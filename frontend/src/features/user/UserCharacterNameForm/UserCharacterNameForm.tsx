@@ -34,7 +34,7 @@ import { RaidStudioAPI } from '@/apis'
 import useCustomForm from '@/hooks/useCustomForm'
 import { LostArkCharacter } from '@/schemas/character'
 import { userCharacterNameFormSchema } from '@/schemas/user'
-import { showAxiosErrorToast } from '@/utils/api'
+import { showErrorToast } from '@/utils/error'
 
 export interface UserCharacterNameFormProps {
   className?: string
@@ -77,7 +77,7 @@ const UserCharacterNameForm = ({
         )
         setOpenConformDialog(true)
       } catch (error: any) {
-        showAxiosErrorToast(error, {
+        showErrorToast(error, {
           title: '로스트아크 캐릭터 가져오기 실패',
         })
       } finally {

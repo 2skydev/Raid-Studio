@@ -13,9 +13,7 @@ import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 
 import { RaidStudioAPI } from '@/apis'
 import useAuth from '@/hooks/useAuth'
-import raidStudioClient from '@/libs/raidStudio/client'
 import { CharacterClassName } from '@/types/character'
-import { showAxiosErrorToast } from '@/utils/api'
 
 const StudioCharactersPage = () => {
   const { user } = useAuth<true>()
