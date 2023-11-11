@@ -33,7 +33,7 @@ const menus = [
       },
       {
         title: '멤버 관리',
-        url: '/studio/squad/members',
+        url: '/studio/squad/users',
       },
     ],
   },

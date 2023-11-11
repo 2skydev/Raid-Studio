@@ -21,31 +21,31 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
 import Skeleton from '@/components/Skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/Table'
 
-import { SquadMembers } from '@/schemas/squad'
+import { SquadUser } from '@/types/squads.types'
 
-export interface SquadMemberManageDataTableProps {
-  data: SquadMembers
+export interface SquadUsersManageDataTableProps {
+  data: SquadUser[]
   code: string
   isLoading?: boolean
 }
 
-const columns: ColumnDef<SquadMembers[number]>[] = [
+const columns: ColumnDef<SquadUser>[] = [
   {
     id: 'profile',
     header: '프로필',
     cell: ({ row }) => (
       <div className={css({ display: 'flex', alignItems: 'center', gap: '3' })}>
-        <Avatar w="7" h="7">
-          <AvatarImage src={row.original.image} alt="profile" />
+        <Avatar w="10" h="10">
+          <AvatarImage src={row.original.profile.photo} alt="profile" />
         </Avatar>
 
-        {row.original.name}
+        {row.original.profile.nickname}
       </div>
     ),
   },
   {
     header: '대표 캐릭터',
-    cell: ({ row }) => row.original.characterName,
+    cell: ({ row }) => row.original.profile.main_character_name,
   },
   {
     id: 'action',
@@ -54,7 +54,7 @@ const columns: ColumnDef<SquadMembers[number]>[] = [
   },
 ]
 
-const SquadMemberManageDataTable = ({ data, code, isLoading }: SquadMemberManageDataTableProps) => {
+const SquadUsersManageDataTable = ({ data, code, isLoading }: SquadUsersManageDataTableProps) => {
   const table = useReactTable({
     data,
     columns,
@@ -65,22 +65,22 @@ const SquadMemberManageDataTable = ({ data, code, isLoading }: SquadMemberManage
     <div className={css({ maxW: '3xl' })}>
       <Flex align="center" justifyContent="space-between" py="4">
         {isLoading ? (
-          <Skeleton w="sm" h="10" />
+          <Skeleton w="xs" h="10" />
         ) : (
           <Input
             placeholder="닉네임으로 검색..."
             value={(table.getColumn('profile')?.getFilterValue() as string) ?? ''}
             onChange={event => table.getColumn('profile')?.setFilterValue(event.target.value)}
-            w="sm"
+            w="xs"
           />
         )}
 
         {isLoading ? (
-          <Skeleton w="32" h="10" />
+          <Skeleton w="30" h="10" />
         ) : (
           <Popover>
             <PopoverTrigger asChild>
-              <Button w="32">
+              <Button w="30">
                 <Share2Icon size="1rem" />
                 초대하기
               </Button>
@@ -164,4 +164,4 @@ const SquadMemberManageDataTable = ({ data, code, isLoading }: SquadMemberManage
   )
 }
 
-export default SquadMemberManageDataTable
+export default SquadUsersManageDataTable

@@ -51,7 +51,7 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
 
         props.onOpenChange?.(false)
 
-        router.push('/studio/squad/members')
+        router.push('/studio/squad/users')
       } catch {}
     },
   })

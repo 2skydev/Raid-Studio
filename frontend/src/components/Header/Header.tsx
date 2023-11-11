@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-
 import clsx from 'clsx'
 import { GithubIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -11,7 +9,6 @@ import { Flex } from '@styled-system/jsx'
 import Button from '@/components/Button'
 import CommandMenu from '@/components/CommandMenu'
 import HeaderNavigationMenu from '@/components/HeaderNavigationMenu'
-import Skeleton from '@/components/Skeleton'
 
 import MySquadSelect from '@/features/squad/MySquadSelect'
 import ThemeToggleButton from '@/features/theme/ThemeToggleButton'
@@ -45,9 +42,7 @@ const Header = ({ className }: HeaderProps) => {
             </Flex>
           </Link>
 
-          {/* <Suspense fallback={<Skeleton w="180px" h="10" />}>
-            <MySquadSelect />
-          </Suspense> */}
+          <MySquadSelect />
 
           <CurrentUserProfileDropdownMenu />
         </Flex>

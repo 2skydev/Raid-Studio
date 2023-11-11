@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { SquadUser } from '@/types/squads.types'
 import { showErrorToast } from '@/utils/error'
 
 export const getPublicSquads = async () => {
@@ -28,6 +29,29 @@ export const getPublicSquads = async () => {
     // @ts-ignore
     userCount: squad.userCount[0].count as number,
   }))
+}
+
+export const getCurrentUserSquads = async () => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (!session) throw '로그인이 필요합니다.'
+
+  const { data } = await supabase
+    .from('profiles')
+    .select(
+      `
+        squads (
+          id,
+          name
+        )
+      `,
+    )
+    .eq('id', session.user.id)
+    .single()
+
+  return data?.squads
 }
 
 export const createSquad = async (name: string) => {
@@ -63,4 +87,32 @@ export const joinSquad = async (code: string) => {
   }
 
   return true
+}
+
+export const getSquadUsers = async (squadId: number) => {
+  const { data } = await supabase
+    .from('squads_public_view')
+    .select(
+      `
+        users: squad_users (
+          id: user_id,
+          role,
+          profile: profiles (
+            nickname,
+            photo,
+            main_character_name
+          )
+        )
+      `,
+    )
+    .eq('id', squadId)
+    .single()
+
+  return data?.users as SquadUser[]
+}
+
+export const getSquadCode = async (squadId: number) => {
+  const { data } = await supabase.from('squads').select('code').eq('id', squadId).single()
+
+  return data?.code
 }
