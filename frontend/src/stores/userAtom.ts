@@ -1,6 +1,7 @@
 import { atomWithDefault } from 'jotai/utils'
 
 import { RaidStudioAPI } from '@/apis'
+import { supabase } from '@/lib/supabase'
 import { Tables } from '@/types/database.types'
 
 interface UserAtomValue {
@@ -9,12 +10,16 @@ interface UserAtomValue {
 }
 
 export const getUserAtomValue = async () => {
-  const profile = await RaidStudioAPI.profiles.getCurrentUserProfile()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  if (!profile) return null
+  if (!session) return null
+
+  const profile = await RaidStudioAPI.profiles.getUserProfile(session.user.id)
 
   return {
-    id: profile.id,
+    id: session.user.id,
     profile,
   }
 }
