@@ -24,7 +24,7 @@ import UserCharacterNameForm from '@/features/user/UserCharacterNameForm'
 import { RaidStudioAPI } from '@/apis'
 import useAuth from '@/hooks/useAuth'
 import useCustomForm from '@/hooks/useCustomForm'
-import { CreateProfileFormSchema } from '@/schemas/user'
+import { CreateProfileFormSchema } from '@/schemas/profiles'
 
 type SetStep = Dispatch<SetStateAction<1 | 2 | 3>>
 

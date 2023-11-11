@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { supabase } from '@/lib/supabase'
 import { LostArkCharacter, lostArkCharacterSchema } from '@/schemas/character'
 import { Tables } from '@/types/database.types'
+import { showErrorToast } from '@/utils/error'
 
 export const getLostArkCharacters = async (characterName: string) => {
   const { data } = await supabase.functions.invoke(`apis/lostark/characters/${characterName}`, {
@@ -39,7 +40,13 @@ export const updateAndMergeCharacters = async (
 
   const { error } = await supabase.from('characters').upsert(characters)
 
-  if (error) throw error
+  if (error) {
+    showErrorToast(error, {
+      title: '캐릭터 정보 업데이트 오류',
+    })
+
+    throw error
+  }
 }
 
 export const reloadCharacters = async (userId: string) => {

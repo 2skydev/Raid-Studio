@@ -1,7 +1,5 @@
 'use client'
 
-import { ReactNode } from 'react'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -19,49 +17,42 @@ import {
 } from '@/components/Form'
 import { Input } from '@/components/Input'
 
+import { RaidStudioAPI } from '@/apis'
+import useAuth from '@/hooks/useAuth'
 import useCustomForm from '@/hooks/useCustomForm'
-import raidStudioClient from '@/libs/raidStudio/client'
-import { userProfileFormSchema, User } from '@/schemas/user'
-import { showAxiosErrorToast } from '@/utils/api'
+import { UpdateProfileFormSchema } from '@/schemas/profiles'
+import { Tables } from '@/types/database.types'
 
-export interface UserProfileFormProps extends Omit<User, 'characterName' | 'name'> {
-  name: string
+export interface UserProfileFormProps extends Pick<Tables<'profiles'>, 'nickname' | 'photo'> {
   className?: string
-  children?: ReactNode
 }
 
-const UserProfileForm = ({ className, id, image, name }: UserProfileFormProps) => {
+const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) => {
+  const { user, setUser } = useAuth<true>()
+
   const form = useCustomForm({
-    resolver: zodResolver(userProfileFormSchema),
+    resolver: zodResolver(UpdateProfileFormSchema),
     defaultValues: {
-      name,
+      nickname,
     },
     onSubmit: async values => {
       try {
-        await raidStudioClient.patch('/users/me', {
-          name: values.name,
+        await RaidStudioAPI.profiles.updateCurrentUserProfile(values)
+
+        setUser({
+          ...user,
+          profile: {
+            ...user.profile,
+            ...values,
+          },
         })
-      } catch (error) {
-        showAxiosErrorToast(error, {
-          title: '프로필 업데이트 오류',
-        })
-      }
+      } catch (error) {}
     },
   })
 
   return (
     <Form className={clsx('UserProfileForm', className)} form={form}>
       <FormHeader title="프로필" description="다른 사람들에게 표시될 정보들입니다." />
-
-      <FormItem>
-        <FormLabel>Discord ID</FormLabel>
-
-        <FormControl>
-          <Input defaultValue={id} disabled />
-        </FormControl>
-
-        <FormDescription>Discord 고유 ID입니다. 유저를 식별하는데 사용됩니다.</FormDescription>
-      </FormItem>
 
       <FormItem>
         <FormLabel>프로필 사진</FormLabel>
@@ -72,14 +63,14 @@ const UserProfileForm = ({ className, id, image, name }: UserProfileFormProps) =
 
         <FormControl>
           <Avatar>
-            <AvatarImage src={image} alt="profile" />
+            <AvatarImage src={photo} alt="profile" />
           </Avatar>
         </FormControl>
       </FormItem>
 
       <FormField
         control={form.control}
-        name="name"
+        name="nickname"
         render={({ field }) => (
           <FormItem>
             <FormLabel>닉네임</FormLabel>

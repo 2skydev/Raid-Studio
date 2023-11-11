@@ -96,11 +96,7 @@ const UserCharacterNameForm = ({
       setOpenConformDialog(false)
 
       onUpdate?.(mainCharacter!.name)
-    } catch (error) {
-      showAxiosErrorToast(error, {
-        title: '대표 캐릭터 업데이트 오류',
-      })
-    }
+    } catch {}
   }
 
   return (
