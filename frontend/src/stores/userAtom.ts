@@ -2,6 +2,7 @@ import { useAtom } from 'jotai'
 import { atomWithDefault } from 'jotai/utils'
 import { useRouter } from 'next-nprogress-bar'
 
+import { RaidStudioAPI } from '@/apis'
 import { supabase } from '@/lib/supabase'
 import { Tables } from '@/types/database.types'
 import { NonNullableDeep } from '@/types/util.types'
@@ -12,17 +13,13 @@ interface UserAtomValue {
 }
 
 export const getUserAtomValue = async () => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const profile = await RaidStudioAPI.profiles.getCurrentUserProfile()
 
-  if (!session) return null
-
-  const { data: profiles } = await supabase.from('profiles').select().eq('id', session.user.id)
+  if (!profile) return null
 
   return {
-    id: session.user.id,
-    profile: profiles?.[0] || null,
+    id: profile.id,
+    profile,
   }
 }
 

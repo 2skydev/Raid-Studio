@@ -21,47 +21,32 @@ import CreateSquadDialog from '@/features/squad/CreateSquadDialog'
 import JoinSquadDialog from '@/features/squad/JoinSquadDialog'
 import UserCharacterNameForm from '@/features/user/UserCharacterNameForm'
 
+import { RaidStudioAPI } from '@/apis'
 import useCustomForm from '@/hooks/useCustomForm'
-import { supabase } from '@/lib/supabase'
-import { userProfileFormSchema } from '@/schemas/user'
+import { CreateProfileFormSchema } from '@/schemas/user'
 import { useAuth } from '@/stores/userAtom'
-import { showAxiosErrorToast } from '@/utils/api'
 
 type SetStep = Dispatch<SetStateAction<1 | 2 | 3>>
 
-const RegisterNamePage = ({ setStep }: { setStep: SetStep }) => {
+const RegisterNicknamePage = ({ setStep }: { setStep: SetStep }) => {
   const { user, setUser } = useAuth()
 
   const form = useCustomForm({
-    resolver: zodResolver(userProfileFormSchema),
+    resolver: zodResolver(CreateProfileFormSchema),
     defaultValues: {
-      name: '',
+      nickname: '',
     },
-    onSubmit: async values => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
+    onSubmit: async ({ nickname }) => {
+      try {
+        const profile = await RaidStudioAPI.profiles.createCurrentUserProfile(nickname)
 
-      const profile = {
-        id: user!.id,
-        nickname: values.name,
-        photo: session!.user.user_metadata.avatar_url,
-        main_character_name: '',
-      }
-
-      const { error } = await supabase.from('profiles').upsert(profile)
-
-      if (error) {
-        return showAxiosErrorToast(error, {
-          title: '닉네임 설정 오류',
+        setUser({
+          ...user!,
+          profile,
         })
-      }
 
-      setUser({
-        ...user!,
-        profile,
-      })
-      setStep(2)
+        setStep(2)
+      } catch {}
     },
   })
 
@@ -75,7 +60,7 @@ const RegisterNamePage = ({ setStep }: { setStep: SetStep }) => {
       <Form w="sm" form={form}>
         <FormField
           control={form.control}
-          name="name"
+          name="nickname"
           render={({ field }) => (
             <FormItem flex="1">
               <FormControl>
@@ -181,7 +166,7 @@ const RegisterSquadPage = ({ setStep }: { setStep: SetStep }) => {
   )
 }
 
-const STEP_COMPONENTS = [RegisterNamePage, RegisterCharacterPage, RegisterSquadPage]
+const STEP_COMPONENTS = [RegisterNicknamePage, RegisterCharacterPage, RegisterSquadPage]
 
 const RegisterSteps = () => {
   const router = useRouter()

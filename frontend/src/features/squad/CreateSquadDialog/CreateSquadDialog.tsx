@@ -28,10 +28,9 @@ import { Input } from '@/components/Input'
 
 import AuthenticatedOnlyDialog from '@/features/auth/AuthenticatedOnlyDialog'
 
+import { RaidStudioAPI } from '@/apis'
 import useCustomForm from '@/hooks/useCustomForm'
-import { supabase } from '@/lib/supabase'
 import { SquadFormSchema } from '@/schemas/squad'
-import { showFunctionsInvokeErrorToast } from '@/utils/api'
 
 export interface CreateSquadDialogProps
   extends Omit<ComponentProps<typeof AuthenticatedOnlyDialog>, 'children'> {}
@@ -45,24 +44,15 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
       name: '',
     },
     onSubmit: async ({ name }) => {
-      const { error } = await supabase.functions.invoke('apis/squads', {
-        method: 'POST',
-        body: {
-          name,
-        },
-      })
+      try {
+        await RaidStudioAPI.squads.createSquad(name)
 
-      if (error) {
-        return await showFunctionsInvokeErrorToast(error, {
-          title: '공격대 생성 오류',
-        })
-      }
+        form.reset()
 
-      form.reset()
+        props.onOpenChange?.(false)
 
-      props.onOpenChange?.(false)
-
-      router.push('/studio/squad/members')
+        router.push('/studio/squad/members')
+      } catch {}
     },
   })
 

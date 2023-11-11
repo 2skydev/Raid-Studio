@@ -1,8 +1,23 @@
 import { supabase } from '@/lib/supabase'
-import { showFunctionsInvokeErrorToast } from '@/utils/api'
+import { showErrorToast } from '@/utils/error'
 
 export const createSquad = async (name: string) => {
-  // await supabase.from()
+  const { error } = await supabase.functions.invoke('apis/squads', {
+    method: 'POST',
+    body: {
+      name,
+    },
+  })
+
+  if (error) {
+    await showErrorToast(error, {
+      title: '공격대 생성 오류',
+    })
+
+    throw error
+  }
+
+  return true
 }
 
 export const joinSquad = async (code: string) => {
@@ -11,7 +26,7 @@ export const joinSquad = async (code: string) => {
   })
 
   if (error) {
-    await showFunctionsInvokeErrorToast(error, {
+    await showErrorToast(error, {
       title: '공격대 참여 오류',
     })
 

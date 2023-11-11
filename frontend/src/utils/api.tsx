@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { AxiosError } from 'axios'
+import { PostgrestError } from '@supabase/supabase-js'
 import { z } from 'zod'
 
 import { css } from '@styled-system/css'
@@ -64,22 +64,6 @@ export const showAxiosErrorToast = (error: any, options?: ToastOptions) => {
         </ul>
       </>
     ),
-    ...options,
-  })
-}
-
-export const showFunctionsInvokeErrorToast = async (error: any, options?: ToastOptions) => {
-  let message = '알 수 없는 오류가 발생했습니다.'
-
-  if (error.context.json) {
-    const body = await error.context.json()
-    message = body.error
-  }
-
-  toast({
-    status: 'error',
-    title: '요청 중 오류가 발생했습니다.',
-    description: message,
     ...options,
   })
 }
