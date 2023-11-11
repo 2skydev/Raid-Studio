@@ -13,6 +13,7 @@ import { css } from '@styled-system/css'
 import { Box, Flex } from '@styled-system/jsx'
 
 import { Avatar, AvatarImage } from '@/components/Avatar'
+import { Badge } from '@/components/Badge'
 import Button from '@/components/Button'
 import CopyButton from '@/components/CopyButton'
 import { DataTableColumnHeader } from '@/components/DataTable/ColumnHeader'
@@ -20,6 +21,8 @@ import { Input } from '@/components/Input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
 import Skeleton from '@/components/Skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/Table'
+
+import SquadRoleBadge from '@/features/squad/SquadRoleBadge'
 
 import { SquadUser } from '@/types/squads.types'
 
@@ -46,6 +49,10 @@ const columns: ColumnDef<SquadUser>[] = [
   {
     header: '대표 캐릭터',
     cell: ({ row }) => row.original.profile.main_character_name,
+  },
+  {
+    header: '역할',
+    cell: ({ row }) => <SquadRoleBadge role={row.original.role} />,
   },
   {
     id: 'action',
