@@ -24,40 +24,16 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/Tooltip'
 import CreateSquadDialog from '@/features/squad/CreateSquadDialog'
 import JoinSquadDialog from '@/features/squad/JoinSquadDialog'
 
-import { supabase } from '@/lib/supabase'
+import { RaidStudioAPI } from '@/apis'
 
 const SquadListPage = () => {
   const [openCreateSquadDialog, setOpenCreateSquadDialog] = useState(false)
   const [openJoinSquadDialog, setOpenJoinSquadDialog] = useState(false)
 
-  const { data: squads, isValidating } = useSWR('all_squads', async () => {
-    const { data } = await supabase
-      .from('squads_public_view')
-      .select(
-        `
-          name,
-          created_at,
-          users: squad_users (
-            role,
-            profile: profiles (
-              nickname,
-              photo,
-              main_character_name
-            )
-          ),
-          userCount: squad_users (count)
-        `,
-      )
-      .limit(5, { foreignTable: 'users' })
-      .order('role', { foreignTable: 'users' })
-
-    return data?.map(squad => ({
-      ...squad,
-      owner: squad.users.find(user => user.role === 'owner')?.profile,
-      // @ts-ignore
-      userCount: squad.userCount[0].count,
-    }))
-  })
+  const { data: squads, isValidating } = useSWR(
+    'public_squads',
+    RaidStudioAPI.squads.getPublicSquads,
+  )
 
   console.log(squads)
 

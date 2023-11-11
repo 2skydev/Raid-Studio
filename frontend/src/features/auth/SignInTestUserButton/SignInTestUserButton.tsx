@@ -13,6 +13,7 @@ import {
 } from '@/components/DropdownMenu'
 import { useToast } from '@/components/Toast/useToast'
 
+import { RaidStudioAPI } from '@/apis'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/stores/userAtom'
 
@@ -23,33 +24,11 @@ const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
 
   const { toast } = useToast()
 
-  const { data: profiles } = useSWR(
-    'test_profiles',
-    async () => {
-      const { data } = await supabase
-        .from('profiles')
-        .select(
-          `
-          nickname,
-          photo,
-          main_character_name
-        `,
-        )
-        .in(
-          'nickname',
-          Array(10)
-            .fill(null)
-            .map((_, i) => `user${i}`),
-        )
-
-      return data
-    },
-    {
-      revalidateOnFocus: false,
-      revalidateIfStale: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const { data: profiles } = useSWR('test_profiles', RaidStudioAPI.profiles.getTestUserProfiles, {
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+    revalidateOnReconnect: false,
+  })
 
   const signInTestUser = async (nickname: string) => {
     await supabase.auth.signInWithPassword({
