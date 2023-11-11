@@ -10,9 +10,9 @@ import MyCharactersReloadButton from '@/features/character/MyCharactersReloadBut
 import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 
 import useAPI from '@/hooks/useAPI'
+import useAuth from '@/hooks/useAuth'
 import raidStudioClient from '@/libs/raidStudio/client'
 import { CharacterWithClears } from '@/schemas/character'
-import { useAuth } from '@/stores/userAtom'
 import { CharacterClassName } from '@/types/character'
 import { showAxiosErrorToast } from '@/utils/api'
 

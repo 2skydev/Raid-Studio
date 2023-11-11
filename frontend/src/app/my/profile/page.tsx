@@ -2,7 +2,7 @@
 
 import UserProfileForm from '@/features/user/UserProfileForm'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 const MyProfilePage = () => {
   const { user } = useAuth<true>()

@@ -5,7 +5,7 @@ import { ReactNode, useEffect } from 'react'
 import { useRouter } from 'next-nprogress-bar'
 import { usePathname } from 'next/navigation'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 export interface RedirectRegisterPageProps {
   children?: ReactNode

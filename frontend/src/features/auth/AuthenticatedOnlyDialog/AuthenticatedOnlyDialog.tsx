@@ -4,7 +4,7 @@ import { Dialog } from '@/components/Dialog'
 import DiscordIcon from '@/components/DiscordIcon'
 import { ToastOptions, useToast } from '@/components/Toast/useToast'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 export interface AuthenticatedOnlyDialogProps extends ComponentProps<typeof Dialog> {
   errorToastOptions?: ToastOptions

@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from 'react'
 
 import { useRouter } from 'next-nprogress-bar'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 export interface AuthenticatedOnlyProps {
   /**

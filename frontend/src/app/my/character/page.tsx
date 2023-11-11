@@ -2,7 +2,7 @@
 
 import UserCharacterNameForm from '@/features/user/UserCharacterNameForm'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 const MyCharacterPage = () => {
   const { user } = useAuth<true>()

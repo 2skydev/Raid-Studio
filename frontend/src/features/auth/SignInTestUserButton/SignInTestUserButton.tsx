@@ -14,8 +14,8 @@ import {
 import { useToast } from '@/components/Toast/useToast'
 
 import { RaidStudioAPI } from '@/apis'
+import useAuth from '@/hooks/useAuth'
 import { supabase } from '@/lib/supabase'
-import { useAuth } from '@/stores/userAtom'
 
 export interface SignInTestUserButtonProps {}
 

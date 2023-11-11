@@ -2,16 +2,12 @@
 
 import Button from '@/components/Button'
 
-import { supabase } from '@/lib/supabase'
+import useAuth from '@/hooks/useAuth'
 
 const SignInDiscordButton = () => {
-  const signInDiscord = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'discord',
-    })
-  }
+  const { signInWithDiscord } = useAuth()
 
-  return <Button onClick={signInDiscord}>Discord 계정으로 시작하기</Button>
+  return <Button onClick={signInWithDiscord}>Discord 계정으로 시작하기</Button>
 }
 
 export default SignInDiscordButton

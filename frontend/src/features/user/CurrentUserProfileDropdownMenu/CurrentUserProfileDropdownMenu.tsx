@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/DropdownMenu'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 export interface CurrentUserProfileDropdownMenuProps {}
 

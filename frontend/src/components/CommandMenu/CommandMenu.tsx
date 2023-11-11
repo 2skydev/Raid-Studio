@@ -18,7 +18,7 @@ import {
 } from '@/components/Command'
 import Kbd from '@/components/Kbd'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 export interface CommandMenuProps {}
 

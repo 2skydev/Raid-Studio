@@ -14,7 +14,7 @@ import SignInDiscordButton from '@/features/auth/SignInDiscordButton'
 import SignInTestUserButton from '@/features/auth/SignInTestUserButton'
 import PageContentMotion from '@/features/motion/PageContentMotion'
 
-import { useAuth } from '@/stores/userAtom'
+import useAuth from '@/hooks/useAuth'
 
 const Home = () => {
   const { user } = useAuth()
