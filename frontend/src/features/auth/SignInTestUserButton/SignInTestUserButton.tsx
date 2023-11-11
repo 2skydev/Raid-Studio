@@ -40,7 +40,15 @@ const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
 
     toast({
       title: '테스트 계정으로 로그인되었습니다.',
-      description: ``,
+      description: (
+        <ul className={css({ listStyle: 'disc' })}>
+          <li>테스트 계정은 읽기 전용입니다.</li>
+          <li>
+            생성, 수정, 삭제 등의 작업은 작동 하는것 처럼 보일 수 있지만 실제로 이루어지지 않습니다.
+          </li>
+        </ul>
+      ),
+      duration: 60000,
       status: 'success',
     })
   }
