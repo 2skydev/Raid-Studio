@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { Character, CharacterWithClears } from '@/schemas/character'
 import { BestGoldRaidStats, getBestGoldRaidStatsByCharacter } from '@/utils/character'
 
-const useCharactersDetail = (data: CharacterWithClears[]) => {
+const useCharactersDetail = (data: Character[]) => {
   const characters = useMemo(() => {
     const items = (data || []).map(character => {
       let fixedRaidIds = character.fixedRaidIds

@@ -64,3 +64,19 @@ export const reloadCharacters = async (userId: string) => {
 
   return true
 }
+
+export const getCharacters = async (userId: string) => {
+  const { data } = await supabase
+    .from('characters')
+    .select(
+      `
+        name,
+        level,
+        class,
+        server
+      `,
+    )
+    .eq('user_id', userId)
+
+  return data
+}

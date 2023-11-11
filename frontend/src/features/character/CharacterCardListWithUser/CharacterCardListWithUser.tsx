@@ -7,15 +7,19 @@ import CharacterCard from '@/features/character/CharacterCard'
 import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 
 import { Character } from '@/schemas/character'
-import { User } from '@/schemas/user'
 import { CharacterClassName } from '@/types/character'
+import { Tables } from '@/types/database.types'
 
-export interface CharacterCardListWithUserProps {
-  user: User
+export interface CharacterCardListWithUserProps
+  extends Pick<Tables<'profiles'>, 'nickname' | 'photo'> {
   characters: Character[]
 }
 
-const CharacterCardListWithUser = ({ user, characters }: CharacterCardListWithUserProps) => {
+const CharacterCardListWithUser = ({
+  nickname,
+  photo,
+  characters,
+}: CharacterCardListWithUserProps) => {
   const { characters: _characters, weekGold } = useCharactersDetail(characters)
 
   return (
@@ -23,9 +27,9 @@ const CharacterCardListWithUser = ({ user, characters }: CharacterCardListWithUs
       <div className={css({ display: 'flex', alignItems: 'center', mb: '4' })}>
         <div className={css({ display: 'flex', alignItems: 'center', gap: '2', mr: '4' })}>
           <Avatar w="8" h="8">
-            <AvatarImage src={user.image} alt="profile" />
+            <AvatarImage src={photo} alt="profile" />
           </Avatar>
-          {user.name}
+          {nickname}
         </div>
 
         <Badge>주간 골드: {weekGold.toLocaleString()}골드</Badge>

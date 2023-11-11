@@ -1,21 +1,22 @@
 'use client'
 
-import { useMemo } from 'react'
-
 import { useAtomValue } from 'jotai'
+import useSWR from 'swr'
 
 import { css } from '@styled-system/css'
 
 import CharacterCardListWithUser from '@/features/character/CharacterCardListWithUser'
 
-import useAPI from '@/hooks/useAPI'
-import { CharactersWithUser } from '@/schemas/character'
+import { RaidStudioAPI } from '@/apis'
 import { selectedSquadIdAtom } from '@/stores/selectedSquadIdAtom'
 
 const StudioCharactersPage = () => {
   const selectedSquadId = useAtomValue(selectedSquadIdAtom)
 
-  const { data, isLoading } = useAPI<CharactersWithUser[]>(`/squads/${selectedSquadId}/characters`)
+  const { data, isLoading } = useSWR(
+    selectedSquadId ? ['squad_users_with_characters', selectedSquadId] : null,
+    async ([, squadId]) => await RaidStudioAPI.squads.getSquadUsersWithCharacters(squadId),
+  )
 
   return (
     <div>
@@ -27,14 +28,14 @@ const StudioCharactersPage = () => {
       <div className={css({ mt: '6' })}>
         {isLoading && <div>로딩중...</div>}
 
-        {data &&
-          data.map(item => (
-            <CharacterCardListWithUser
-              key={item.user.id}
-              user={item.user}
-              characters={item.characters}
-            />
-          ))}
+        {data?.map(item => (
+          <CharacterCardListWithUser
+            key={item.id}
+            nickname={item.profile.nickname}
+            photo={item.profile.photo}
+            characters={item.profile.characters.map(x => ({ ...x, fixedRaidIds: [] }))}
+          />
+        ))}
       </div>
     </div>
   )

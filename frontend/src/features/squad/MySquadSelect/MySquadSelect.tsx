@@ -14,7 +14,7 @@ import { selectedSquadIdAtom } from '@/stores/selectedSquadIdAtom'
 export interface MySquadSelectProps {}
 
 const MySquadSelect = ({}: MySquadSelectProps) => {
-  const { data: mySquads = [], isLoading } = useSWR(
+  const { data: mySquads, isLoading } = useSWR(
     'my_squads',
     RaidStudioAPI.squads.getCurrentUserSquads,
     {
@@ -26,7 +26,7 @@ const MySquadSelect = ({}: MySquadSelectProps) => {
   const [selectedSquadId, setSelectedSquadId] = useAtom(selectedSquadIdAtom)
 
   useEffect(() => {
-    if (mySquads.length && selectedSquadId === null) {
+    if (mySquads?.length && selectedSquadId === null) {
       setSelectedSquadId(mySquads[0].id)
     }
   }, [selectedSquadId, mySquads])
@@ -45,13 +45,13 @@ const MySquadSelect = ({}: MySquadSelectProps) => {
       </SelectTrigger>
 
       <SelectContent>
-        {!mySquads.length && (
+        {!mySquads?.length && (
           <SelectItem value="none" disabled>
             참여된 공격대 없음
           </SelectItem>
         )}
 
-        {mySquads.map(squad => (
+        {mySquads?.map(squad => (
           <SelectItem key={squad.id} value={String(squad.id)}>
             {squad.name}
           </SelectItem>
