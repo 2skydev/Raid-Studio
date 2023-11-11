@@ -19,6 +19,10 @@ app.use((ctx, next) => {
     'Access-Control-Allow-Headers',
     'authorization, x-client-info, apikey, content-type',
   )
+  ctx.response.headers.set(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+  )
 
   if (ctx.request.method === 'OPTIONS') {
     ctx.response.status = 200

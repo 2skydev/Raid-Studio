@@ -26,10 +26,9 @@ import { Input } from '@/components/Input'
 
 import AuthenticatedOnlyDialog from '@/features/auth/AuthenticatedOnlyDialog'
 
+import { RaidStudioAPI } from '@/apis'
 import useCustomForm from '@/hooks/useCustomForm'
-import raidStudioClient from '@/libs/raidStudio/client'
 import { squadJoinFormSchema } from '@/schemas/squad'
-import { showAxiosErrorToast } from '@/utils/api'
 
 export interface JoinSquadDialogProps
   extends Omit<ComponentProps<typeof AuthenticatedOnlyDialog>, 'children'> {}
@@ -44,18 +43,14 @@ const JoinSquadDialog = (props: JoinSquadDialogProps) => {
     },
     onSubmit: async ({ code }) => {
       try {
-        await raidStudioClient.patch(`/squads/join/${code}`)
+        await RaidStudioAPI.squads.joinSquad(code)
 
         form.reset()
 
         props.onOpenChange?.(false)
 
-        router.push('/')
-      } catch (error) {
-        showAxiosErrorToast(error, {
-          title: '공격대 참여 오류',
-        })
-      }
+        router.push('/studio/squad/members')
+      } catch {}
     },
   })
 

@@ -31,7 +31,6 @@ import AuthenticatedOnlyDialog from '@/features/auth/AuthenticatedOnlyDialog'
 import useCustomForm from '@/hooks/useCustomForm'
 import { supabase } from '@/lib/supabase'
 import { SquadFormSchema } from '@/schemas/squad'
-import { userAtom } from '@/stores/userAtom'
 import { showFunctionsInvokeErrorToast } from '@/utils/api'
 
 export interface CreateSquadDialogProps
@@ -43,7 +42,7 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
   const form = useCustomForm({
     resolver: zodResolver(SquadFormSchema),
     defaultValues: {
-      name: '테스트 공격대 8',
+      name: '',
     },
     onSubmit: async ({ name }) => {
       const { error } = await supabase.functions.invoke('apis/squads', {
