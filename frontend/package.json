@@ -37,7 +37,7 @@
     "@shadow-panda/style-context": "^0.7.0",
     "@supabase/supabase-js": "^2.38.4",
     "@tanstack/react-table": "^8.10.7",
-    "axios": "^1.5.1",
+    "axios": "^1.6.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "dayjs": "^1.11.10",
