@@ -1,7 +1,6 @@
 'use client'
 
 import clsx from 'clsx'
-import { useAtomValue } from 'jotai'
 import Link from 'next/link'
 
 import { css } from '@styled-system/css'
@@ -15,10 +14,10 @@ import SignInDiscordButton from '@/features/auth/SignInDiscordButton'
 import SignInTestUserButton from '@/features/auth/SignInTestUserButton'
 import PageContentMotion from '@/features/motion/PageContentMotion'
 
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 
 const Home = () => {
-  const user = useAtomValue(userAtom)
+  const { user } = useAuth()
 
   return (
     <PageContentMotion>

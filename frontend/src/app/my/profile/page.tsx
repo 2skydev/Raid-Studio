@@ -1,15 +1,13 @@
 'use client'
 
-import { useAtomValue } from 'jotai'
-
 import UserProfileForm from '@/features/user/UserProfileForm'
 
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 
 const MyProfilePage = () => {
-  const user = useAtomValue(userAtom)!
+  const { user } = useAuth<true>()
 
-  return <UserProfileForm id={user.id} name={user.name || ''} image={user.image} />
+  return <UserProfileForm id={user.id} name={user.profile.nickname} image={user.profile.photo} />
 }
 
 export default MyProfilePage

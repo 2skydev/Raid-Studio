@@ -1,7 +1,6 @@
 'use client'
 
-import { useAtomValue } from 'jotai'
-import { LogOutIcon, SettingsIcon, UserCircle2Icon, UserCog2Icon, UsersIcon } from 'lucide-react'
+import { LogOutIcon, UserCircle2Icon, UserCog2Icon } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 
 import { icon } from '@styled-system/recipes'
@@ -16,15 +15,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/DropdownMenu'
 
-import { supabase } from '@/lib/supabase'
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 
 export interface CurrentUserProfileDropdownMenuProps {}
 
 const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps) => {
   const router = useRouter()
 
-  const user = useAtomValue(userAtom)
+  const { user, signOut } = useAuth()
 
   if (!user || !user.profile) return null
 
@@ -52,7 +50,7 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={() => supabase.auth.signOut()}>
+        <DropdownMenuItem onClick={signOut}>
           <LogOutIcon className={icon()} />
           로그아웃
         </DropdownMenuItem>

@@ -1,43 +1,68 @@
 import useSWR from 'swr'
 
+import { css } from '@styled-system/css'
+import { Flex } from '@styled-system/jsx'
+
+import { Avatar, AvatarImage } from '@/components/Avatar'
 import Button from '@/components/Button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/DropdownMenu'
+import { useToast } from '@/components/Toast/useToast'
 
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/stores/userAtom'
 
 export interface SignInTestUserButtonProps {}
 
 const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
-  const { data: profiles, isValidating } = useSWR('test_profiles', async () => {
-    const { data } = await supabase
-      .from('profiles')
-      .select(
-        `
+  const { reload } = useAuth()
+
+  const { toast } = useToast()
+
+  const { data: profiles } = useSWR(
+    'test_profiles',
+    async () => {
+      const { data } = await supabase
+        .from('profiles')
+        .select(
+          `
           nickname,
           photo,
           main_character_name
         `,
-      )
-      .in(
-        'nickname',
-        Array(10)
-          .fill(null)
-          .map((_, i) => `user${i}`),
-      )
+        )
+        .in(
+          'nickname',
+          Array(10)
+            .fill(null)
+            .map((_, i) => `user${i}`),
+        )
 
-    return data
-  })
+      return data
+    },
+    {
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
+      revalidateOnReconnect: false,
+    },
+  )
 
   const signInTestUser = async (nickname: string) => {
     await supabase.auth.signInWithPassword({
       email: `${nickname}@example.com`,
       password: 'password123',
+    })
+
+    await reload()
+
+    toast({
+      title: '테스트 계정으로 로그인되었습니다.',
+      description: ``,
+      status: 'success',
     })
   }
 
@@ -47,10 +72,32 @@ const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
         <Button variant="secondary">테스트 계정으로 둘러보기</Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent w="40" align="start">
+      <DropdownMenuContent align="start">
         {profiles?.map(profile => (
-          <DropdownMenuItem key={profile.nickname} onClick={() => signInTestUser(profile.nickname)}>
-            {profile.nickname}
+          <DropdownMenuItem
+            cursor="pointer"
+            key={profile.nickname}
+            onClick={() => signInTestUser(profile.nickname)}
+          >
+            <Flex alignItems="center" gap="2" py="1">
+              <Avatar w="8" h="8">
+                <AvatarImage src={profile.photo} alt={profile.nickname} />
+              </Avatar>
+
+              <div>
+                <div className={css({ leading: '1' })}>테스트 {profile.nickname}</div>
+                <div
+                  className={css({
+                    leading: '1',
+                    mt: '1',
+                    fontSize: 'xs',
+                    color: 'muted.foreground',
+                  })}
+                >
+                  {profile.main_character_name}
+                </div>
+              </div>
+            </Flex>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

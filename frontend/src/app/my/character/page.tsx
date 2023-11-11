@@ -1,15 +1,13 @@
 'use client'
 
-import { useAtomValue } from 'jotai'
-
 import UserCharacterNameForm from '@/features/user/UserCharacterNameForm'
 
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 
 const MyCharacterPage = () => {
-  const user = useAtomValue(userAtom)!
+  const { user } = useAuth<true>()
 
-  return <UserCharacterNameForm characterName={user.characterName || ''} />
+  return <UserCharacterNameForm userId={user.id} characterName={user.profile.main_character_name} />
 }
 
 export default MyCharacterPage

@@ -18,7 +18,7 @@ import {
 } from '@/components/Command'
 import Kbd from '@/components/Kbd'
 
-import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/stores/userAtom'
 
 export interface CommandMenuProps {}
 
@@ -32,6 +32,7 @@ interface CommandMenuItem {
 const CommandMenu = ({}: CommandMenuProps) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const { signOut } = useAuth()
 
   const items: CommandMenuItem[] = [
     {
@@ -42,7 +43,8 @@ const CommandMenu = ({}: CommandMenuProps) => {
       icon: <LogOutIcon />,
       title: '로그아웃',
       onClick: () => {
-        supabase.auth.signOut()
+        signOut()
+        setOpen(false)
       },
     },
   ]
