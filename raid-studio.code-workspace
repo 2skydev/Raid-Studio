@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "nextjs",
+      "path": "frontend"
+    },
+    {
+      "name": "supabase-functions",
+      "path": "supabase/functions"
+    }
+  ],
+  "settings": {
+    // root folder에서 표시 안함
+    "files.exclude": {
+      "node_modules/": true,
+      "frontend/": true,
+      "supabase/functions/": true
+    },
+    // supabase/functions deno settings
+    "deno.importMap": "./supabase/functions/import_map.json",
+    "deno.config": "./supabase/functions/deno.json"
+  }
+}
