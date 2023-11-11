@@ -22,8 +22,12 @@ export const getTestUserProfiles = async () => {
       'nickname',
       Array(10)
         .fill(null)
-        .map((_, i) => `user${i}`),
+        .map((_, i) => `user${i + 1}`),
     )
+
+  if (data) {
+    data.sort((a, b) => +a.nickname.replace('user', '') - +b.nickname.replace('user', ''))
+  }
 
   return data
 }
