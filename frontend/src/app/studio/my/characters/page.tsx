@@ -1,7 +1,5 @@
 'use client'
 
-import { useAtomValue } from 'jotai'
-
 import { css } from '@styled-system/css'
 
 import { Badge } from '@/components/Badge'
@@ -14,12 +12,12 @@ import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 import useAPI from '@/hooks/useAPI'
 import raidStudioClient from '@/libs/raidStudio/client'
 import { CharacterWithClears } from '@/schemas/character'
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 import { CharacterClassName } from '@/types/character'
 import { showAxiosErrorToast } from '@/utils/api'
 
 const StudioCharactersPage = () => {
-  const user = useAtomValue(userAtom)!
+  const { user } = useAuth<true>()
 
   const { data, isLoading, mutate } = useAPI<CharacterWithClears[]>('/users/me/characters')
 

@@ -2,10 +2,9 @@
 
 import { ReactNode, useEffect } from 'react'
 
-import { useAtomValue } from 'jotai'
 import { useRouter } from 'next-nprogress-bar'
 
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 
 export interface AuthenticatedOnlyProps {
   /**
@@ -23,7 +22,7 @@ export interface AuthenticatedOnlyProps {
 
 const AuthenticatedOnly = ({ replaceUrl, children }: AuthenticatedOnlyProps) => {
   const router = useRouter()
-  const user = useAtomValue(userAtom)
+  const { user } = useAuth()
 
   useEffect(() => {
     if (!user) {

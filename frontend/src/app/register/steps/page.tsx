@@ -3,7 +3,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { ArrowRightFromLineIcon, PlusIcon } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 
@@ -25,13 +24,13 @@ import UserCharacterNameForm from '@/features/user/UserCharacterNameForm'
 import useCustomForm from '@/hooks/useCustomForm'
 import { supabase } from '@/lib/supabase'
 import { userProfileFormSchema } from '@/schemas/user'
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 import { showAxiosErrorToast } from '@/utils/api'
 
 type SetStep = Dispatch<SetStateAction<1 | 2 | 3>>
 
 const RegisterNamePage = ({ setStep }: { setStep: SetStep }) => {
-  const [user, setUser] = useAtom(userAtom)
+  const { user, setUser } = useAuth()
 
   const form = useCustomForm({
     resolver: zodResolver(userProfileFormSchema),
@@ -99,7 +98,7 @@ const RegisterNamePage = ({ setStep }: { setStep: SetStep }) => {
 }
 
 const RegisterCharacterPage = ({ setStep }: { setStep: SetStep }) => {
-  const [user, setUser] = useAtom(userAtom)
+  const { user, setUser } = useAuth()
 
   return (
     <>
@@ -186,7 +185,7 @@ const STEP_COMPONENTS = [RegisterNamePage, RegisterCharacterPage, RegisterSquadP
 
 const RegisterSteps = () => {
   const router = useRouter()
-  const user = useAtomValue(userAtom)
+  const { user } = useAuth()
   const [step, setStep] = useState<1 | 2 | 3>(
     user ? (user.profile?.nickname ? (user.profile?.main_character_name ? 3 : 2) : 1) : 1,
   )

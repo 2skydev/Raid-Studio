@@ -1,12 +1,10 @@
 import { ComponentProps, ReactNode, useEffect } from 'react'
 
-import { useAtomValue } from 'jotai'
-
 import { Dialog } from '@/components/Dialog'
 import DiscordIcon from '@/components/DiscordIcon'
 import { ToastOptions, useToast } from '@/components/Toast/useToast'
 
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 
 export interface AuthenticatedOnlyDialogProps extends ComponentProps<typeof Dialog> {
   errorToastOptions?: ToastOptions
@@ -21,7 +19,7 @@ const AuthenticatedOnlyDialog = ({
   ...props
 }: AuthenticatedOnlyDialogProps) => {
   const { toast } = useToast()
-  const user = useAtomValue(userAtom)
+  const { user } = useAuth()
 
   const internalOpen = Boolean(user && open)
 

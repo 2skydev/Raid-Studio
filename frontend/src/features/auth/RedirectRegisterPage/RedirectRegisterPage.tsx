@@ -2,11 +2,10 @@
 
 import { ReactNode, useEffect } from 'react'
 
-import { useAtomValue } from 'jotai'
 import { useRouter } from 'next-nprogress-bar'
 import { usePathname } from 'next/navigation'
 
-import { userAtom } from '@/stores/userAtom'
+import { useAuth } from '@/stores/userAtom'
 
 export interface RedirectRegisterPageProps {
   children?: ReactNode
@@ -15,7 +14,7 @@ export interface RedirectRegisterPageProps {
 const RedirectRegisterPage = ({ children }: RedirectRegisterPageProps) => {
   const router = useRouter()
   const pathname = usePathname()
-  const user = useAtomValue(userAtom)
+  const { user } = useAuth()
 
   useEffect(() => {
     if (
