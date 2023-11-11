@@ -74,7 +74,7 @@ INSERT INTO
   ) (
     select
       id,
-      format('https://raw.githubusercontent.com/2skydev/assets/main/discord-default-profiles/%s.png', ((ROW_NUMBER() OVER () - 1) % 5 + 1)::text),
+      format('https://raw.githubusercontent.com/2skydev/assets/main/lostark-default-profiles/%s.jpg', (ROW_NUMBER() OVER ())::text),
       'user' || (ROW_NUMBER() OVER ()),
       '풍선알바'
     from
@@ -89,10 +89,10 @@ INSERT INTO
   )
   VALUES
     (
-      '테스트 공격대 8', 'wzNF0YAHW-t9s73hCstQ2'
+      '테스트용 8인 공격대', 'wzNF0YAHW-t9s73hCstQ2'
     ),
     (
-      '테스트 공격대 10', 'vxA1CwSTZuWKbf0PqmJYd'
+      '테스트용 10인 공격대', 'vxA1CwSTZuWKbf0PqmJYd'
     );
 
 -- 테스트용 공격대 유저 생성
