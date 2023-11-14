@@ -18,19 +18,19 @@ RAID STUDIO의 주 목적은 로스트아크의 레이드 클리어 현황을 �
 <img src="https://github.com/2skydev/Raid-Studio/assets/43225384/a306bd79-1b16-49a9-a472-5602bfeb7ce5" width="50px" height="50px">
 <img src="https://github.com/2skydev/Raid-Studio/assets/43225384/5fc8dd76-d743-4ebb-84a4-20e2c0aabfdc" width="50px" height="50px">
 
+[![Made with Supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
+
+- [supabase](https://supabase.com) / backend platform (auth, db, api, edge functions, storage ...)
+- discord-oauth
 - vercel
 - nextjs
 - typescript
 - react
 - [panda-css](https://panda-css.com) / css-in-js
+- [shadow-panda](https://shadow-panda.dev) / UI Component, shadcn-ui panda css version
 - [framer-motion](https://www.framer.com/motion) / animation js
 - [swr](https://swr.vercel.app/ko) / api state manager
-- axios
-- [next-auth](https://next-auth.js.org) / nextjs auth
-- discord-oauth
-- mongodb
 - [react-hook-form](https://react-hook-form.com) / form state manager
-- [shadow-panda](https://shadow-panda.dev) / UI Component, shadcn-ui panda css version
 
 <br />
 
