@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import { useRouter } from 'next-nprogress-bar'
 
@@ -21,8 +21,12 @@ export interface AuthenticatedOnlyProps {
 }
 
 const AuthenticatedOnly = ({ replaceUrl, children }: AuthenticatedOnlyProps) => {
+  const [mounted, setMounted] = useState(false)
+
   const router = useRouter()
   const { user } = useAuth()
+
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     if (!user) {
@@ -34,7 +38,7 @@ const AuthenticatedOnly = ({ replaceUrl, children }: AuthenticatedOnlyProps) => 
     }
   }, [])
 
-  if (!user) return null
+  if (!mounted || !user) return null
 
   return children
 }

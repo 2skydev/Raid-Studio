@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { GithubIcon } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,13 +11,16 @@ import Button from '@/components/Button'
 import CommandMenu from '@/components/CommandMenu'
 import HeaderNavigationMenu from '@/components/HeaderNavigationMenu'
 
-import MySquadSelect from '@/features/squad/MySquadSelect'
 import ThemeToggleButton from '@/features/theme/ThemeToggleButton'
-import CurrentUserProfileDropdownMenu from '@/features/user/CurrentUserProfileDropdownMenu'
 
 import logoImage from '@/assets/images/logo.png'
 
 import * as Styled from './Header.styled'
+
+const CurrentUserProfileDropdownMenu = dynamic(
+  () => import('@/features/user/CurrentUserProfileDropdownMenu'),
+  { ssr: false },
+)
 
 export interface HeaderProps {
   className?: string
@@ -42,13 +46,11 @@ const Header = ({ className }: HeaderProps) => {
             </Flex>
           </Link>
 
-          <MySquadSelect />
-
-          <CurrentUserProfileDropdownMenu />
+          <HeaderNavigationMenu />
         </Flex>
 
         <Flex gap="1" alignItems="center">
-          <HeaderNavigationMenu />
+          <CurrentUserProfileDropdownMenu />
 
           <CommandMenu />
 

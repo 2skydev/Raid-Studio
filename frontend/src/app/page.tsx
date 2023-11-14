@@ -1,5 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 import clsx from 'clsx'
 import Link from 'next/link'
 
@@ -17,7 +19,11 @@ import PageContentMotion from '@/features/motion/PageContentMotion'
 import useAuth from '@/hooks/useAuth'
 
 const Home = () => {
+  const [mounted, setMounted] = useState(false)
+
   const { user } = useAuth()
+
+  useEffect(() => setMounted(true), [])
 
   return (
     <PageContentMotion>
@@ -33,7 +39,7 @@ const Home = () => {
 
         <br />
 
-        {user ? (
+        {mounted && user ? (
           <Button asChild>
             <Link href="/studio/my/characters">Studio로 이동</Link>
           </Button>
