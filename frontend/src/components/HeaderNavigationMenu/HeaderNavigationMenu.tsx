@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react'
 
 import { ChevronDown } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { css, cx } from '@styled-system/css'
@@ -16,7 +15,7 @@ import {
   NavigationMenuContent,
 } from '@/components/NavigationMenu'
 
-import logoImage from '@/assets/images/logo.png'
+import CharacterClassIcon from '@/features/character/CharacterClassIcon'
 
 const studioSubMenus = [
   {
@@ -51,17 +50,19 @@ const studioSubMenus = [
   },
 ]
 
-export interface HeaderNavigationMenuProps {}
+export interface HeaderNavigationMenuProps {
+  className?: string
+}
 
-const HeaderNavigationMenu = ({}: HeaderNavigationMenuProps) => {
+const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
   return (
-    <NavigationMenu>
+    <NavigationMenu className={className}>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger asChild>
-            <Link href="/" className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}>
+          <NavigationMenuTrigger onClick={e => e.preventDefault()} asChild>
+            <div>
               RAID STUDIO 소개 <ChevronDown aria-hidden="true" />
-            </Link>
+            </div>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
@@ -103,13 +104,7 @@ const HeaderNavigationMenu = ({}: HeaderNavigationMenuProps) => {
                     href="/"
                   >
                     <Flex direction="column" alignItems="flex-start" justifyContent="center">
-                      <Image
-                        className={css({ _light: { filter: 'invert(1)' } })}
-                        src={logoImage}
-                        width={26}
-                        height={26}
-                        alt="logo"
-                      />
+                      <CharacterClassIcon characterClassName="블레이드" width={26} height={26} />
 
                       <div
                         className={css({
@@ -156,13 +151,10 @@ const HeaderNavigationMenu = ({}: HeaderNavigationMenuProps) => {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger asChild>
-            <Link
-              href="/squad/list"
-              className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}
-            >
+          <NavigationMenuTrigger onClick={e => e.preventDefault()} asChild>
+            <div>
               Studio <ChevronDown aria-hidden="true" />
-            </Link>
+            </div>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
@@ -197,7 +189,7 @@ const HeaderNavigationMenu = ({}: HeaderNavigationMenuProps) => {
               href="/squad/list"
               className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}
             >
-              공격대 목록
+              공개된 공격대 목록
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
