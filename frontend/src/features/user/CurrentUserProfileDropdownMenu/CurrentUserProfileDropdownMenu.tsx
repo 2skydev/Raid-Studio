@@ -1,8 +1,9 @@
 'use client'
 
-import { LogOutIcon, UserCircle2Icon, UserCog2Icon } from 'lucide-react'
+import { ChevronDownIcon, CogIcon, LogOutIcon, UserCircle2Icon, UserCog2Icon } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 
+import { css } from '@styled-system/css'
 import { icon } from '@styled-system/recipes'
 
 import { Avatar, AvatarImage } from '@/components/Avatar'
@@ -29,11 +30,13 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" lineHeight="1">
-          <Avatar w="5" h="5">
+        <Button variant="ghost" size="sm" fontSize="xs">
+          <Avatar w="6" h="6">
             <AvatarImage src={user.profile.photo} alt="profile" />
           </Avatar>
           {user.profile.nickname}
+          {user.profile.main_character_name && ` / ${user.profile.main_character_name}`}
+          <ChevronDownIcon size="1rem" className={css({ color: 'muted.foreground' })} />
         </Button>
       </DropdownMenuTrigger>
 

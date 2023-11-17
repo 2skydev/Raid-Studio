@@ -23,7 +23,7 @@ const CharacterCardListWithUser = ({
   const { characters: _characters, weekGold } = useCharactersDetail(characters)
 
   return (
-    <div className={css({ mt: '8' })}>
+    <div className={css({ w: 'calc(19rem * 2 + token(sizes.4))' })}>
       <div className={css({ display: 'flex', alignItems: 'center', mb: '4' })}>
         <div className={css({ display: 'flex', alignItems: 'center', gap: '2', mr: '4' })}>
           <Avatar w="8" h="8">
@@ -36,14 +36,34 @@ const CharacterCardListWithUser = ({
       </div>
 
       <div className={css({ display: 'flex', flexWrap: 'wrap', gap: '4' })}>
-        {_characters.map(item => {
+        {_characters.slice(0, 7).map(item => {
           return (
             <CharacterCard
               key={item.name}
               name={item.name}
               level={item.level}
               characterClassName={item.class as CharacterClassName}
-            />
+            >
+              <div
+                className={css({
+                  pos: 'absolute',
+                  bottom: '0px',
+                  left: '0px',
+                  w: 'full',
+                  h: '3px',
+                })}
+              >
+                <div
+                  className={css({
+                    width: '33%',
+                    h: 'full',
+                    bg: 'teal.500',
+                    // boxShadow: '0 0 5px rgb(21, 128, 61)',
+                    roundedBottom: '5px',
+                  })}
+                ></div>
+              </div>
+            </CharacterCard>
           )
         })}
       </div>

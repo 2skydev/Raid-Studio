@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { toast } from '@/components/Toast/useToast'
+
 import { supabase } from '@/lib/supabase'
 import { LostArkCharacter, lostArkCharacterSchema } from '@/schemas/character'
 import { Tables } from '@/types/database.types'
@@ -61,6 +63,11 @@ export const reloadCharacters = async (userId: string) => {
   const characters = await getLostArkCharacters(characterName)
 
   await updateAndMergeCharacters(userId, characters)
+
+  toast({
+    status: 'success',
+    title: '내 캐릭터들 정보를 업데이트 했습니다.',
+  })
 
   return true
 }
