@@ -14,14 +14,24 @@ const { withProvider, withContext } = createStyleContext(select)
 const Trigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ children, ...props }, ref) => (
-  <SelectPrimitive.Trigger ref={ref} {...props}>
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronDown className={icon({ dimmed: true })} />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
+>(({ children, ...props }, ref) => {
+  if (props.asChild) {
+    return (
+      <SelectPrimitive.Trigger ref={ref} {...props}>
+        {children}
+      </SelectPrimitive.Trigger>
+    )
+  }
+
+  return (
+    <SelectPrimitive.Trigger ref={ref} {...props}>
+      {children}
+      <SelectPrimitive.Icon asChild>
+        <ChevronDown className={icon({ dimmed: true })} />
+      </SelectPrimitive.Icon>
+    </SelectPrimitive.Trigger>
+  )
+})
 Trigger.displayName = SelectPrimitive.Trigger.displayName
 
 const Viewport = withContext(SelectPrimitive.Viewport, 'viewport')
@@ -45,11 +55,11 @@ const Item = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ children, ...props }, ref) => (
   <SelectPrimitive.Item ref={ref} {...props}>
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+
     <ItemIndicator>
       <Check className={icon()} />
     </ItemIndicator>
-
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ))
 Item.displayName = SelectPrimitive.Item.displayName
