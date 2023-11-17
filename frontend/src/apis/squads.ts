@@ -32,13 +32,7 @@ export const getPublicSquads = async () => {
   }))
 }
 
-export const getCurrentUserSquads = async () => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  if (!session) throw '로그인이 필요합니다.'
-
+export const getSquadNames = async (userId: string) => {
   const { data } = await supabase
     .from('profiles')
     .select(
@@ -49,7 +43,7 @@ export const getCurrentUserSquads = async () => {
         )
       `,
     )
-    .eq('id', session.user.id)
+    .eq('id', userId)
     .single()
 
   return data?.squads || null
