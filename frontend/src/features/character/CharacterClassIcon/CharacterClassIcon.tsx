@@ -2,31 +2,33 @@ import { ComponentProps } from 'react'
 
 import Image from 'next/image'
 
-import arcana_image from '@/assets/images/class/emblem_arcana.png'
-import bard_image from '@/assets/images/class/emblem_bard.png'
-import battle_master_image from '@/assets/images/class/emblem_battle_master.png'
-import battle_master_male_image from '@/assets/images/class/emblem_battle_master_male.png'
-import berserker_image from '@/assets/images/class/emblem_berserker.png'
-import berserker_female_image from '@/assets/images/class/emblem_berserker_female.png'
-import blade_image from '@/assets/images/class/emblem_blade.png'
-import blaster_image from '@/assets/images/class/emblem_blaster.png'
-import demonic_image from '@/assets/images/class/emblem_demonic.png'
-import destroyer_image from '@/assets/images/class/emblem_destroyer.png'
-import devil_hunter_image from '@/assets/images/class/emblem_devil_hunter.png'
-import devil_hunter_female_image from '@/assets/images/class/emblem_devil_hunter_female.png'
-import elemental_master_image from '@/assets/images/class/emblem_elemental_master.png'
-import force_master_image from '@/assets/images/class/emblem_force_master.png'
-import hawk_eye_image from '@/assets/images/class/emblem_hawk_eye.png'
-import holyknight_image from '@/assets/images/class/emblem_holyknight.png'
-import infighter_image from '@/assets/images/class/emblem_infighter.png'
-import lance_master_image from '@/assets/images/class/emblem_lance_master.png'
-import reaper_image from '@/assets/images/class/emblem_reaper.png'
-import scouter_image from '@/assets/images/class/emblem_scouter.png'
-import soul_eater_image from '@/assets/images/class/emblem_soul_eater.png'
-import summoner_image from '@/assets/images/class/emblem_summoner.png'
-import warlord_image from '@/assets/images/class/emblem_warlord.png'
-import weather_artist_image from '@/assets/images/class/emblem_weather_artist.png'
-import yinyangshi_image from '@/assets/images/class/emblem_yinyangshi.png'
+import { css } from '@styled-system/css'
+
+import arcana_image from '@/assets/images/class/emblem_arcana.svg'
+import bard_image from '@/assets/images/class/emblem_bard.svg'
+import battle_master_image from '@/assets/images/class/emblem_battle_master.svg'
+import battle_master_male_image from '@/assets/images/class/emblem_battle_master_male.svg'
+import berserker_image from '@/assets/images/class/emblem_berserker.svg'
+import berserker_female_image from '@/assets/images/class/emblem_berserker_female.svg'
+import blade_image from '@/assets/images/class/emblem_blade.svg'
+import blaster_image from '@/assets/images/class/emblem_blaster.svg'
+import demonic_image from '@/assets/images/class/emblem_demonic.svg'
+import destroyer_image from '@/assets/images/class/emblem_destroyer.svg'
+import devil_hunter_image from '@/assets/images/class/emblem_devil_hunter.svg'
+import devil_hunter_female_image from '@/assets/images/class/emblem_devil_hunter_female.svg'
+import elemental_master_image from '@/assets/images/class/emblem_elemental_master.svg'
+import force_master_image from '@/assets/images/class/emblem_force_master.svg'
+import hawk_eye_image from '@/assets/images/class/emblem_hawk_eye.svg'
+import holyknight_image from '@/assets/images/class/emblem_holyknight.svg'
+import infighter_image from '@/assets/images/class/emblem_infighter.svg'
+import lance_master_image from '@/assets/images/class/emblem_lance_master.svg'
+import reaper_image from '@/assets/images/class/emblem_reaper.svg'
+import scouter_image from '@/assets/images/class/emblem_scouter.svg'
+import soul_eater_image from '@/assets/images/class/emblem_soul_eater.svg'
+import summoner_image from '@/assets/images/class/emblem_summoner.svg'
+import warlord_image from '@/assets/images/class/emblem_warlord.svg'
+import weather_artist_image from '@/assets/images/class/emblem_weather_artist.svg'
+import yinyangshi_image from '@/assets/images/class/emblem_yinyangshi.svg'
 import { CharacterClassName } from '@/types/character'
 
 const IMAGE_MAP = {
@@ -68,6 +70,7 @@ const CharacterClassIcon = ({ characterClassName, ...props }: CharacterClassIcon
       alt={characterClassName}
       width={32}
       height={32}
+      className={css({ _dark: { filter: 'invert(1)' } })}
       {...props}
     />
   )
