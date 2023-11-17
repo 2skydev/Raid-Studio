@@ -60,7 +60,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger onClick={e => e.preventDefault()} asChild>
-            <div>
+            <div className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}>
               RAID STUDIO 소개 <ChevronDown aria-hidden="true" />
             </div>
           </NavigationMenuTrigger>
@@ -152,7 +152,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
 
         <NavigationMenuItem>
           <NavigationMenuTrigger onClick={e => e.preventDefault()} asChild>
-            <div>
+            <div className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}>
               Studio <ChevronDown aria-hidden="true" />
             </div>
           </NavigationMenuTrigger>
