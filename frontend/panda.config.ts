@@ -23,6 +23,13 @@ export default defineConfig({
         },
       },
       semanticTokens: {
+        colors: {
+          background: {
+            value: {
+              _light: '{colors.grayscale.50}',
+            },
+          },
+        },
         sizes: {
           headerHeight: {
             value: '{sizes.14}',

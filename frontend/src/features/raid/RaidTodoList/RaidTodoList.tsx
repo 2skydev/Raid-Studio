@@ -94,7 +94,7 @@ const RaidTodoList = ({ clears, fixedRaidIds, onClear }: RaidTodoListProps) => {
   return (
     <div>
       <div className={css({ spaceY: '2' })}>
-        {raids.map(raid => {
+        {raids.slice(0, 3).map(raid => {
           const clearData = clearsMap.get(raid.id)
           const clearSteps = clearData?.map(clear => clear.step) ?? []
           const lastClearStep = Math.max(-1, ...clearSteps)

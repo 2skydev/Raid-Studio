@@ -19,7 +19,7 @@ const progressBarStyleString = `
 }
 
 #nprogress .bar {
-  background: ${token('colors.foreground')};
+  background: ${token('colors.zinc.600')};
 
   position: fixed;
   z-index: ${token('zIndex.pageProgressBar')};

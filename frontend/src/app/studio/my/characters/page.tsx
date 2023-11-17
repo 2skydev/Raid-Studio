@@ -107,7 +107,15 @@ const StudioCharactersPage = () => {
 
           {!isLoading && (
             <>
-              <Badge>주간 골드: {weekGold.toLocaleString()}골드</Badge>
+              <Badge
+                className={css({
+                  '&:hover': {
+                    backgroundColor: 'primary',
+                  },
+                })}
+              >
+                주간 골드: {weekGold.toLocaleString()}골드
+              </Badge>
             </>
           )}
         </div>

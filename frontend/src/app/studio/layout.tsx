@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation'
 
 import { css } from '@styled-system/css'
-import { styled } from '@styled-system/jsx'
 
 import { ScrollArea } from '@/components/ScrollArea'
 import Sidebar from '@/components/Sidebar'
@@ -17,7 +16,13 @@ const StudioLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthenticatedOnly>
-      <styled.div px="4">
+      <div
+        className={css({
+          m: '0 auto',
+          maxW: '1920px',
+          px: '4',
+        })}
+      >
         <SidebarMotion
           className={css({
             w: '280px',
@@ -51,7 +56,7 @@ const StudioLayout = ({ children }: { children: React.ReactNode }) => {
         >
           {children}
         </PageContentMotion>
-      </styled.div>
+      </div>
     </AuthenticatedOnly>
   )
 }
