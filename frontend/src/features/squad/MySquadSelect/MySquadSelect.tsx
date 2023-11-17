@@ -1,57 +1,52 @@
 'use client'
 
-import { useEffect } from 'react'
-
 import { useAtom } from 'jotai'
-import useSWR from 'swr'
+import { ChevronsUpDownIcon } from 'lucide-react'
 
+import { css } from '@styled-system/css'
+
+import Button from '@/components/Button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Select'
-import Skeleton from '@/components/Skeleton'
 
-import { RaidStudioAPI } from '@/apis'
+import useAuth from '@/hooks/useAuth'
 import { selectedSquadIdAtom } from '@/stores/selectedSquadIdAtom'
 
 export interface MySquadSelectProps {}
 
 const MySquadSelect = ({}: MySquadSelectProps) => {
-  const { data: mySquads, isLoading } = useSWR(
-    'my_squads',
-    RaidStudioAPI.squads.getCurrentUserSquads,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
-
+  const { user } = useAuth()
   const [selectedSquadId, setSelectedSquadId] = useAtom(selectedSquadIdAtom)
-
-  useEffect(() => {
-    if (mySquads?.length && selectedSquadId === null) {
-      setSelectedSquadId(mySquads[0].id)
-    }
-  }, [selectedSquadId, mySquads])
-
-  if (isLoading) {
-    return <Skeleton w="180px" h="10" />
-  }
 
   return (
     <Select
       value={selectedSquadId === null ? 'none' : String(selectedSquadId)}
       onValueChange={value => setSelectedSquadId(+value)}
     >
-      <SelectTrigger focusRingColor="transparent" w="180px" h="10">
-        <SelectValue placeholder="참여된 공격대 없음" />
+      <SelectTrigger asChild>
+        <Button
+          focusRingColor="transparent"
+          variant="ghost"
+          w="auto"
+          h="auto"
+          fontSize="xs"
+          border="none"
+          px="3"
+          py="1.5"
+          leading="1"
+        >
+          <SelectValue placeholder="참여된 공격대 없음" />
+          <ChevronsUpDownIcon size="1rem" className={css({ color: 'muted.foreground' })} />
+        </Button>
       </SelectTrigger>
 
       <SelectContent>
-        {!mySquads?.length && (
+        {!user?.squadNames?.length && (
           <SelectItem value="none" disabled>
             참여된 공격대 없음
           </SelectItem>
         )}
 
-        {mySquads?.map(squad => (
+        {user?.squadNames?.map(squad => (
           <SelectItem key={squad.id} value={String(squad.id)}>
             {squad.name}
           </SelectItem>
