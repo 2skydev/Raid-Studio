@@ -22,10 +22,18 @@ const StudioCharactersPage = () => {
     <div>
       <h1 className={css({ fontSize: '2xl', fontWeight: 'bold' })}>공격대 모든 캐릭터</h1>
       <p className={css({ color: 'muted.foreground' })}>
-        내 프로필, 대표 캐릭터, 팀 등을 설정할 수 있습니다
+        엔드 콘텐츠 골드 획득 횟수를 빠르게 확인할 수 있습니다
       </p>
 
-      <div className={css({ mt: '6' })}>
+      <div
+        className={css({
+          mt: '6',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, calc(token(sizes.72) * 2 + token(sizes.4)))',
+          columnGap: '24',
+          rowGap: '16',
+        })}
+      >
         {isLoading && <div>로딩중...</div>}
 
         {data?.map(item => (

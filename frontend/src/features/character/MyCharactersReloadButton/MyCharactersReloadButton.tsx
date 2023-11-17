@@ -1,4 +1,8 @@
+import { useState } from 'react'
+
 import { RefreshCwIcon } from 'lucide-react'
+
+import { css } from '@styled-system/css'
 
 import Button, { ButtonProps } from '@/components/Button'
 
@@ -8,20 +12,27 @@ import useAuth from '@/hooks/useAuth'
 export interface MyCharactersReloadButtonProps extends ButtonProps {}
 
 const MyCharactersReloadButton = ({ children, ...props }: MyCharactersReloadButtonProps) => {
+  const [loading, setLoading] = useState(false)
+
   const { user } = useAuth()
 
   const reloadMyCharacters = async () => {
     try {
       if (!user) return
+      setLoading(true)
       await RaidStudioAPI.characters.reloadCharacters(user.id)
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <Button onClick={reloadMyCharacters} useOnClickLoading {...props}>
+    <Button onClick={reloadMyCharacters} {...props}>
       {children ?? (
         <>
-          <RefreshCwIcon size="1rem" />내 캐릭터들 정보 갱신
+          <RefreshCwIcon className={css({ animation: loading ? 'spin' : '' })} size="1rem" />내
+          캐릭터들 정보 갱신
         </>
       )}
     </Button>
