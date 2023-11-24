@@ -22,6 +22,7 @@
     },
     // supabase/functions deno settings
     "deno.importMap": "./supabase/functions/import_map.json",
-    "deno.config": "./supabase/functions/deno.json"
+    "deno.config": "./supabase/functions/deno.json",
+    "typescript.tsdk": "nextjs\\node_modules\\typescript\\lib"
   }
 }
