@@ -80,6 +80,11 @@ const SquadListPage = () => {
 
       <div className={css({ mt: '8' })}>
         <div className={css({ spaceY: '4' })}>
+          {!isValidating && !loading && squads && squads.length === 0 && (
+            <div className={css({ textAlign: 'center' })}>
+              <p className={css({ p: '10', color: 'muted.foreground' })}>검색 결과가 없습니다.</p>
+            </div>
+          )}
           {!isValidating &&
             !loading &&
             squads &&
