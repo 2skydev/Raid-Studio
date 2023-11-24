@@ -49,6 +49,21 @@ export const updateAndMergeCharacters = async (
 
     throw error
   }
+
+  const { error: deleteError } = await supabase
+    .from('characters')
+    .delete()
+    .not('name', 'in', `(${characters.map(({ name }) => name).join(',')})`)
+
+  if (deleteError) {
+    showErrorToast(deleteError, {
+      title: '캐릭터 정보 업데이트 오류',
+    })
+
+    throw deleteError
+  }
+
+  return true
 }
 
 export const reloadCharacters = async (userId: string) => {
@@ -81,6 +96,28 @@ export const getCharacters = async (userId: string) => {
         level,
         class,
         server
+      `,
+    )
+    .eq('user_id', userId)
+
+  return data
+}
+
+export const getCharactersWithDetailData = async (userId: string) => {
+  const { data } = await supabase
+    .from('characters')
+    .select(
+      `
+        name,
+        level,
+        class,
+        server,
+        clears (
+          raid_name,
+          raid_difficulty,
+          raid_step,
+          cleared_at
+        )
       `,
     )
     .eq('user_id', userId)

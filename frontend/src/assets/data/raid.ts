@@ -1,3 +1,5 @@
+import { groupBy } from 'lodash'
+
 import { Raid } from '@/types/raid'
 
 /**
@@ -408,6 +410,18 @@ export const RAIDS: Record<string, Raid> = {
     ],
   },
 }
+
+export const RAIDS_ARRAY_GROUP_BY_NAME = Object.values(groupBy(RAIDS, 'name'))
+  .map(x => {
+    return {
+      name: x[0].name,
+      minLevel: x[0].minLevel,
+      raids: x,
+    }
+  })
+  .sort((a, b) => {
+    return b.minLevel - a.minLevel
+  })
 
 export const RAIDS_ARRAY_ORDER_BY_GOLD_DESC = Object.values(RAIDS).sort((a, b) => {
   const aGold = a.steps.reduce((acc, cur) => acc + cur.gold, 0)

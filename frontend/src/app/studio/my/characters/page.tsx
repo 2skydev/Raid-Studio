@@ -18,9 +18,9 @@ import { CharacterClassName } from '@/types/character'
 const StudioCharactersPage = () => {
   const { user } = useAuth<true>()
 
-  const { data, isLoading, mutate } = useSWR(
+  const { data, isLoading } = useSWR(
     'my_characters',
-    async () => await RaidStudioAPI.characters.getCharacters(user.id),
+    async () => await RaidStudioAPI.characters.getCharactersWithDetailData(user.id),
   )
 
   const { characters, weekGold } = useCharactersDetail(

@@ -157,9 +157,10 @@ BaseFormMessage.displayName = 'FormMessage'
 export interface FormHeaderProps extends HTMLStyledProps<typeof styled.div> {
   title: string
   description?: string
+  divider?: boolean
 }
 
-export const FormHeader = ({ title, description }: FormHeaderProps) => {
+export const FormHeader = ({ title, description, divider = true }: FormHeaderProps) => {
   return (
     <div className="FormHeader">
       <h3
@@ -182,7 +183,7 @@ export const FormHeader = ({ title, description }: FormHeaderProps) => {
         </p>
       )}
 
-      <Divider my="6" borderColor="border" />
+      {divider && <Divider my="6" borderColor="border" />}
     </div>
   )
 }
