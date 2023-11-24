@@ -1,9 +1,14 @@
+import { ChevronDownIcon } from 'lucide-react'
+
 import { css } from '@styled-system/css'
+import { Flex } from '@styled-system/jsx'
 
 import { Avatar, AvatarImage } from '@/components/Avatar'
 import { Badge } from '@/components/Badge'
+import Button from '@/components/Button'
 
 import CharacterCard from '@/features/character/CharacterCard'
+import CharacterProfile from '@/features/character/CharacterProfile'
 import useCharactersDetail from '@/features/character/hooks/useCharactersDetail'
 
 import { Character } from '@/schemas/character'
@@ -36,14 +41,33 @@ const CharacterCardListWithUser = ({
       </div>
 
       <div className={css({ display: 'flex', flexWrap: 'wrap', gap: '4' })}>
-        {_characters.slice(0, 7).map(item => {
+        {_characters.slice(0, 6).map(item => {
           return (
-            <CharacterCard
-              key={item.name}
-              name={item.name}
-              level={item.level}
-              characterClassName={item.class as CharacterClassName}
-            >
+            <CharacterCard key={item.name}>
+              <Flex alignItems="center" justifyContent="space-between">
+                <CharacterProfile
+                  name={item.name}
+                  level={item.level}
+                  characterClassName={item.class as CharacterClassName}
+                />
+
+                <Flex alignItems="center" gap="2">
+                  <div
+                    className={css({
+                      whiteSpace: 'nowrap',
+                      color: 'muted.foreground',
+                      fontSize: 'xs',
+                    })}
+                  >
+                    1 / 3
+                  </div>
+
+                  <Button w="8" h="8" p="0" variant="ghost">
+                    <ChevronDownIcon size="1rem" />
+                  </Button>
+                </Flex>
+              </Flex>
+
               <div
                 className={css({
                   pos: 'absolute',
@@ -58,7 +82,7 @@ const CharacterCardListWithUser = ({
                     width: '33%',
                     h: 'full',
                     bg: 'teal.500',
-                    // boxShadow: '0 0 5px rgb(21, 128, 61)',
+                    boxShadow: '0 0 5px token(colors.teal.500)',
                     roundedBottom: '5px',
                   })}
                 ></div>

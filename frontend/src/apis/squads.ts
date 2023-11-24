@@ -125,7 +125,7 @@ export const getSquadUsersWithCharacters = async (squadId: number) => {
             nickname,
             photo,
             main_character_name,
-            characters (
+            characters: characters!characters_user_id_fkey (
               name,
               class,
               level,

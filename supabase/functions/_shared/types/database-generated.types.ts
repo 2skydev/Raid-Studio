@@ -63,7 +63,50 @@ export interface Database {
           {
             foreignKeyName: "characters_user_id_fkey"
             columns: ["user_id"]
-            referencedRelation: "users"
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      clears: {
+        Row: {
+          character_id: string
+          cleared_at: string
+          id: string
+          raid_difficulty: string
+          raid_name: string
+          raid_step: number
+          user_id: string
+        }
+        Insert: {
+          character_id: string
+          cleared_at?: string
+          id?: string
+          raid_difficulty: string
+          raid_name: string
+          raid_step: number
+          user_id: string
+        }
+        Update: {
+          character_id?: string
+          cleared_at?: string
+          id?: string
+          raid_difficulty?: string
+          raid_name?: string
+          raid_step?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clears_character_id_fkey"
+            columns: ["character_id"]
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "clears_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           }
         ]
@@ -182,7 +225,10 @@ export interface Database {
       }
     }
     Functions: {
-      [_ in never]: never
+      is_test_user: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
     }
     Enums: {
       squad_role: "owner" | "normal"

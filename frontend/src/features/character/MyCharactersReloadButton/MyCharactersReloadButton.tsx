@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { RefreshCwIcon } from 'lucide-react'
+import { useSWRConfig } from 'swr'
 
 import { css } from '@styled-system/css'
 
@@ -12,6 +13,7 @@ import useAuth from '@/hooks/useAuth'
 export interface MyCharactersReloadButtonProps extends ButtonProps {}
 
 const MyCharactersReloadButton = ({ children, ...props }: MyCharactersReloadButtonProps) => {
+  const { mutate } = useSWRConfig()
   const [loading, setLoading] = useState(false)
 
   const { user } = useAuth()
@@ -21,6 +23,7 @@ const MyCharactersReloadButton = ({ children, ...props }: MyCharactersReloadButt
       if (!user) return
       setLoading(true)
       await RaidStudioAPI.characters.reloadCharacters(user.id)
+      mutate('my_characters')
     } catch (error) {
     } finally {
       setLoading(false)

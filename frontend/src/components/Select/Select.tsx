@@ -48,7 +48,15 @@ const Content = React.forwardRef<
 ))
 Content.displayName = SelectPrimitive.Content.displayName
 
-const ItemIndicator = withContext(styled(SelectPrimitive.ItemIndicator), 'itemIndicator')
+const ItemIndicator = withContext(
+  styled(SelectPrimitive.ItemIndicator, {
+    base: {
+      left: 'initial',
+      right: '2',
+    },
+  }),
+  'itemIndicator',
+)
 
 const Item = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
@@ -70,5 +78,13 @@ export const SelectValue = withContext(styled(SelectPrimitive.Value), 'value')
 export const SelectTrigger = withContext(styled(Trigger), 'trigger')
 export const SelectContent = withContext(styled(Content), 'content')
 export const SelectLabel = withContext(styled(SelectPrimitive.Label), 'label')
-export const SelectItem = withContext(styled(Item), 'item')
+export const SelectItem = withContext(
+  styled(Item, {
+    base: {
+      pl: '2',
+      pr: '8',
+    },
+  }),
+  'item',
+)
 export const SelectSeparator = withContext(styled(SelectPrimitive.Separator), 'separator')
