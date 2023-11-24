@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
+import { debounce } from 'lodash'
 import { SwordsIcon, LogInIcon, PlusIcon } from 'lucide-react'
 import useSWR from 'swr'
 
@@ -30,16 +31,33 @@ import { RaidStudioAPI } from '@/apis'
 const SquadListPage = () => {
   const [openCreateSquadDialog, setOpenCreateSquadDialog] = useState(false)
   const [openJoinSquadDialog, setOpenJoinSquadDialog] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [search, setSearch] = useState('')
 
-  const { data: squads, isValidating } = useSWR(
-    'public_squads',
-    RaidStudioAPI.squads.getPublicSquads,
+  const { data: squads, isValidating } = useSWR(['public_squads', search], ([, keyword]) => {
+    return RaidStudioAPI.squads.getPublicSquads(keyword)
+  })
+
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setSearch(value)
+        setLoading(false)
+      }, 500),
+    [],
   )
 
   return (
     <div>
       <Flex justifyContent="space-between" alignItems="center">
-        <Input w="64" placeholder="공격대 이름으로 검색..." />
+        <Input
+          onChange={e => {
+            setLoading(true)
+            debouncedSearch(e.target.value)
+          }}
+          w="64"
+          placeholder="공격대 이름으로 검색..."
+        />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -63,6 +81,7 @@ const SquadListPage = () => {
       <div className={css({ mt: '8' })}>
         <div className={css({ spaceY: '4' })}>
           {!isValidating &&
+            !loading &&
             squads &&
             squads.map(item => (
               <div
@@ -79,7 +98,11 @@ const SquadListPage = () => {
                 })}
               >
                 <Flex gap="6" alignItems="center">
-                  <div>
+                  <div
+                    className={css({
+                      w: '16rem',
+                    })}
+                  >
                     <h3>{item.name}</h3>
                     <p className={muted()}>
                       공대장: {item.owner?.nickname} / {item.owner?.main_character_name}
@@ -133,7 +156,7 @@ const SquadListPage = () => {
                 </Tooltip>
               </div>
             ))}
-          {isValidating && (
+          {(isValidating || loading) && (
             <>
               <Skeleton w="full" h="20" />
               <Skeleton w="full" h="20" />

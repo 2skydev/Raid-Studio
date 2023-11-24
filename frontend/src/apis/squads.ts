@@ -3,7 +3,7 @@ import { SquadUser } from '@/types/squads.types'
 import { NonNullableDeep } from '@/types/util.types'
 import { showErrorToast } from '@/utils/error'
 
-export const getPublicSquads = async () => {
+export const getPublicSquads = async (keyword: string) => {
   const { data } = await supabase
     .from('squads_public_view')
     .select(
@@ -21,6 +21,7 @@ export const getPublicSquads = async () => {
       userCount: squad_users (count)
     `,
     )
+    .like('name', `%${keyword}%`)
     .limit(5, { foreignTable: 'users' })
     .order('role', { foreignTable: 'users' })
 
