@@ -11,9 +11,31 @@ const Value = ({ ...props }: ComponentPropsWithoutRef<typeof SelectValue>) => {
 
   return (
     <SelectValue asChild {...props}>
-      <div className={css({ spaceX: '1' })}>
+      <div
+        className={css({
+          spaceX: '1',
+          mb: '-1',
+          display: 'flex',
+          flexWrap: 'wrap',
+        })}
+      >
+        {selectedValues.length === 0 && (
+          <div
+            className={css({
+              p: '0.5',
+              leading: '1rem',
+              fontSize: '0.75rem',
+              mb: '1',
+              border: 'base',
+              borderColor: 'transparent!',
+              color: 'muted.foreground',
+            })}
+          >
+            선택된 레이드가 없습니다
+          </div>
+        )}
         {selectedValues.map(value => (
-          <Badge variant="secondary" key={value}>
+          <Badge key={value} variant="secondary" whiteSpace="nowrap" mb="1">
             {value}
           </Badge>
         ))}

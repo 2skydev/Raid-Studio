@@ -32,11 +32,18 @@ export interface CharacterConfigDialogProps
 }
 
 const CharacterConfigDialog = ({ characterName, ...props }: CharacterConfigDialogProps) => {
-  const form = useCustomForm({
+  const form = useCustomForm<{
+    selectedRaidNames: string[]
+  }>({
     defaultValues: {
       selectedRaidNames: [],
     },
   })
+
+  const handleChangeSelectedRaidNames = (values: string[]) => {
+    if (values.length > 3) return
+    form.setValue('selectedRaidNames', values)
+  }
 
   return (
     <Dialog {...props}>
@@ -74,17 +81,17 @@ const CharacterConfigDialog = ({ characterName, ...props }: CharacterConfigDialo
                     <FormControl>
                       <SelectMultiple
                         values={field.value}
-                        onValuesChange={values => form.setValue('selectedRaidNames', values)}
+                        onValuesChange={handleChangeSelectedRaidNames}
                       >
-                        <SelectTrigger w="60">
+                        <SelectMultiple.Trigger w="80">
                           <SelectMultiple.Value placeholder="레이드를 선택해주세요" />
-                        </SelectTrigger>
+                        </SelectMultiple.Trigger>
 
                         <SelectMultiple.Content>
                           {RAIDS_ARRAY_GROUP_BY_NAME.map(item => (
-                            <SelectItem key={item.name} value={item.name}>
+                            <SelectMultiple.Item key={item.name} value={item.name}>
                               {item.name}
-                            </SelectItem>
+                            </SelectMultiple.Item>
                           ))}
                         </SelectMultiple.Content>
                       </SelectMultiple>
