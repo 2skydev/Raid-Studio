@@ -113,9 +113,7 @@ export const getCharactersWithDetailData = async (userId: string) => {
         class,
         server,
         clears (
-          raid_name,
-          raid_difficulty,
-          raid_step,
+          raid_id,
           cleared_at
         )
       `,
