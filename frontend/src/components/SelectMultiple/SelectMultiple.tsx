@@ -26,7 +26,7 @@ const SelectMultiple = ({
   const open = props.open ?? _open
   const selectedValues = values ?? _selectedValues
 
-  const handleValueChange = (value: string) => {
+  const handleClickItem = (value: string) => {
     let result = []
 
     if (selectedValues.includes(value)) {
@@ -44,12 +44,13 @@ const SelectMultiple = ({
       value={{
         setOpen,
         selectedValues,
+        handleClickItem,
       }}
     >
       <Select
+        value={'null'}
         open={open}
         onOpenChange={isOpen => isOpen && setOpen(true)}
-        onValueChange={handleValueChange}
         {...props}
       >
         {props.children}

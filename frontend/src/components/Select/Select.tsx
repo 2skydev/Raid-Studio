@@ -88,3 +88,11 @@ export const SelectItem = withContext(
   'item',
 )
 export const SelectSeparator = withContext(styled(SelectPrimitive.Separator), 'separator')
+export const SelectItemPrimitiveWithStyled = withContext(
+  styled(SelectPrimitive.Item, {
+    base: {
+      pl: '2',
+    },
+  }),
+  'item',
+)
