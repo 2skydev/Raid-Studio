@@ -72,28 +72,22 @@ export interface Database {
         Row: {
           character_id: string
           cleared_at: string
-          id: string
-          raid_difficulty: string
-          raid_name: string
-          raid_step: number
+          id: number
+          raid_id: number
           user_id: string
         }
         Insert: {
           character_id: string
           cleared_at?: string
-          id?: string
-          raid_difficulty: string
-          raid_name: string
-          raid_step: number
+          id?: number
+          raid_id: number
           user_id: string
         }
         Update: {
           character_id?: string
           cleared_at?: string
-          id?: string
-          raid_difficulty?: string
-          raid_name?: string
-          raid_step?: number
+          id?: number
+          raid_id?: number
           user_id?: string
         }
         Relationships: [
@@ -101,6 +95,12 @@ export interface Database {
             foreignKeyName: "clears_character_id_fkey"
             columns: ["character_id"]
             referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "clears_raid_id_fkey"
+            columns: ["raid_id"]
+            referencedRelation: "raids"
             referencedColumns: ["id"]
           },
           {
@@ -138,6 +138,36 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      raids: {
+        Row: {
+          difficulty: string
+          gold: number
+          id: number
+          is_biweekly: boolean
+          level: number
+          name: string
+          step: number
+        }
+        Insert: {
+          difficulty: string
+          gold: number
+          id?: number
+          is_biweekly: boolean
+          level: number
+          name: string
+          step: number
+        }
+        Update: {
+          difficulty?: string
+          gold?: number
+          id?: number
+          is_biweekly?: boolean
+          level?: number
+          name?: string
+          step?: number
+        }
+        Relationships: []
       }
       squad_users: {
         Row: {
