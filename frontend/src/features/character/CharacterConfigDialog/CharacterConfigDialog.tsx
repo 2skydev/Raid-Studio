@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react'
 
+import { css } from '@styled-system/css'
 import { Divider } from '@styled-system/jsx'
 
 import {
@@ -19,9 +20,10 @@ import {
   FormDescription,
   FormMessage,
 } from '@/components/Form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Select'
 import SelectMultiple from '@/components/SelectMultiple'
 import VerticalTabsTemplate from '@/components/VerticalTabsTemplate'
+
+import RaidRoot from '@/features/raid/RaidRoot'
 
 import { RAIDS_ARRAY_GROUP_BY_NAME } from '@/assets/data/raid'
 import useCustomForm from '@/hooks/useCustomForm'
@@ -39,6 +41,8 @@ const CharacterConfigDialog = ({ characterName, ...props }: CharacterConfigDialo
       selectedRaidNames: [],
     },
   })
+
+  const selectedRaidNames = form.watch('selectedRaidNames')
 
   const handleChangeSelectedRaidNames = (values: string[]) => {
     if (values.length > 3) return
@@ -101,6 +105,12 @@ const CharacterConfigDialog = ({ characterName, ...props }: CharacterConfigDialo
                   </FormItem>
                 )}
               />
+
+              <div className={css({ spaceY: '4' })}>
+                {selectedRaidNames.map(name => (
+                  <RaidRoot key={name} name={name} />
+                ))}
+              </div>
             </Form>
           </VerticalTabsTemplate.Content>
 
