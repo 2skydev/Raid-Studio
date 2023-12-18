@@ -1,10 +1,10 @@
 import { css } from '@styled-system/css'
 
-import { Raid } from '@/types/raid'
+import { RaidDifficulty } from '@/types/raid.types'
 
 export interface RaidLabelProps {
-  difficulty: Raid['difficulty']
-  name: string
+  difficulty: RaidDifficulty
+  name?: string
 }
 
 const RaidLabel = ({ difficulty, name }: RaidLabelProps) => {
@@ -16,8 +16,8 @@ const RaidLabel = ({ difficulty, name }: RaidLabelProps) => {
         })}
       >
         {difficulty}
-      </span>{' '}
-      {name}
+      </span>
+      {name && ` ${name}`}
     </div>
   )
 }
