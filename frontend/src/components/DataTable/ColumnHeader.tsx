@@ -38,7 +38,7 @@ export function DataTableColumnHeader<TData, TValue>({
             className={css({
               ml: '-3',
               h: '8',
-              '&[data-state="open]': {
+              '&[data-state=open]': {
                 bg: 'accent',
               },
             })}

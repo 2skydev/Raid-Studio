@@ -83,6 +83,7 @@ export const SelectItem = withContext(
     base: {
       pl: '2',
       pr: '8',
+      cursor: 'pointer',
     },
   }),
   'item',
@@ -92,6 +93,7 @@ export const SelectItemPrimitiveWithStyled = withContext(
   styled(SelectPrimitive.Item, {
     base: {
       pl: '2',
+      cursor: 'pointer',
     },
   }),
   'item',

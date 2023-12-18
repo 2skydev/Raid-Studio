@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { Suspense } from 'react'
+import 'reactflow/dist/style.css'
 
 import { css } from '@styled-system/css'
 

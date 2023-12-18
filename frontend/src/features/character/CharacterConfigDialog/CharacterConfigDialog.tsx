@@ -1,4 +1,6 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, Suspense } from 'react'
+
+import { Loader2Icon } from 'lucide-react'
 
 import { css } from '@styled-system/css'
 import { Divider } from '@styled-system/jsx'
@@ -106,11 +108,13 @@ const CharacterConfigDialog = ({ characterName, ...props }: CharacterConfigDialo
                 )}
               />
 
-              <div className={css({ spaceY: '4' })}>
-                {selectedRaidNames.map(name => (
-                  <RaidRoot key={name} name={name} />
-                ))}
-              </div>
+              <Suspense fallback={<Loader2Icon className={css({ animation: 'spin' })} />}>
+                <div className={css({ spaceY: '4' })}>
+                  {selectedRaidNames.map(name => (
+                    <RaidRoot key={name} name={name} />
+                  ))}
+                </div>
+              </Suspense>
             </Form>
           </VerticalTabsTemplate.Content>
 
