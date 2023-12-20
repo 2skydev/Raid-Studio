@@ -13,7 +13,7 @@
     "^next$",
     "^react",
     "<THIRD_PARTY_MODULES>",
-    "^@styled-system",
+    "^@/components/ui/.+$",
     "^@/components/.+$",
     "^@/features/.+$",
     "^@/.+$",

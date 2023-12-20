@@ -1,19 +1,15 @@
 import type { Metadata } from 'next'
 
-import { Suspense } from 'react'
-import 'reactflow/dist/style.css'
-
-import { css } from '@styled-system/css'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 import Header from '@/components/Header'
-import { ScrollArea } from '@/components/ScrollArea'
 
 import RedirectRegisterPage from '@/features/auth/RedirectRegisterPage'
 
 import Providers from '@/app/providers'
 import AquaticoFont from '@/assets/fonts/Aquatico'
 import PretendardFont from '@/assets/fonts/Pretendard'
-import '@/styles/index.css'
+import '@/styles/global.css'
 
 export const metadata: Metadata = {
   title: 'RAID STUDIO',
@@ -28,13 +24,12 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       className={`${PretendardFont.variable} ${AquaticoFont.variable}`}
       suppressHydrationWarning
     >
-      <body className={css({ fontFamily: 'pretendard' })}>
+      <body className="font-pretendard">
         <Providers>
           <RedirectRegisterPage>
             <div id="app">
-              <ScrollArea h="100vh" type="always">
+              <ScrollArea className="h-screen" type="always">
                 <Header />
-
                 {children}
               </ScrollArea>
             </div>
