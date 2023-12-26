@@ -10,12 +10,47 @@ import {
 
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { Slot } from '@radix-ui/react-slot'
+import { omit } from 'lodash'
 
 import { Label } from '@/components/ui/label'
 
+import { UseCustomUseFormReturn } from '@/hooks/useCustomForm'
 import { cn } from '@/utils'
 
-const Form = FormProvider
+export interface BaseFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any>
+  extends React.HTMLAttributes<HTMLFormElement> {
+  form: UseCustomUseFormReturn<TFieldValues, TContext>
+}
+
+const BaseFormInner = <TFieldValues extends FieldValues = FieldValues, TContext = any>(
+  { form, children, className, ...props }: BaseFormProps<TFieldValues, TContext>,
+  ref: React.ForwardedRef<HTMLFormElement>,
+) => {
+  return (
+    <FormProvider
+      {...omit(form, ['handleSubmit', 'submit'])}
+      handleSubmit={form._formProviderHandleSubmit}
+    >
+      <form
+        ref={ref}
+        className={cn('space-y-10', className)}
+        onSubmit={form.handleSubmit}
+        {...props}
+      >
+        {children}
+      </form>
+    </FormProvider>
+  )
+}
+
+const BaseForm = React.forwardRef(BaseFormInner) as <
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any,
+>(
+  props: BaseFormProps<TFieldValues, TContext> & { ref?: React.ForwardedRef<HTMLFormElement> },
+) => ReturnType<typeof BaseFormInner>
+
+const Form = BaseForm
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -118,12 +153,14 @@ FormControl.displayName = 'FormControl'
 
 const FormDescription = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => {
+  { asChild?: boolean } & React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, asChild, ...props }, ref) => {
   const { formDescriptionId } = useFormField()
 
+  const Comp = asChild ? Slot : 'p'
+
   return (
-    <p
+    <Comp
       ref={ref}
       id={formDescriptionId}
       className={cn('text-sm text-muted-foreground', className)}

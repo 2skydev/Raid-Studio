@@ -5,16 +5,14 @@ import { ComponentProps } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next-nprogress-bar'
 
-import { css } from '@styled-system/css'
-
-import Button from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import {
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/Dialog'
+} from '@/components/ui/dialog'
 import {
   Form,
   FormItem,
@@ -23,8 +21,10 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-} from '@/components/Form'
-import { Input } from '@/components/Input'
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+
+import AsyncButton from '@/components/AsyncButton'
 
 import AuthenticatedOnlyDialog from '@/features/auth/AuthenticatedOnlyDialog'
 
@@ -64,7 +64,7 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
           <DialogDescription>새로운 공격대를 생성하여 팀원들을 초대합니다.</DialogDescription>
         </DialogHeader>
 
-        <Form my="4" form={form}>
+        <Form className="my-4" form={form}>
           <FormField
             control={form.control}
             name="name"
@@ -76,13 +76,8 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
                   <Input placeholder="공격대명을 입력해주세요" {...field} />
                 </FormControl>
 
-                <FormDescription>
-                  <ul
-                    className={css({
-                      ml: '6',
-                      listStyle: 'disc',
-                    })}
-                  >
+                <FormDescription asChild>
+                  <ul className="ml-6 list-disc">
                     <li>영어, 한글, 공백만 사용가능</li>
                     <li>1 ~ 12자</li>
                     <li>중복 불가</li>
@@ -99,9 +94,9 @@ const CreateSquadDialog = (props: CreateSquadDialogProps) => {
           <Button type="button" variant="outline" onClick={() => props.onOpenChange?.(false)}>
             취소
           </Button>
-          <Button type="button" onClick={form.submit} useOnClickLoading>
+          <AsyncButton type="button" onClick={form.submit} shouldLoadingIconShow>
             생성하기
-          </Button>
+          </AsyncButton>
         </DialogFooter>
       </DialogContent>
     </AuthenticatedOnlyDialog>
