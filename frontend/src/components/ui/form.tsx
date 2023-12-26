@@ -13,6 +13,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { omit } from 'lodash'
 
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 
 import { UseCustomUseFormReturn } from '@/hooks/useCustomForm'
 import { cn } from '@/utils'
@@ -193,6 +194,23 @@ const FormMessage = React.forwardRef<
   )
 })
 FormMessage.displayName = 'FormMessage'
+
+export interface FormHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  title: string
+  description?: string
+}
+
+export const FormHeader = ({ title, description, ...props }: FormHeaderProps) => {
+  return (
+    <div className="FormHeader" {...props}>
+      <h3 className="text-lg font-medium">{title}</h3>
+
+      {description && <p className="text-sm text-muted-foreground">{description}</p>}
+
+      <Separator className="my-6" />
+    </div>
+  )
+}
 
 export {
   useFormField,
