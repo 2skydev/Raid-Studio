@@ -1,11 +1,8 @@
 import { ChevronDownIcon } from 'lucide-react'
 
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
-
-import { Avatar, AvatarImage } from '@/components/Avatar'
-import { Badge } from '@/components/Badge'
-import Button from '@/components/Button'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 import CharacterCard from '@/features/character/CharacterCard'
 import CharacterProfile from '@/features/character/CharacterProfile'
@@ -28,10 +25,10 @@ const CharacterCardListWithUser = ({
   const { characters: _characters, weekGold } = useCharactersDetail(characters)
 
   return (
-    <div className={css({ w: 'calc(19rem * 2 + token(sizes.4))' })}>
-      <div className={css({ display: 'flex', alignItems: 'center', mb: '4' })}>
-        <div className={css({ display: 'flex', alignItems: 'center', gap: '2', mr: '4' })}>
-          <Avatar w="8" h="8">
+    <div className="w-[calc(19rem * 2 + token(spacing.4))]">
+      <div className="mb-4 flex items-center">
+        <div className="mr-4 flex items-center gap-2">
+          <Avatar className="size-8">
             <AvatarImage src={photo} alt="profile" />
           </Avatar>
           {nickname}
@@ -40,52 +37,28 @@ const CharacterCardListWithUser = ({
         <Badge>주간 골드: {weekGold.toLocaleString()}골드</Badge>
       </div>
 
-      <div className={css({ display: 'flex', flexWrap: 'wrap', gap: '4' })}>
+      <div className="flex flex-wrap gap-4">
         {_characters.slice(0, 6).map(item => {
           return (
             <CharacterCard key={item.name}>
-              <Flex alignItems="center" justifyContent="space-between">
+              <div className="flex items-center justify-between">
                 <CharacterProfile
                   name={item.name}
                   level={item.level}
                   characterClassName={item.class as CharacterClassName}
                 />
 
-                <Flex alignItems="center" gap="2">
-                  <div
-                    className={css({
-                      whiteSpace: 'nowrap',
-                      color: 'muted.foreground',
-                      fontSize: 'xs',
-                    })}
-                  >
-                    1 / 3
-                  </div>
+                <div className="flex items-center gap-2">
+                  <div className="whitespace-nowrap text-xs text-muted-foreground">1 / 3</div>
 
-                  <Button w="8" h="8" p="0" variant="ghost">
+                  <Button className="size-8 p-0" variant="ghost">
                     <ChevronDownIcon size="1rem" />
                   </Button>
-                </Flex>
-              </Flex>
+                </div>
+              </div>
 
-              <div
-                className={css({
-                  pos: 'absolute',
-                  bottom: '0px',
-                  left: '0px',
-                  w: 'full',
-                  h: '3px',
-                })}
-              >
-                <div
-                  className={css({
-                    width: '33%',
-                    h: 'full',
-                    bg: 'teal.500',
-                    boxShadow: '0 0 5px token(colors.teal.500)',
-                    roundedBottom: '5px',
-                  })}
-                ></div>
+              <div className="absolute bottom-0 left-0 h-[3px] w-full">
+                <div className="shadow-[0 0 5px theme(colors.teal.500)] h-full w-[33%] rounded-b-[5px] bg-teal-500" />
               </div>
             </CharacterCard>
           )
