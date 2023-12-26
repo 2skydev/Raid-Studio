@@ -1,17 +1,14 @@
+import { toast } from 'sonner'
 import useSWR from 'swr'
 
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
-
-import { Avatar, AvatarImage } from '@/components/Avatar'
-import Button from '@/components/Button'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/DropdownMenu'
-import { useToast } from '@/components/Toast/useToast'
+} from '@/components/ui/dropdown-menu'
 
 import { RaidStudioAPI } from '@/apis'
 import useAuth from '@/hooks/useAuth'
@@ -21,8 +18,6 @@ export interface SignInTestUserButtonProps {}
 
 const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
   const { reload } = useAuth()
-
-  const { toast } = useToast()
 
   const { data: profiles } = useSWR('test_profiles', RaidStudioAPI.profiles.getTestUserProfiles, {
     revalidateOnFocus: false,
@@ -38,10 +33,9 @@ const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
 
     await reload()
 
-    toast({
-      title: '테스트 계정으로 로그인되었습니다.',
+    toast.message('테스트 계정으로 로그인되었습니다.', {
       description: (
-        <ul className={css({ listStyle: 'disc' })}>
+        <ul className="list-disc">
           <li>테스트 계정은 읽기 전용입니다.</li>
           <li>
             생성, 수정, 삭제 등의 작업은 작동 하는것 처럼 보일 수 있지만 실제로 이루어지지 않습니다.
@@ -49,7 +43,6 @@ const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
         </ul>
       ),
       duration: 60000,
-      status: 'success',
     })
   }
 
@@ -59,32 +52,21 @@ const SignInTestUserButton = ({}: SignInTestUserButtonProps) => {
         <Button variant="secondary">테스트 계정으로 둘러보기</Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent className="space-y-1" align="start">
         {profiles?.map(profile => (
-          <DropdownMenuItem
-            cursor="pointer"
-            key={profile.nickname}
-            onClick={() => signInTestUser(profile.nickname)}
-          >
-            <Flex alignItems="center" gap="2" py="1">
-              <Avatar w="8" h="8">
+          <DropdownMenuItem key={profile.nickname} onClick={() => signInTestUser(profile.nickname)}>
+            <div className="py1 flex items-center gap-2">
+              <Avatar className="size-8">
                 <AvatarImage src={profile.photo} alt={profile.nickname} />
               </Avatar>
 
               <div>
-                <div className={css({ leading: '1' })}>테스트 {profile.nickname}</div>
-                <div
-                  className={css({
-                    leading: '1',
-                    mt: '1',
-                    fontSize: 'xs',
-                    color: 'muted.foreground',
-                  })}
-                >
+                <div className="leading-none">테스트 {profile.nickname}</div>
+                <div className="mt-1 text-xs leading-none text-muted-foreground">
                   {profile.main_character_name}
                 </div>
               </div>
-            </Flex>
+            </div>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

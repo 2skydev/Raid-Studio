@@ -6,8 +6,8 @@ import clsx from 'clsx'
 import { MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
-import Button from '@/components/Button'
-import Skeleton from '@/components/Skeleton'
+import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export interface ThemeToggleButtonProps {
   className?: string
@@ -27,16 +27,13 @@ const ThemeToggleButton = ({ className }: ThemeToggleButtonProps) => {
     }
   }
 
-  if (!mounted) return <Skeleton w="9" h="9" />
+  if (!mounted) return <Skeleton className="size-9" />
 
   return (
     <Button
       onClick={toggleTheme}
-      className={clsx('ThemeToggleButton', className)}
+      className={clsx('ThemeToggleButton', 'size-9 p-0', className)}
       variant="ghost"
-      w="9"
-      h="9"
-      p="0"
     >
       {resolvedTheme === 'light' ? <SunIcon size="1.2rem" /> : <MoonIcon size="1.2rem" />}
     </Button>
