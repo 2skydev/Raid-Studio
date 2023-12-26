@@ -2,9 +2,9 @@ import { ComponentProps, useState } from 'react'
 
 import { CheckIcon, CopyIcon } from 'lucide-react'
 
-import { token } from '@styled-system/tokens'
+import { Button } from '@/components/ui/button'
 
-import Button from '@/components/Button'
+import { theme } from '@/styles/theme'
 
 export interface CopyButtonProps extends ComponentProps<typeof Button> {
   value: string
@@ -23,9 +23,9 @@ const CopyButton = ({ value, ...props }: CopyButtonProps) => {
   }
 
   return (
-    <Button variant="ghost" size="icon" w="8" h="8" onClick={handleCopy} {...props}>
+    <Button variant="ghost" size="icon" className="size-8" onClick={handleCopy} {...props}>
       {showSuccessIcon ? (
-        <CheckIcon size="1rem" color={token('colors.green.500')} />
+        <CheckIcon size="1rem" color={theme.colors.green['500']} />
       ) : (
         <CopyIcon size="1rem" />
       )}

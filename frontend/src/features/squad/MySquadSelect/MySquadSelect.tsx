@@ -28,7 +28,7 @@ const MySquadSelect = ({}: MySquadSelectProps) => {
     >
       <SelectTrigger asChild>
         <Button
-          className="leading-1 size-auto border-none px-3 py-1.5 text-xs focus:ring-transparent"
+          className="leading-1 h-auto w-auto border-none px-3 py-1.5 text-xs focus:ring-transparent"
           variant="ghost"
         >
           <SelectValue placeholder="참여된 공격대 없음" />
