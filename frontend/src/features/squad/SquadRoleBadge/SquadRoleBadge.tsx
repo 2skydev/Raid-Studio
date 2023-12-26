@@ -1,4 +1,4 @@
-import { Badge } from '@/components/Badge'
+import { Badge } from '@/components/ui/badge'
 
 import { Enums } from '@/types/database.types'
 

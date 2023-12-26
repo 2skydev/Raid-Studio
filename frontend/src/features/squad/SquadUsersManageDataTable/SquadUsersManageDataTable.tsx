@@ -1,26 +1,23 @@
 'use client'
 
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { Share2Icon } from 'lucide-react'
 
-import { css } from '@styled-system/css'
-import { Box, Flex } from '@styled-system/jsx'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Skeleton } from '@/components/ui/skeleton'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
-import { Avatar, AvatarImage } from '@/components/Avatar'
-import { Badge } from '@/components/Badge'
-import Button from '@/components/Button'
 import CopyButton from '@/components/CopyButton'
-import { DataTableColumnHeader } from '@/components/DataTable/ColumnHeader'
-import { Input } from '@/components/Input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
-import Skeleton from '@/components/Skeleton'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/Table'
 
 import SquadRoleBadge from '@/features/squad/SquadRoleBadge'
 
@@ -37,8 +34,8 @@ const columns: ColumnDef<SquadUser>[] = [
     id: 'profile',
     header: '프로필',
     cell: ({ row }) => (
-      <div className={css({ display: 'flex', alignItems: 'center', gap: '3' })}>
-        <Avatar w="10" h="10">
+      <div className="flex items-center gap-3">
+        <Avatar className="size-10">
           <AvatarImage src={row.original.profile.photo} alt="profile" />
         </Avatar>
 
@@ -69,64 +66,51 @@ const SquadUsersManageDataTable = ({ data, code, isLoading }: SquadUsersManageDa
   })
 
   return (
-    <div className={css({ maxW: '3xl' })}>
-      <Flex align="center" justifyContent="space-between" py="4">
+    <div className="max-w-3xl">
+      <div className="flex items-center justify-between py-4">
         {isLoading ? (
-          <Skeleton w="xs" h="10" />
+          <Skeleton className="h-10 w-80" />
         ) : (
           <Input
+            className="w-80"
             placeholder="닉네임으로 검색..."
             value={(table.getColumn('profile')?.getFilterValue() as string) ?? ''}
             onChange={event => table.getColumn('profile')?.setFilterValue(event.target.value)}
-            w="xs"
           />
         )}
 
         {isLoading ? (
-          <Skeleton w="30" h="10" />
+          <Skeleton className="h-10 w-32" />
         ) : (
           <Popover>
             <PopoverTrigger asChild>
-              <Button w="30">
+              <Button className="w-32">
                 <Share2Icon size="1rem" />
                 초대하기
               </Button>
             </PopoverTrigger>
 
-            <PopoverContent w="80">
-              <h2 className={css({ fontSize: 'md', fontWeight: 'medium' })}>
-                참여 코드로 초대하기
-              </h2>
-              <p className={css({ fontSize: 'sm', color: 'muted.foreground' })}>
+            <PopoverContent className="w-80">
+              <h2 className="font-medium">참여 코드로 초대하기</h2>
+              <p className="text-sm text-muted-foreground">
                 참여 코드로 공격대 목록에서 참여 할 수 있습니다.
               </p>
-              <div
-                className={css({
-                  mt: '2',
-                  p: '2',
-                  pl: '3',
-                  border: 'base',
-                  rounded: 'md',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                })}
-              >
-                <span className={css({ fontSize: 'sm' })}>{code}</span>
+              <div className="mt-2 flex items-center justify-between rounded-md border p-2 pl-3">
+                <span className="text-sm">{code}</span>
                 <CopyButton value={code} />
               </div>
             </PopoverContent>
           </Popover>
         )}
-      </Flex>
+      </div>
 
-      <Box w="full" rounded="md" border="base">
+      <div className="w-full rounded-md border">
         {isLoading ? (
-          <Box p="2" spaceY="2">
-            <Skeleton w="full" h="12" />
-            <Skeleton w="full" h="12" />
-            <Skeleton w="full" h="12" />
-          </Box>
+          <div className="space-y-2 p-2">
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+          </div>
         ) : (
           <Table>
             <TableHeader>
@@ -158,7 +142,7 @@ const SquadUsersManageDataTable = ({ data, code, isLoading }: SquadUsersManageDa
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} h="24" textAlign="center">
+                  <TableCell className="h-24 text-center" colSpan={columns.length}>
                     데이터가 없습니다.
                   </TableCell>
                 </TableRow>
@@ -166,7 +150,7 @@ const SquadUsersManageDataTable = ({ data, code, isLoading }: SquadUsersManageDa
             </TableBody>
           </Table>
         )}
-      </Box>
+      </div>
     </div>
   )
 }

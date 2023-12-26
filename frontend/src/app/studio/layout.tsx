@@ -2,9 +2,8 @@
 
 import { usePathname } from 'next/navigation'
 
-import { css } from '@styled-system/css'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
-import { ScrollArea } from '@/components/ScrollArea'
 import Sidebar from '@/components/Sidebar'
 
 import AuthenticatedOnly from '@/features/auth/AuthenticatedOnly'
@@ -16,43 +15,16 @@ const StudioLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthenticatedOnly>
-      <div
-        className={css({
-          m: '0 auto',
-          maxW: '1920px',
-          px: '4',
-        })}
-      >
-        <SidebarMotion
-          className={css({
-            w: '280px',
-            h: 'mainHeight',
-            pos: 'fixed',
-          })}
-        >
-          <ScrollArea
-            h="full"
-            pr="2.5"
-            py="6"
-            lg={{
-              py: '8',
-            }}
-          >
+      <div className="mx-auto max-w-[1920px] px-4">
+        <SidebarMotion className="fixed h-mainHeight w-[280px]">
+          <ScrollArea className="h-full py-6 pr-2.5 lg:py-8">
             <Sidebar />
           </ScrollArea>
         </SidebarMotion>
 
         <PageContentMotion
           key={pathname}
-          className={css({
-            ml: 'calc(280px + token(sizes.10))',
-            flex: '1',
-            py: '6',
-            pr: '8',
-            lg: {
-              py: '8',
-            },
-          })}
+          className="ml-[calc(280px+theme(spacing.10))] flex-1 py-6 pr-8 lg:py-8"
         >
           {children}
         </PageContentMotion>
