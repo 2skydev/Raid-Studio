@@ -1,6 +1,3 @@
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
-
 import CharacterClassIcon from '@/features/character/CharacterClassIcon'
 
 import { CharacterClassName } from '@/types/character'
@@ -13,24 +10,16 @@ export interface CharacterProfileProps {
 
 const CharacterProfile = ({ characterClassName, name, level }: CharacterProfileProps) => {
   return (
-    <Flex alignItems="center">
+    <div className="flex items-center">
       <CharacterClassIcon characterClassName={characterClassName} width={26} height={26} />
 
-      <div className={css({ ml: '3' })}>
-        <div className={css({ fontSize: 'sm', fontWeight: 'medium', leading: 'tight' })}>
-          {name}
-        </div>
-        <div
-          className={css({
-            fontSize: 'xs',
-            color: 'muted.foreground',
-            leading: 'tight',
-          })}
-        >
+      <div className="ml-3">
+        <div className="text-sm font-medium leading-tight">{name}</div>
+        <div className="text-xs leading-tight text-muted-foreground">
           {characterClassName} / {level}
         </div>
       </div>
-    </Flex>
+    </div>
   )
 }
 
