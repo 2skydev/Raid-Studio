@@ -2,8 +2,6 @@ import { ComponentProps } from 'react'
 
 import Image from 'next/image'
 
-import { css } from '@styled-system/css'
-
 import arcana_image from '@/assets/images/class/emblem_arcana.svg'
 import bard_image from '@/assets/images/class/emblem_bard.svg'
 import battle_master_image from '@/assets/images/class/emblem_battle_master.svg'
@@ -70,7 +68,7 @@ const CharacterClassIcon = ({ characterClassName, ...props }: CharacterClassIcon
       alt={characterClassName}
       width={32}
       height={32}
-      className={css({ _dark: { filter: 'invert(1)' } })}
+      className="dark:invert"
       {...props}
     />
   )

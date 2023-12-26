@@ -1,5 +1,5 @@
 {
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
   "arrowParens": "avoid",
   "endOfLine": "auto",
   "singleQuote": true,
@@ -20,5 +20,6 @@
     "^\\..+$"
   ],
   "importOrderSeparation": true,
-  "importOrderParserPlugins": ["typescript", "jsx"]
+  "importOrderParserPlugins": ["typescript", "jsx"],
+  "tailwindFunctions": ["clsx", "cva"]
 }

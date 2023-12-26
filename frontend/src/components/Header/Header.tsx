@@ -6,18 +6,14 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
+import { Button } from '@/components/ui/button'
 
-import Button from '@/components/Button'
 import CommandMenu from '@/components/CommandMenu'
 import HeaderNavigationMenu from '@/components/HeaderNavigationMenu'
 
 import CharacterClassIcon from '@/features/character/CharacterClassIcon'
 import MySquadSelect from '@/features/squad/MySquadSelect'
 import ThemeToggleButton from '@/features/theme/ThemeToggleButton'
-
-import * as Styled from './Header.styled'
 
 const CurrentUserProfileDropdownMenu = dynamic(
   () => import('@/features/user/CurrentUserProfileDropdownMenu'),
@@ -33,37 +29,40 @@ const Header = ({ className }: HeaderProps) => {
   const isStudioPage = pathname.startsWith('/studio')
 
   return (
-    <Styled.Root className={clsx('Header', className)}>
-      <Styled.Wrap>
-        <Flex gap="1" alignItems="center">
-          <Link
-            href={isStudioPage ? '/studio/my/characters' : '/'}
-            className={css({ fontFamily: 'aquatico', mr: '6' })}
-          >
-            <Flex alignItems="center" gap="2">
+    <div
+      className={clsx(
+        'Header',
+        'sticky top-0 z-header w-full border-b bg-background/80 backdrop-blur-md',
+        className,
+      )}
+    >
+      <div className="flex h-headerHeight items-center justify-between pl-4 pr-5">
+        <div className="flex items-center gap-1">
+          <Link href={isStudioPage ? '/studio/my/characters' : '/'} className="mr-6 font-aquatico">
+            <div className="flex items-center gap-2">
               <CharacterClassIcon characterClassName="블레이드" width={22} height={22} />
-              <span className={css({ leading: '1', mt: '0.5' })}>Raid Studio</span>
-            </Flex>
+              <span className="leading-1 mt-0.5">Raid Studio</span>
+            </div>
           </Link>
 
           {isStudioPage ? <MySquadSelect /> : <HeaderNavigationMenu />}
-        </Flex>
+        </div>
 
-        <Flex gap="1" alignItems="center">
+        <div className="flex items-center gap-1">
           <CurrentUserProfileDropdownMenu />
 
           <CommandMenu />
 
           <ThemeToggleButton />
 
-          <Button w="9" h="9" p="0" variant="ghost" asChild>
+          <Button className="h-9 w-9 p-0" variant="ghost" asChild>
             <Link href="https://github.com/2skydev/Raid-Studio" target="_blank">
               <GithubIcon size="1.2rem" />
             </Link>
           </Button>
-        </Flex>
-      </Styled.Wrap>
-    </Styled.Root>
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -3,11 +3,17 @@
 import { ReactNode } from 'react'
 
 import clsx from 'clsx'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { Accordion, AccordionContent, AccordionItem } from '@/components/Accordion'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
-import * as Styled from './Sidebar.styled'
+import { cn } from '@/utils'
 
 export interface SidebarProps {
   className?: string
@@ -45,28 +51,35 @@ const Sidebar = ({ className }: SidebarProps) => {
   return (
     <div>
       <Accordion
-        className={clsx('Sidebar', className)}
+        className={clsx('Sidebar', 'w-full', className)}
         type="multiple"
-        w="full"
         defaultValue={menus.map(menu => menu.title)}
         asChild
       >
         <ul>
           {menus.map(menu => (
-            <AccordionItem key={menu.title} value={menu.title} borderBottom="none" asChild>
+            <AccordionItem key={menu.title} className="border-b-0" value={menu.title} asChild>
               <li>
-                <Styled.MenuAccordionTrigger>{menu.title}</Styled.MenuAccordionTrigger>
+                <AccordionTrigger className="cursor-pointer rounded-md px-3 py-2 text-sm font-medium hover:bg-muted hover:no-underline [&>svg]:-rotate-90 [&[data-state=open]>svg]:rotate-0">
+                  {menu.title}
+                </AccordionTrigger>
 
                 <AccordionContent>
-                  <Styled.MenuItemsGroup>
+                  <ul className="ml-4 mt-2 space-y-1 border-l pl-2">
                     {menu.items.map(item => (
                       <li key={item.title}>
-                        <Styled.MenuLink href={item.url} active={pathname === item.url}>
+                        <Link
+                          className={cn(
+                            'flex w-full cursor-pointer rounded-md bg-transparent px-3 py-2 text-sm font-medium hover:bg-muted',
+                            pathname === item.url && 'bg-muted',
+                          )}
+                          href={item.url}
+                        >
                           {item.title}
-                        </Styled.MenuLink>
+                        </Link>
                       </li>
                     ))}
-                  </Styled.MenuItemsGroup>
+                  </ul>
                 </AccordionContent>
               </li>
             </AccordionItem>

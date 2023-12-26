@@ -1,19 +1,17 @@
 import { ComponentProps } from 'react'
 
-import { ChevronDown } from 'lucide-react'
+import clsx from 'clsx'
 import Link from 'next/link'
-
-import { css, cx } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
 
 import {
   NavigationMenu,
-  NavigationMenuList,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
+  NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuContent,
-} from '@/components/NavigationMenu'
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu'
 
 import CharacterClassIcon from '@/features/character/CharacterClassIcon'
 
@@ -59,75 +57,26 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
     <NavigationMenu className={className}>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger onClick={e => e.preventDefault()} asChild>
-            <div className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}>
-              RAID STUDIO 소개 <ChevronDown aria-hidden="true" />
-            </div>
+          <NavigationMenuTrigger className="bg-transparent" onClick={e => e.preventDefault()}>
+            RAID STUDIO 소개
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul
-              className={css({
-                display: 'grid',
-                gap: '3',
-                p: '6',
-                md: {
-                  w: '400px',
-                },
-                lg: {
-                  w: '500px',
-                  gridTemplateColumns: '.75fr 1fr',
-                },
-              })}
-            >
-              <li className={css({ gridRow: '3' })}>
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <li className="grid-span-3">
                 <NavigationMenuLink asChild>
                   <Link
-                    className={css({
-                      display: 'flex',
-                      h: 'full',
-                      w: 'full',
-                      userSelect: 'none',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      rounded: 'md',
-                      bgGradient: 'to-b',
-                      gradientFromAlpha: 'muted/50',
-                      gradientToAlpha: 'muted',
-                      p: '4',
-                      textDecoration: 'none',
-                      outline: 'none',
-
-                      _focus: {
-                        shadow: 'md',
-                      },
-                    })}
+                    className="text-decoration-none flex size-full select-none flex-col justify-center rounded-md bg-gradient-to-b from-muted/50 to-muted p-4 outline-none focus:shadow-md"
                     href="/"
                   >
-                    <Flex direction="column" alignItems="flex-start" justifyContent="center">
+                    <div className="flex flex-col items-start justify-center">
                       <CharacterClassIcon characterClassName="블레이드" width={26} height={26} />
 
-                      <div
-                        className={css({
-                          mt: '4',
-                          mb: '2',
-                          fontSize: 'md',
-                          lineHeight: '1.1',
-                          fontWeight: 'bold',
-                          fontFamily: 'aquatico',
-                        })}
-                      >
+                      <div className="text-md mb-2 mt-4 font-aquatico font-bold leading-[1.1]">
                         RAID STUDIO
                       </div>
-                    </Flex>
+                    </div>
 
-                    <p
-                      className={css({
-                        textStyle: 'sm',
-                        leading: 'tight',
-                        color: 'muted.foreground',
-                        wordBreak: 'keep-all',
-                      })}
-                    >
+                    <p className="break-keep text-sm leading-tight text-muted-foreground">
                       로스트아크 레이드 클리어 현황을 고정 파티에게 공유 및 일정 관리 하는
                       서비스입니다.
                     </p>
@@ -135,7 +84,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
                 </NavigationMenuLink>
               </li>
 
-              <ListItem className={css({ wordBreak: 'keep-all' })} href="/" title="가이드">
+              <ListItem href="/" title="가이드">
                 공격대 생성, 참여 등 여러가지 기능에 대한 가이드를 제공합니다.
               </ListItem>
 
@@ -151,29 +100,11 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger onClick={e => e.preventDefault()} asChild>
-            <div className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}>
-              Studio <ChevronDown aria-hidden="true" />
-            </div>
+          <NavigationMenuTrigger className="bg-transparent" onClick={e => e.preventDefault()}>
+            Studio
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul
-              className={css({
-                display: 'grid',
-                w: '400px',
-                gap: '3',
-                p: '4',
-
-                md: {
-                  w: '500px',
-                  gridTemplateColumns: '2',
-                },
-
-                lg: {
-                  w: '600px',
-                },
-              })}
-            >
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {studioSubMenus.map(component => (
                 <ListItem key={component.title} title={component.title} href={component.url}>
                   {component.description}
@@ -185,10 +116,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link
-              href="/squad/list"
-              className={css({ bg: 'transparent', _hover: { bg: 'accent' } })}
-            >
+            <Link href="/squad/list" className={navigationMenuTriggerStyle()}>
               공개된 공격대 목록
             </Link>
           </NavigationMenuLink>
@@ -207,48 +135,15 @@ const ListItem = ({ title, className, children, ...props }: ListItemProps) => {
     <li>
       <NavigationMenuLink asChild>
         <Link
-          className={cx(
-            css({
-              display: 'block',
-              userSelect: 'none',
-              spaceY: '1',
-              rounded: 'md',
-              p: '3',
-              leading: 'none',
-              textDecoration: 'none',
-              outline: 'none',
-              transition: 'colors',
-              _hover: {
-                bg: 'accent',
-                color: 'accent.foreground',
-              },
-              _focus: {
-                bg: 'accent',
-                color: 'accent.foreground',
-              },
-            }),
+          className={clsx(
+            'block select-none space-y-1 rounded-md bg-transparent p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
             className,
           )}
           {...props}
         >
           <div>
-            <div
-              className={css({
-                textStyle: 'sm',
-                fontWeight: 'medium',
-              })}
-            >
-              {title}
-            </div>
-            <p
-              className={css({
-                lineClamp: '2',
-                textStyle: 'sm',
-                color: 'muted.foreground',
-              })}
-            >
-              {children}
-            </p>
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
           </div>
         </Link>
       </NavigationMenuLink>

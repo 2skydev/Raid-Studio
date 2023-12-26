@@ -7,11 +7,10 @@ import { Loader2Icon } from 'lucide-react'
 import { AppProgressBar } from 'next-nprogress-bar'
 import { ThemeProvider } from 'next-themes'
 
-import { css } from '@styled-system/css'
-import { token } from '@styled-system/tokens'
+import { Toaster } from '@/components/ui/sonner'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
-import { Toaster } from '@/components/Toast/Toaster'
-import { TooltipProvider } from '@/components/Tooltip'
+import { theme } from '@/styles/theme'
 
 const progressBarStyleString = `
 #nprogress {
@@ -19,11 +18,11 @@ const progressBarStyleString = `
 }
 
 #nprogress .bar {
-  background: ${token('colors.zinc.600')};
+  background: ${theme.colors.zinc['600']};
 
   position: fixed;
-  z-index: ${token('zIndex.pageProgressBar')};
-  top: calc(${token('sizes.headerHeight')} + 1px);
+  z-index: ${theme.zIndex.pageProgressBar};
+  top: calc(${theme.height.headerHeight} + 1px);
   left: 0;
 
   width: 100%;
@@ -37,16 +36,8 @@ const Providers = ({ children }: { children: ReactNode }) => {
       <JotaiProvider>
         <Suspense
           fallback={
-            <div
-              className={css({
-                w: '100vw',
-                h: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              })}
-            >
-              <Loader2Icon className={css({ animation: 'spin' })} />
+            <div className="flex h-screen w-screen items-center justify-center">
+              <Loader2Icon className="animate-spin" />
             </div>
           }
         >

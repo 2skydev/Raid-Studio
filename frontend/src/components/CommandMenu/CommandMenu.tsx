@@ -5,9 +5,7 @@ import { useEffect, useState, type ReactNode, useMemo } from 'react'
 import { CircleIcon, LogOutIcon, RefreshCwIcon, Loader2Icon } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 
-import { css } from '@styled-system/css'
-
-import Button, { ButtonProps } from '@/components/Button'
+import { Button, ButtonProps } from '@/components/ui/button'
 import {
   CommandDialog,
   CommandEmpty,
@@ -16,7 +14,8 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/Command'
+} from '@/components/ui/command'
+
 import Kbd from '@/components/Kbd'
 
 import { RaidStudioAPI } from '@/apis'
@@ -130,50 +129,27 @@ const CommandMenu = ({ ...props }: CommandMenuProps) => {
       <Button
         variant="outline"
         size="sm"
-        className={css({
-          position: 'relative',
-          w: '56',
-          justifyContent: 'flex-start',
-          textStyle: 'xs',
-          color: 'muted.foreground',
-        })}
+        className="relative w-56 justify-start text-xs text-muted-foreground"
         onClick={() => setOpen(true)}
         {...props}
       >
         검색 후 바로가기...
-        <Kbd
-          keys={['K']}
-          useCommandKey
-          pos="absolute"
-          right="2"
-          top="50%"
-          transform="translateY(-50%)"
-        />
+        <Kbd keys={['K']} useCommandKey className="absolute right-2 top-1/2 -translate-y-1/2" />
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="커맨드 입력 또는 검색..." />
-        <CommandList pb="1">
+        <CommandList className="pb-1">
           {loadingText && (
-            <div
-              className={css({
-                w: 'full',
-                h: '60',
-                display: 'flex',
-                flexDir: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '2',
-              })}
-            >
-              <Loader2Icon className={css({ animation: 'spin' })} />
-              <p className={css({ fontSize: 'sm', color: 'muted.foreground' })}>{loadingText}</p>
+            <div className="flex h-60 w-full flex-col items-center justify-center gap-2">
+              <Loader2Icon className="animate-spin" />
+              <p className="text-sm text-muted-foreground">{loadingText}</p>
             </div>
           )}
 
           {!loadingText && (
             <>
-              <CommandEmpty mb="-1">검색 결과가 없습니다.</CommandEmpty>
+              <CommandEmpty className="-mb-1">검색 결과가 없습니다.</CommandEmpty>
 
               {groups.map((group, i) => (
                 <div key={group.heading}>
@@ -190,26 +166,14 @@ const CommandMenu = ({ ...props }: CommandMenuProps) => {
                           }
                         }}
                       >
-                        <div
-                          className={css({
-                            display: 'flex',
-                            h: '4',
-                            w: '4',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            '& > svg': {
-                              w: '3',
-                              h: '3',
-                            },
-                          })}
-                        >
+                        <div className="flex size-4 items-center justify-center [&>svg]:!size-3">
                           {item.icon || <CircleIcon />}
                         </div>
                         {item.title}
                       </CommandItem>
                     ))}
                   </CommandGroup>
-                  {i < groups.length - 1 && <CommandSeparator mt="1" />}
+                  {i < groups.length - 1 && <CommandSeparator className="mt-1" />}
                 </div>
               ))}
             </>
