@@ -3,12 +3,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowRightFromLineIcon, PlusIcon } from 'lucide-react'
-import { useRouter } from 'next-nprogress-bar'
-
 import { css } from '@styled-system/css'
 import { Flex } from '@styled-system/jsx'
 import { h3, muted } from '@styled-system/recipes'
+import { ArrowRightFromLineIcon, PlusIcon } from 'lucide-react'
+import { useRouter } from 'next-nprogress-bar'
 
 import Button from '@/components/Button'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/Card'
@@ -53,7 +52,7 @@ const RegisterNicknamePage = ({ setStep }: { setStep: SetStep }) => {
   return (
     <>
       <h1 className={h3()}>계정 닉네임 설정</h1>
-      <p className={muted()}>모든 사람에게 표시될 닉네임을 설정합니다</p>
+      <p className="text-sm text-muted-foreground">모든 사람에게 표시될 닉네임을 설정합니다</p>
 
       <br />
 
@@ -88,7 +87,9 @@ const RegisterCharacterPage = ({ setStep }: { setStep: SetStep }) => {
   return (
     <>
       <h1 className={h3()}>대표 캐릭터 등록</h1>
-      <p className={muted()}>공격대 생성, 참여 전에 대표 캐릭터 등록이 필요합니다</p>
+      <p className="text-sm text-muted-foreground">
+        공격대 생성, 참여 전에 대표 캐릭터 등록이 필요합니다
+      </p>
 
       <br />
 
@@ -120,7 +121,7 @@ const RegisterSquadPage = ({ setStep }: { setStep: SetStep }) => {
   return (
     <>
       <h1 className={h3()}>공격대 생성 및 참여</h1>
-      <p className={muted()}>이 단계는 다음에 진행할 수 있습니다.</p>
+      <p className="text-sm text-muted-foreground">이 단계는 다음에 진행할 수 있습니다.</p>
 
       <br />
 

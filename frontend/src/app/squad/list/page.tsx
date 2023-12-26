@@ -6,22 +6,17 @@ import { debounce } from 'lodash'
 import { SwordsIcon, LogInIcon, PlusIcon } from 'lucide-react'
 import useSWR from 'swr'
 
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
-import { icon, muted } from '@styled-system/recipes'
-import { token } from '@styled-system/tokens'
-
-import { Avatar, AvatarImage } from '@/components/Avatar'
-import Button from '@/components/Button'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/DropdownMenu'
-import { Input } from '@/components/Input'
-import Skeleton from '@/components/Skeleton'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/Tooltip'
+} from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 import CreateSquadDialog from '@/features/squad/CreateSquadDialog'
 import JoinSquadDialog from '@/features/squad/JoinSquadDialog'
@@ -49,14 +44,14 @@ const SquadListPage = () => {
 
   return (
     <div>
-      <Flex justifyContent="space-between" alignItems="center">
+      <div className="flex items-center justify-between">
         <Input
+          className="w-64"
+          placeholder="공격대 이름으로 검색..."
           onChange={e => {
             setLoading(true)
             debouncedSearch(e.target.value)
           }}
-          w="64"
-          placeholder="공격대 이름으로 검색..."
         />
 
         <DropdownMenu>
@@ -66,23 +61,23 @@ const SquadListPage = () => {
 
           <DropdownMenuContent>
             <DropdownMenuItem onClick={() => setOpenCreateSquadDialog(true)}>
-              <PlusIcon className={icon()} />
+              <PlusIcon className="size-4" />
               공격대 생성
             </DropdownMenuItem>
 
             <DropdownMenuItem onClick={() => setOpenJoinSquadDialog(true)}>
-              <LogInIcon className={icon()} />
+              <LogInIcon className="size-4" />
               공격대 참여하기
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </Flex>
+      </div>
 
-      <div className={css({ mt: '8' })}>
-        <div className={css({ spaceY: '4' })}>
+      <div className="mt-8">
+        <div className="space-y-4">
           {!isValidating && !loading && squads && squads.length === 0 && (
-            <div className={css({ textAlign: 'center' })}>
-              <p className={css({ p: '10', color: 'muted.foreground' })}>검색 결과가 없습니다.</p>
+            <div className="text-center">
+              <p className="p-10 text-muted-foreground">검색 결과가 없습니다.</p>
             </div>
           )}
           {!isValidating &&
@@ -91,38 +86,20 @@ const SquadListPage = () => {
             squads.map(item => (
               <div
                 key={item.name}
-                className={css({
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  px: '4',
-                  py: '4',
-                  border: 'base',
-                  borderRadius: 'md',
-                  h: '20',
-                })}
+                className="flex h-20 items-center justify-between rounded-md border px-4 py-4"
               >
-                <Flex gap="6" alignItems="center">
-                  <div
-                    className={css({
-                      w: '16rem',
-                    })}
-                  >
+                <div className="flex items-center gap-6">
+                  <div className="w-[16rem]">
                     <h3>{item.name}</h3>
-                    <p className={muted()}>
+                    <p className="text-sm text-muted-foreground">
                       공대장: {item.owner?.nickname} / {item.owner?.main_character_name}
                     </p>
                   </div>
 
-                  <div
-                    className={css({
-                      display: 'flex',
-                      spaceX: '-2',
-                    })}
-                  >
+                  <div className="flex -space-x-2">
                     {item.users.map(user => (
                       <Avatar
-                        border="3px solid token(colors.background)"
+                        className="size-10 border-[3px] border-background"
                         key={user.profile!.nickname}
                       >
                         <AvatarImage src={user.profile!.photo} alt="profile" />
@@ -130,21 +107,12 @@ const SquadListPage = () => {
                     ))}
 
                     {item.userCount > 5 && (
-                      <Avatar
-                        border="3px solid token(colors.background)"
-                        bg="muted"
-                        alignItems="center"
-                        justifyContent="center"
-                        fontSize="xs"
-                        fontWeight="bold"
-                        lineHeight="1"
-                        pt="0.5"
-                      >
+                      <Avatar className="size-10 items-center justify-center border-[3px] border-background bg-muted pt-0.5 text-xs font-bold leading-none">
                         +{item.userCount - 5}
                       </Avatar>
                     )}
                   </div>
-                </Flex>
+                </div>
 
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger asChild>
@@ -163,8 +131,8 @@ const SquadListPage = () => {
             ))}
           {(isValidating || loading) && (
             <>
-              <Skeleton w="full" h="20" />
-              <Skeleton w="full" h="20" />
+              <Skeleton className="h-20 w-full" />
+              <Skeleton className="h-20 w-full" />
             </>
           )}
         </div>

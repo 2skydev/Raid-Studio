@@ -5,14 +5,14 @@ import { ComponentProps } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next-nprogress-bar'
 
-import Button from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import {
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/Dialog'
+} from '@/components/ui/dialog'
 import {
   Form,
   FormItem,
@@ -21,8 +21,10 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-} from '@/components/Form'
-import { Input } from '@/components/Input'
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+
+import AsyncButton from '@/components/AsyncButton'
 
 import AuthenticatedOnlyDialog from '@/features/auth/AuthenticatedOnlyDialog'
 
@@ -62,7 +64,7 @@ const JoinSquadDialog = (props: JoinSquadDialogProps) => {
           <DialogDescription>공격대 참여 코드를 사용하여 들어가기</DialogDescription>
         </DialogHeader>
 
-        <Form my="4" form={form}>
+        <Form className="my-4" form={form}>
           <FormField
             control={form.control}
             name="code"
@@ -86,9 +88,9 @@ const JoinSquadDialog = (props: JoinSquadDialogProps) => {
           <Button type="button" variant="outline" onClick={() => props.onOpenChange?.(false)}>
             취소
           </Button>
-          <Button type="button" onClick={form.submit} useOnClickLoading>
+          <AsyncButton type="button" onClick={form.submit} shouldLoadingIconShow>
             참여하기
-          </Button>
+          </AsyncButton>
         </DialogFooter>
       </DialogContent>
     </AuthenticatedOnlyDialog>
