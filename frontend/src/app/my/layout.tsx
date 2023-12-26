@@ -53,7 +53,7 @@ const MyLayout = ({ children }: { children: React.ReactNode }) => {
               ))}
             </aside>
 
-            <div className="h-[calc(theme(sizes.mainHeight) - 10rem)] flex flex-1 overflow-hidden">
+            <div className="h-[calc(theme(height.mainHeight) - 10rem)] flex flex-1 overflow-hidden">
               <PageContentMotion key={pathname} className="size-full">
                 <ScrollArea className="size-full">
                   <div className="w-full max-w-2xl px-2.5 pb-10">{children}</div>

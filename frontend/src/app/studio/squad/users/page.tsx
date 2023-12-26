@@ -3,8 +3,6 @@
 import { useAtomValue } from 'jotai'
 import useSWR from 'swr'
 
-import { css } from '@styled-system/css'
-
 import SquadUsersManageDataTable from '@/features/squad/SquadUsersManageDataTable'
 
 import { RaidStudioAPI } from '@/apis'
@@ -31,10 +29,8 @@ const StudioSquadUsersPage = () => {
 
   return (
     <div>
-      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold' })}>공격대 멤버 관리</h1>
-      <p className={css({ color: 'muted.foreground' })}>
-        내 프로필, 대표 캐릭터, 팀 등을 설정할 수 있습니다
-      </p>
+      <h1 className="text-2xl font-bold">공격대 멤버 관리</h1>
+      <p className="text-muted-foreground">내 프로필, 대표 캐릭터, 팀 등을 설정할 수 있습니다</p>
       <br />
 
       <SquadUsersManageDataTable data={squadUsers || []} code={code || ''} isLoading={isLoading} />
