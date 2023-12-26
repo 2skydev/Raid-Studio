@@ -43,7 +43,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
         >
           <TooltipProvider>
             <AppProgressBar options={{ showSpinner: false }} style={progressBarStyleString} />
-            <Toaster />
+            <Toaster closeButton />
             {children}
           </TooltipProvider>
         </Suspense>
