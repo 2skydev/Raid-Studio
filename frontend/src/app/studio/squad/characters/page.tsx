@@ -3,8 +3,6 @@
 import { useAtomValue } from 'jotai'
 import useSWR from 'swr'
 
-import { css } from '@styled-system/css'
-
 import CharacterCardListWithUser from '@/features/character/CharacterCardListWithUser'
 
 import { RaidStudioAPI } from '@/apis'
@@ -20,20 +18,12 @@ const StudioCharactersPage = () => {
 
   return (
     <div>
-      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold' })}>공격대 모든 캐릭터</h1>
-      <p className={css({ color: 'muted.foreground' })}>
+      <h1 className="text-2xl font-bold">공격대 모든 캐릭터</h1>
+      <p className="text-muted-foreground">
         엔드 콘텐츠 골드 획득 횟수를 빠르게 확인할 수 있습니다
       </p>
 
-      <div
-        className={css({
-          mt: '6',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, calc(token(sizes.72) * 2 + token(sizes.4)))',
-          columnGap: '24',
-          rowGap: '16',
-        })}
-      >
+      <div className="grid-cols-[repeat(2, calc(theme(spacing.72) * 2 + theme(spacing.4)))] mt-6 grid gap-x-24 gap-y-16">
         {isLoading && <div>로딩중...</div>}
 
         {data?.map(item => (
