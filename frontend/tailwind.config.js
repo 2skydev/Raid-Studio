@@ -9,8 +9,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      pretendard: ['pretendard'],
-      aquatico: ['aquatico'],
+      pretendard: ['var(--fonts-pretendard)'],
+      aquatico: ['var(--fonts-aquatico)'],
     },
     container: {
       center: true,
@@ -20,6 +20,15 @@ module.exports = {
       },
     },
     extend: {
+      height: ({ theme }) => ({
+        headerHeight: theme('spacing.14'),
+        mainHeight: `calc(100vh - ${theme('spacing.14')} - 1px)`,
+      }),
+      zIndex: {
+        scrollbar: 49,
+        pageProgressBar: 48,
+        header: 10,
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -68,6 +77,10 @@ module.exports = {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 },
+        },
+        backgroundAnimation: {
+          from: { transform: 'translateY(100%) rotate(-50deg)' },
+          to: { transform: 'translateY(calc(-100vh + -100%)) rotate(20deg)' },
         },
       },
       animation: {

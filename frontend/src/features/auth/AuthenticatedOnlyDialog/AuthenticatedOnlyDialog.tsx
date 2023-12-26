@@ -1,13 +1,13 @@
 import { ComponentProps, ReactNode, useEffect } from 'react'
 
-import { Dialog } from '@/components/Dialog'
-import DiscordIcon from '@/components/DiscordIcon'
-import { ToastOptions, useToast } from '@/components/Toast/useToast'
+import { ExternalToast, toast } from 'sonner'
+
+import { Dialog } from '@/components/ui/dialog'
 
 import useAuth from '@/hooks/useAuth'
 
 export interface AuthenticatedOnlyDialogProps extends ComponentProps<typeof Dialog> {
-  errorToastOptions?: ToastOptions
+  errorToastOptions?: ExternalToast
   children: ReactNode
 }
 
@@ -18,7 +18,6 @@ const AuthenticatedOnlyDialog = ({
   children,
   ...props
 }: AuthenticatedOnlyDialogProps) => {
-  const { toast } = useToast()
   const { user } = useAuth()
 
   const internalOpen = Boolean(user && open)
@@ -27,10 +26,7 @@ const AuthenticatedOnlyDialog = ({
     if (!user && open) {
       onOpenChange?.(false)
 
-      toast({
-        icon: <DiscordIcon w="5" h="5" fill="foreground" />,
-        color: '#5662f6',
-        title: '로그인이 필요한 서비스입니다',
+      toast.error('로그인이 필요한 서비스입니다', {
         description: '홈 화면에서 로그인 후 이용해주세요.',
         ...errorToastOptions,
       })
