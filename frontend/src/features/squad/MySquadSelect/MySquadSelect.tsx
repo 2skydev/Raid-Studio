@@ -32,7 +32,7 @@ const MySquadSelect = ({}: MySquadSelectProps) => {
           variant="ghost"
         >
           <SelectValue placeholder="참여된 공격대 없음" />
-          <ChevronsUpDownIcon size="1rem" className="text-muted-foreground" />
+          <ChevronsUpDownIcon className="size-4 opacity-50" />
         </Button>
       </SelectTrigger>
 
