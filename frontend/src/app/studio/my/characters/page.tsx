@@ -2,10 +2,8 @@
 
 import useSWR from 'swr'
 
-import { css } from '@styled-system/css'
-
-import { Badge } from '@/components/Badge'
-import Skeleton from '@/components/Skeleton'
+import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 
 import CharacterCardWithRaidTodoList from '@/features/character/CharacterCardWithRaidTodoList'
 import MyCharactersReloadButton from '@/features/character/MyCharactersReloadButton'
@@ -94,39 +92,27 @@ const StudioCharactersPage = () => {
 
   return (
     <div>
-      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold' })}>내 캐릭터 관리</h1>
-      <p className={css({ color: 'muted.foreground' })}>
-        내 프로필, 대표 캐릭터, 팀 등을 설정할 수 있습니다
-      </p>
+      <h1 className="text-2xl font-bold">내 캐릭터 관리</h1>
+      <p className="text-muted-foreground">내 프로필, 대표 캐릭터, 팀 등을 설정할 수 있습니다</p>
 
-      <div className={css({ mt: '6' })}>
-        <div className={css({ display: 'flex', alignItems: 'center', gap: '2', mb: '6' })}>
-          <MyCharactersReloadButton variant="outline" mr="4" />
+      <div className="mt-6">
+        <div className="mb-6 flex items-center gap-2">
+          <MyCharactersReloadButton variant="outline" className="mr-4" />
 
-          {isLoading && <Skeleton w="40" h="6" rounded="full" />}
+          {isLoading && <Skeleton className="h-6 w-40 rounded-full" />}
 
           {!isLoading && (
             <>
-              <Badge
-                className={css({
-                  '&:hover': {
-                    backgroundColor: 'primary',
-                  },
-                })}
-              >
-                주간 골드: {weekGold.toLocaleString()}골드
-              </Badge>
+              <Badge className="hover:bg-primary">주간 골드: {weekGold.toLocaleString()}골드</Badge>
             </>
           )}
         </div>
 
-        <div
-          className={css({ display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', gap: '4' })}
-        >
+        <div className="flex flex-wrap items-start gap-4">
           {isLoading &&
             Array(9)
               .fill(0)
-              .map((_, index) => <Skeleton key={index} w="80" h="20" />)}
+              .map((_, index) => <Skeleton key={index} className="h-20 w-80" />)}
 
           {!isLoading &&
             characters.map(item => {

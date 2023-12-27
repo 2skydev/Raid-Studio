@@ -1,15 +1,13 @@
 import { ReactNode, useState } from 'react'
 
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
-
-import { Badge } from '@/components/Badge'
+import { Badge } from '@/components/ui/badge'
 
 import RaidLabel from '@/features/raid/RaidLabel'
 
 import useRaids from '@/hooks/useRaids'
 import { Tables } from '@/types/database.types'
 import { RaidDifficulty } from '@/types/raid.types'
+import { cn } from '@/utils'
 
 export interface RaidRootProps {
   children?: ReactNode
@@ -55,18 +53,18 @@ const RaidRoot = ({ name, level = Infinity }: RaidRootProps) => {
     }, [] as Tables<'raids'>[][])
 
   return (
-    <div className={css({ border: 'base', p: '4', rounded: 'md' })}>
-      <div className={css({ fontSize: 'md', fontWeight: 'bold', mb: '4' })}>{name}</div>
+    <div className="rounded-md border p-4">
+      <div className="mb-4 font-bold">{name}</div>
 
-      <div className={css({ spaceY: '2' })}>
+      <div className="space-y-2">
         {raidsGroupByDifficulty.map(raids => {
           const difficulty = raids[0].difficulty
 
           return (
-            <Flex key={difficulty} gap="2" alignItems="center">
+            <div key={difficulty} className="flex items-center gap-2">
               <RaidLabel difficulty={difficulty as RaidDifficulty} />
 
-              <Flex gap="1">
+              <div className="flex gap-1">
                 {raids.map((raid, i) => {
                   const isDisabled = raid.level > level
                   const isActive = routes[i] === difficulty
@@ -75,16 +73,15 @@ const RaidRoot = ({ name, level = Infinity }: RaidRootProps) => {
                     <Badge
                       key={raid.step}
                       variant={isActive ? 'default' : 'outline'}
-                      opacity={isDisabled ? 0.5 : 1}
-                      cursor="pointer"
+                      className={cn('cursor-pointer', isDisabled ? 'opacity-50' : 'opacity-100')}
                       onClick={() => !isDisabled && handleClickBadge(difficulty, i)}
                     >
                       {raid.step}
                     </Badge>
                   )
                 })}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           )
         })}
       </div>

@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
-import { SelectContent } from '@/components/Select'
+import { SelectContent } from '@/components/ui/select'
+
 import useSelectMultiple from '@/components/SelectMultiple/useSelectMultiple'
 
 export interface ContentProps {

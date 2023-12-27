@@ -3,12 +3,11 @@ import { useState } from 'react'
 import { RefreshCwIcon } from 'lucide-react'
 import { useSWRConfig } from 'swr'
 
-import { css } from '@styled-system/css'
-
-import Button, { ButtonProps } from '@/components/Button'
+import { Button, ButtonProps } from '@/components/ui/button'
 
 import { RaidStudioAPI } from '@/apis'
 import useAuth from '@/hooks/useAuth'
+import { cn } from '@/utils'
 
 export interface MyCharactersReloadButtonProps extends ButtonProps {}
 
@@ -34,8 +33,8 @@ const MyCharactersReloadButton = ({ children, ...props }: MyCharactersReloadButt
     <Button onClick={reloadMyCharacters} {...props}>
       {children ?? (
         <>
-          <RefreshCwIcon className={css({ animation: loading ? 'spin' : '' })} size="1rem" />내
-          캐릭터들 정보 갱신
+          <RefreshCwIcon className={cn(loading && 'animate-spin')} size="1rem" />내 캐릭터들 정보
+          갱신
         </>
       )}
     </Button>

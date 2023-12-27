@@ -6,20 +6,16 @@ import { ChevronDownIcon, HourglassIcon, Undo2Icon } from 'lucide-react'
 import Image from 'next/image'
 import { P, match } from 'ts-pattern'
 
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
-import { icon } from '@styled-system/recipes'
-
-import { Badge } from '@/components/Badge'
-import Button from '@/components/Button'
-import { Checkbox } from '@/components/Checkbox'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/DropdownMenu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/Tooltip'
+} from '@/components/ui/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 import RaidLabel from '@/features/raid/RaidLabel'
 
@@ -27,7 +23,6 @@ import { RAIDS } from '@/assets/data/raid'
 import cooldownImage from '@/assets/images/stepCooldown.png'
 import { CharacterWithClears } from '@/schemas/character'
 import { Raid } from '@/types/raid'
-import { getBestGoldRaidStatsByCharacter } from '@/utils/character'
 import dayjs from '@/utils/day'
 
 interface RaidTodoListItem {
@@ -93,7 +88,7 @@ const RaidTodoList = ({ clears, fixedRaidIds, onClear }: RaidTodoListProps) => {
 
   return (
     <div>
-      <div className={css({ spaceY: '2' })}>
+      <div className="space-y-2">
         {raids.slice(0, 3).map(raid => {
           const clearData = clearsMap.get(raid.id)
           const clearSteps = clearData?.map(clear => clear.step) ?? []
@@ -135,10 +130,10 @@ const RaidTodoList = ({ clears, fixedRaidIds, onClear }: RaidTodoListProps) => {
             .exhaustive()
 
           return (
-            <Flex key={raid.id} alignItems="center" justifyContent="space-between">
+            <div key={raid.id} className="flex items-center justify-between">
               <RaidLabel difficulty={raid.difficulty} name={raid.name} />
 
-              <Flex alignItems="center" gap="1">
+              <div className="flex items-center gap-1">
                 {hasCooldown && (
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -150,7 +145,7 @@ const RaidTodoList = ({ clears, fixedRaidIds, onClear }: RaidTodoListProps) => {
                 )}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Badge variant={variant} fontSize="xs" cursor="pointer">
+                    <Badge variant={variant} className="cursor-pointer text-xs">
                       {status}
                     </Badge>
                   </DropdownMenuTrigger>
@@ -158,7 +153,7 @@ const RaidTodoList = ({ clears, fixedRaidIds, onClear }: RaidTodoListProps) => {
                   <DropdownMenuContent>
                     {checked && (
                       <DropdownMenuItem onClick={() => handleClear(raid.id, 0)}>
-                        <Undo2Icon className={icon()} />
+                        <Undo2Icon className="size-4" />
                         되돌리기
                       </DropdownMenuItem>
                     )}
@@ -188,13 +183,13 @@ const RaidTodoList = ({ clears, fixedRaidIds, onClear }: RaidTodoListProps) => {
                     onCheckedChange={() => handleClear(raid.id, raid.steps.length)}
                   />
                 )}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           )
         })}
       </div>
 
-      <Button mt="2" p="0" variant="ghost" w="full" h="6" onClick={() => setShowAll(v => !v)}>
+      <Button className="mt-2 h-6 w-full p-0" variant="ghost" onClick={() => setShowAll(v => !v)}>
         <ChevronDownIcon size="1rem" />
       </Button>
     </div>
