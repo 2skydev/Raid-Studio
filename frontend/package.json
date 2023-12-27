@@ -9,12 +9,7 @@
     "lint": "next lint",
     "prettier": "prettier --write ./src",
     "g": "node generator.mjs",
-    "sb-type": "node scripts.mjs sb-type",
-    "sb-deploy": "node scripts.mjs sb-deploy",
-    "sb": "node scripts.mjs sb",
-    "sb-start": "supabase start --workdir ..",
-    "sb-stop": "supabase stop --workdir ..",
-    "sb-serve": "supabase functions serve --workdir .. --no-verify-jwt"
+    "sb-type": "node scripts.mjs sb-type"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",

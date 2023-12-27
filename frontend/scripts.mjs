@@ -4,10 +4,10 @@ import { copyFile } from 'fs/promises'
 
 const [script] = process.argv.slice(2)
 
-if (!process.env.SUPABASE_PROJECT_ID) {
-  console.error(`Not found "SUPABASE_PROJECT_ID" env variable.`)
-  process.exit(1)
-}
+// if (!process.env.SUPABASE_PROJECT_ID) {
+//   console.error(`Not found "SUPABASE_PROJECT_ID" env variable.`)
+//   process.exit(1)
+// }
 
 switch (script) {
   case 'sb-type': {
