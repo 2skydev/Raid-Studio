@@ -51,7 +51,7 @@ const CharacterCardListWithUser = ({
                 <div className="flex items-center gap-2">
                   <div className="whitespace-nowrap text-xs text-muted-foreground">1 / 3</div>
 
-                  <Button className="size-8 p-0" variant="ghost">
+                  <Button className="!size-8 p-0" variant="ghost">
                     <ChevronDownIcon size="1rem" />
                   </Button>
                 </div>

@@ -27,7 +27,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body className="font-pretendard">
         <Providers>
           <RedirectRegisterPage>
-            <div id="app">
+            <div id="app" vaul-drawer-wrapper="">
               <ScrollArea className="h-screen" type="always">
                 <Header />
                 {children}

@@ -198,16 +198,17 @@ FormMessage.displayName = 'FormMessage'
 export interface FormHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   description?: string
+  divider?: boolean
 }
 
-export const FormHeader = ({ title, description, ...props }: FormHeaderProps) => {
+export const FormHeader = ({ title, description, divider, ...props }: FormHeaderProps) => {
   return (
     <div className="FormHeader" {...props}>
       <h3 className="text-lg font-medium">{title}</h3>
 
       {description && <p className="text-sm text-muted-foreground">{description}</p>}
 
-      <Separator className="my-6" />
+      {divider && <Separator className="my-6" />}
     </div>
   )
 }

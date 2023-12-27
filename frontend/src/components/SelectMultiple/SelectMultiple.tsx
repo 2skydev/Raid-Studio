@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ReactNode, useState } from 'react'
 
-import { Select } from '@/components/Select'
+import { Select } from '@/components/ui/select'
 
 import { SelectMultipleContext } from './useSelectMultiple'
 

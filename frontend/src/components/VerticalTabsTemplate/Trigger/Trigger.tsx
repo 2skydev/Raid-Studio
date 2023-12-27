@@ -1,11 +1,9 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import clsx from 'clsx'
+import { Button, ButtonProps } from '@/components/ui/button'
+import { TabsTrigger } from '@/components/ui/tabs'
 
-import { css } from '@styled-system/css'
-
-import Button, { ButtonProps } from '@/components/Button'
-import { TabsTrigger } from '@/components/Tabs'
+import { cn } from '@/utils'
 
 interface TriggerProps extends ButtonProps {}
 
@@ -17,18 +15,11 @@ const Trigger = ({
   return (
     <TabsTrigger value={value} asChild>
       <Button
-        className={clsx(
-          css({
-            bg: 'none',
-            '&[data-state=active]': {
-              bg: 'muted',
-            },
-          }),
+        className={cn(
+          'w-full justify-start rounded-md bg-none text-primary hover:bg-transparent hover:underline hover:underline-offset-[3px] [&[data-state=active]]:bg-muted',
           className,
         )}
-        w="full"
         variant="ghost"
-        justifyContent="start"
         {...props}
       >
         {props.children}
