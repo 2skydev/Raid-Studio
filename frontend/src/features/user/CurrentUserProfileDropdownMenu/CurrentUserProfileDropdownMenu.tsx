@@ -1,20 +1,17 @@
 'use client'
 
-import { ChevronDownIcon, CogIcon, LogOutIcon, UserCircle2Icon, UserCog2Icon } from 'lucide-react'
+import { ChevronDownIcon, LogOutIcon, UserCircle2Icon, UserCog2Icon } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 
-import { css } from '@styled-system/css'
-import { icon } from '@styled-system/recipes'
-
-import { Avatar, AvatarImage } from '@/components/Avatar'
-import Button from '@/components/Button'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/DropdownMenu'
+} from '@/components/ui/dropdown-menu'
 
 import useAuth from '@/hooks/useAuth'
 
@@ -30,31 +27,31 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" fontSize="xs">
-          <Avatar w="6" h="6">
+        <Button variant="ghost" size="sm" className="text-xs">
+          <Avatar className="!size-6">
             <AvatarImage src={user.profile.photo} alt="profile" />
           </Avatar>
           {user.profile.nickname}
           {user.profile.main_character_name && ` / ${user.profile.main_character_name}`}
-          <ChevronDownIcon size="1rem" className={css({ color: 'muted.foreground' })} />
+          <ChevronDownIcon size="1rem" className="text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent w="40" align="start">
+      <DropdownMenuContent className="w-40" align="start">
         <DropdownMenuItem onClick={() => router.push('/my/profile')}>
-          <UserCircle2Icon className={icon()} />
+          <UserCircle2Icon className="size-4" />
           프로필 설정
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => router.push('/my/character')}>
-          <UserCog2Icon className={icon()} />
+          <UserCog2Icon className="size-4" />
           대표 캐릭터 변경
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem onClick={signOut}>
-          <LogOutIcon className={icon()} />
+          <LogOutIcon className="size-4" />
           로그아웃
         </DropdownMenuItem>
       </DropdownMenuContent>

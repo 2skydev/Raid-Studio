@@ -6,14 +6,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRightFromLineIcon, PlusIcon } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 
-import { css } from '@styled-system/css'
-import { Flex } from '@styled-system/jsx'
-import { h3, muted } from '@styled-system/recipes'
+import { Button } from '@/components/ui/button'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
-import Button from '@/components/Button'
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/Card'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/Form'
-import { Input } from '@/components/Input'
+import AsyncButton from '@/components/AsyncButton'
 
 import LayoutScaleMotion from '@/features/motion/LayoutScaleMotion'
 import PageContentMotion from '@/features/motion/PageContentMotion'
@@ -52,25 +50,25 @@ const RegisterNicknamePage = ({ setStep }: { setStep: SetStep }) => {
 
   return (
     <>
-      <h1 className={h3()}>계정 닉네임 설정</h1>
-      <p className={muted()}>모든 사람에게 표시될 닉네임을 설정합니다</p>
+      <h1 className="text-2xl">계정 닉네임 설정</h1>
+      <p className="text-sm text-muted-foreground">모든 사람에게 표시될 닉네임을 설정합니다</p>
 
       <br />
 
-      <Form w="sm" form={form}>
+      <Form className="w-96" form={form}>
         <FormField
           control={form.control}
           name="nickname"
           render={({ field }) => (
-            <FormItem flex="1">
+            <FormItem className="flex-1">
               <FormControl>
-                <Flex alignItems="center" gap="2">
-                  <Input flex="1" placeholder="닉네임을 입력해주세요" {...field} />
+                <div className="flex items-center gap-2">
+                  <Input className="flex-1" placeholder="닉네임을 입력해주세요" {...field} />
 
-                  <Button type="button" onClick={form.submit} useOnClickLoading>
+                  <AsyncButton type="button" onClick={form.submit} shouldLoadingIconShow>
                     저장하기
-                  </Button>
-                </Flex>
+                  </AsyncButton>
+                </div>
               </FormControl>
 
               <FormMessage />
@@ -87,13 +85,15 @@ const RegisterCharacterPage = ({ setStep }: { setStep: SetStep }) => {
 
   return (
     <>
-      <h1 className={h3()}>대표 캐릭터 등록</h1>
-      <p className={muted()}>공격대 생성, 참여 전에 대표 캐릭터 등록이 필요합니다</p>
+      <h1 className="text-2xl">대표 캐릭터 등록</h1>
+      <p className="text-sm text-muted-foreground">
+        공격대 생성, 참여 전에 대표 캐릭터 등록이 필요합니다
+      </p>
 
       <br />
 
       <UserCharacterNameForm
-        className={css({ w: 'sm' })}
+        className="w-96"
         userId={user!.id}
         characterName=""
         onUpdate={characterName => {
@@ -119,34 +119,34 @@ const RegisterSquadPage = ({ setStep }: { setStep: SetStep }) => {
 
   return (
     <>
-      <h1 className={h3()}>공격대 생성 및 참여</h1>
-      <p className={muted()}>이 단계는 다음에 진행할 수 있습니다.</p>
+      <h1 className="text-2xl">공격대 생성 및 참여</h1>
+      <p className="text-sm text-muted-foreground">이 단계는 다음에 진행할 수 있습니다.</p>
 
       <br />
 
-      <div className={css({ display: 'flex', gap: '2' })}>
-        <Card w="sm" textAlign="left">
+      <div className="flex gap-2">
+        <Card className="w-96 text-left">
           <CardHeader>
-            <CardTitle fontSize="lg">공격대 생성</CardTitle>
+            <CardTitle className="text-lg">공격대 생성</CardTitle>
             <CardDescription>직접 공격대를 생성하여 다른 팀원들을 초대합니다.</CardDescription>
           </CardHeader>
 
           <CardFooter>
-            <Button w="full" onClick={() => setOpenCreateSquadDialog(true)}>
+            <Button className="w-full" onClick={() => setOpenCreateSquadDialog(true)}>
               <PlusIcon size="1rem" />
               생성하기
             </Button>
           </CardFooter>
         </Card>
 
-        <Card w="sm" textAlign="left">
+        <Card className="w-96 text-left">
           <CardHeader>
-            <CardTitle fontSize="lg">공격대 참여</CardTitle>
+            <CardTitle className="text-lg">공격대 참여</CardTitle>
             <CardDescription>다른 사람이 만들어둔 공격대에 참여합니다.</CardDescription>
           </CardHeader>
 
           <CardFooter>
-            <Button w="full" onClick={() => setOpenJoinSquadDialog(true)}>
+            <Button className="w-full" onClick={() => setOpenJoinSquadDialog(true)}>
               <ArrowRightFromLineIcon size="1rem" />
               참여하기
             </Button>
@@ -188,20 +188,11 @@ const RegisterSteps = () => {
   const CurrentStepComponent = STEP_COMPONENTS[step - 1]
 
   return (
-    <div className={css({ w: '100vw', h: 'mainHeight' })}>
-      <LayoutScaleMotion className={css({ w: 'full', h: 'full' })}>
+    <div className="h-mainHeight w-screen">
+      <LayoutScaleMotion className="size-full">
         <PageContentMotion
           key={step}
-          className={css({
-            textAlign: 'center',
-            pb: '10',
-            w: 'full',
-            h: 'calc(100vh - token(sizes.14) - 1px)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          })}
+          className="flex h-[calc(100vh-theme(height.headerHeight)-1px)] w-full flex-col items-center justify-center pb-10 text-center"
         >
           <CurrentStepComponent setStep={setStep} />
         </PageContentMotion>

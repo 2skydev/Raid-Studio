@@ -5,9 +5,6 @@ import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
-import { Flex } from '@styled-system/jsx'
-import { list } from '@styled-system/recipes'
-
 import {
   AlertDialog,
   AlertDialogContent,
@@ -16,8 +13,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogCancel,
-} from '@/components/AlertDialog'
-import Button from '@/components/Button'
+} from '@/components/ui/alert-dialog'
 import {
   Form,
   FormField,
@@ -27,8 +23,10 @@ import {
   FormDescription,
   FormMessage,
   FormHeader,
-} from '@/components/Form'
-import { Input } from '@/components/Input'
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+
+import AsyncButton from '@/components/AsyncButton'
 
 import { RaidStudioAPI } from '@/apis'
 import useCustomForm from '@/hooks/useCustomForm'
@@ -114,18 +112,18 @@ const UserCharacterNameForm = ({
               {!simple && <FormLabel>대표 캐릭터 닉네임</FormLabel>}
 
               <FormControl>
-                <Flex gap="2" alignItems="center">
+                <div className="flex items-center gap-2">
                   <Input placeholder="대표 캐릭터명을 입력해주세요" {...field} />
 
-                  <Button
-                    whiteSpace="nowrap"
+                  <AsyncButton
+                    className="whitespace-nowrap"
                     type="submit"
                     disabled={inputCharacterName === characterName}
                     loading={loading}
                   >
                     검색하기
-                  </Button>
-                </Flex>
+                  </AsyncButton>
+                </div>
               </FormControl>
 
               {!simple && (
@@ -144,6 +142,7 @@ const UserCharacterNameForm = ({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>대표 캐릭터로 등록 하시겠습니까?</AlertDialogTitle>
+
             {mainCharacter && (
               <AlertDialogDescription asChild>
                 <div>
@@ -153,7 +152,7 @@ const UserCharacterNameForm = ({
                   </b>{' '}
                   캐릭터로 등록하시겠습니까?
                   <br />
-                  <ul className={list()}>
+                  <ul className="list-disc">
                     <li>대표 캐릭터는 이후에 변경할 수 있습니다.</li>
                     <li>대표 캐릭터 기준으로 다른 캐릭터들을 불러옵니다.</li>
                     <li>대표 캐릭터 닉네임 변경 시, 다시 등록해야 합니다.</li>
@@ -165,9 +164,9 @@ const UserCharacterNameForm = ({
 
           <AlertDialogFooter>
             <AlertDialogCancel>취소</AlertDialogCancel>
-            <Button onClick={updateMainCharacter} useOnClickLoading>
+            <AsyncButton onClick={updateMainCharacter} shouldLoadingIconShow>
               등록하기
-            </Button>
+            </AsyncButton>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

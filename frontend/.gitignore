@@ -43,9 +43,5 @@ next-env.d.ts
 !.yarn/sdks
 !.yarn/versions
 
-# Panda
-styled-system
-styled-system-static
-
 
 .env

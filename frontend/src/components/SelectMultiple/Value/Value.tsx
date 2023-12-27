@@ -1,42 +1,30 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { css } from '@styled-system/css'
+import { XIcon } from 'lucide-react'
 
-import { Badge } from '@/components/Badge'
-import { SelectValue } from '@/components/Select'
+import { Badge } from '@/components/ui/badge'
+import { SelectValue } from '@/components/ui/select'
+
 import useSelectMultiple from '@/components/SelectMultiple/useSelectMultiple'
 
-const Value = ({ ...props }: ComponentPropsWithoutRef<typeof SelectValue>) => {
-  const { selectedValues } = useSelectMultiple()
+const Value = ({ placeholder, ...props }: ComponentPropsWithoutRef<typeof SelectValue>) => {
+  const { selectedValues, handleClickItem } = useSelectMultiple()
 
   return (
     <SelectValue asChild {...props}>
-      <div
-        className={css({
-          spaceX: '1',
-          mb: '-1',
-          display: 'flex',
-          flexWrap: 'wrap',
-        })}
-      >
+      <div className="flex flex-wrap gap-1">
         {selectedValues.length === 0 && (
-          <div
-            className={css({
-              p: '0.5',
-              leading: '1rem',
-              fontSize: '0.75rem',
-              mb: '1',
-              border: 'base',
-              borderColor: 'transparent!',
-              color: 'muted.foreground',
-            })}
-          >
-            선택된 레이드가 없습니다
+          <div className="border border-transparent p-0.5 text-xs leading-4 text-muted-foreground">
+            {placeholder ?? '선택된 항목이 없습니다'}
           </div>
         )}
         {selectedValues.map(value => (
-          <Badge key={value} variant="secondary" whiteSpace="nowrap" mb="1">
+          <Badge key={value} variant="secondary" className="whitespace-nowrap rounded-md">
             {value}
+            <XIcon
+              className="close pointer-events-auto ml-2 size-3 opacity-30 transition-opacity hover:opacity-60"
+              onClick={() => handleClickItem(value)}
+            />
           </Badge>
         ))}
       </div>

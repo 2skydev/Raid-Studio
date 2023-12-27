@@ -1,12 +1,12 @@
 import { ComponentProps } from 'react'
 
-import { Tabs } from '@/components/Tabs'
+import { Tabs } from '@/components/ui/tabs'
 
 export interface VerticalTabsTemplateProps extends ComponentProps<typeof Tabs> {}
 
 const VerticalTabsTemplate = ({ ...props }: VerticalTabsTemplateProps) => {
   return (
-    <Tabs display="flex" alignItems="flex-start" gap="12" {...props}>
+    <Tabs className="flex items-start gap-12" {...props}>
       {props.children}
     </Tabs>
   )

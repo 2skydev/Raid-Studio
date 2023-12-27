@@ -3,10 +3,14 @@
 import { useAtom } from 'jotai'
 import { ChevronsUpDownIcon } from 'lucide-react'
 
-import { css } from '@styled-system/css'
-
-import Button from '@/components/Button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/Select'
+import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import useAuth from '@/hooks/useAuth'
 import { selectedSquadIdAtom } from '@/stores/selectedSquadIdAtom'
@@ -24,18 +28,11 @@ const MySquadSelect = ({}: MySquadSelectProps) => {
     >
       <SelectTrigger asChild>
         <Button
-          focusRingColor="transparent"
+          className="leading-1 h-auto w-auto border-none px-3 py-1.5 text-xs focus:ring-transparent"
           variant="ghost"
-          w="auto"
-          h="auto"
-          fontSize="xs"
-          border="none"
-          px="3"
-          py="1.5"
-          leading="1"
         >
           <SelectValue placeholder="참여된 공격대 없음" />
-          <ChevronsUpDownIcon size="1rem" className={css({ color: 'muted.foreground' })} />
+          <ChevronsUpDownIcon className="size-4 opacity-50" />
         </Button>
       </SelectTrigger>
 

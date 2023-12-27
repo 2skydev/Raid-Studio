@@ -3,15 +3,15 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { css } from '@styled-system/css'
-import { Container, Divider, Flex } from '@styled-system/jsx'
-
-import Button from '@/components/Button'
-import { ScrollArea } from '@/components/ScrollArea'
+import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
 
 import AuthenticatedOnly from '@/features/auth/AuthenticatedOnly'
 import LayoutScaleMotion from '@/features/motion/LayoutScaleMotion'
 import PageContentMotion from '@/features/motion/PageContentMotion'
+
+import { cn } from '@/utils'
 
 const sideMenuItems = [
   {
@@ -29,34 +29,23 @@ const MyLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthenticatedOnly>
-      <LayoutScaleMotion className={css({ h: 'mainHeight' })}>
-        <Container py="8" h="full">
-          <h1 className={css({ fontSize: '2xl', fontWeight: 'bold' })}>내 설정</h1>
+      <LayoutScaleMotion className="h-mainHeight">
+        <div className="container h-full py-8">
+          <h1 className="text-2xl font-bold">내 설정</h1>
 
-          <p className={css({ color: 'muted.foreground' })}>
+          <p className="text-muted-foreground">
             내 프로필, 대표 캐릭터, 팀 등을 설정할 수 있습니다
           </p>
 
-          <Divider my="6" borderColor="border" />
+          <Separator className="my-6" />
 
-          <Flex spaceX="12">
-            <aside
-              className={css({
-                w: '64',
-                display: 'flex',
-                flexDir: 'column',
-                spaceY: '1',
-                mx: '-4',
-              })}
-            >
+          <div className="flex gap-12">
+            <aside className="-mx-4 flex w-64 flex-col gap-1">
               {sideMenuItems.map(item => (
                 <Button
                   key={item.title}
-                  justifyContent="start"
                   variant="link"
-                  className={css({
-                    bg: item.url === pathname ? 'muted' : undefined,
-                  })}
+                  className={cn('justify-start', item.url === pathname && 'bg-muted')}
                   asChild
                 >
                   <Link href={item.url}>{item.title}</Link>
@@ -64,27 +53,15 @@ const MyLayout = ({ children }: { children: React.ReactNode }) => {
               ))}
             </aside>
 
-            <div
-              className={css({
-                flex: 1,
-                h: 'calc(token(sizes.mainHeight) - 10rem)',
-                overflow: 'hidden',
-              })}
-            >
-              <PageContentMotion
-                key={pathname}
-                className={css({
-                  w: 'full',
-                  h: 'full',
-                })}
-              >
-                <ScrollArea w="full" h="full">
-                  <div className={css({ w: '2xl', pb: '10', px: '2.5' })}>{children}</div>
+            <div className="h-[calc(theme(height.mainHeight) - 10rem)] flex flex-1 overflow-hidden">
+              <PageContentMotion key={pathname} className="size-full">
+                <ScrollArea className="size-full">
+                  <div className="w-full max-w-2xl px-2.5 pb-10">{children}</div>
                 </ScrollArea>
               </PageContentMotion>
             </div>
-          </Flex>
-        </Container>
+          </div>
+        </div>
       </LayoutScaleMotion>
     </AuthenticatedOnly>
   )

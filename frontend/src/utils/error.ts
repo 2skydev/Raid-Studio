@@ -1,6 +1,7 @@
-import { ToastOptions, toast } from '@/components/Toast/useToast'
+import { ExternalToast, toast } from 'sonner'
 
-export const showErrorToast = async (error: any, options?: ToastOptions) => {
+export const showErrorToast = async (error: any, options?: ExternalToast & { title?: string }) => {
+  const title = options?.title || '요청 중 오류가 발생했습니다.'
   let message = '알 수 없는 오류가 발생했습니다.'
 
   if (!options?.description) {
@@ -19,9 +20,7 @@ export const showErrorToast = async (error: any, options?: ToastOptions) => {
     }
   }
 
-  toast({
-    status: 'error',
-    title: '요청 중 오류가 발생했습니다.',
+  toast.error(title, {
     description: message,
     ...options,
   })

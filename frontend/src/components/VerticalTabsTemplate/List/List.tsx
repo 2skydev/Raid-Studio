@@ -1,17 +1,16 @@
-import { styled } from '@styled-system/jsx'
+import { ComponentProps } from 'react'
 
-import { TabsList } from '@/components/Tabs'
+import { TabsList } from '@/components/ui/tabs'
 
-const List = styled(TabsList, {
-  base: {
-    display: 'flex',
-    flexDir: 'column',
-    spaceY: '1',
-    h: 'auto',
-    bg: 'none',
-    p: '0',
-    mx: '-4',
-  },
-})
+import { cn } from '@/utils'
+
+const List = ({ className, ...props }: ComponentProps<typeof TabsList>) => {
+  return (
+    <TabsList
+      className={cn('-mx-4 flex h-auto flex-col gap-1 bg-transparent p-0', className)}
+      {...props}
+    />
+  )
+}
 
 export default List

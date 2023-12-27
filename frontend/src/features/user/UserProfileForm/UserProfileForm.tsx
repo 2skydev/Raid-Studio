@@ -3,8 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
-import { Avatar, AvatarImage } from '@/components/Avatar'
-import Button from '@/components/Button'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   Form,
   FormField,
@@ -14,8 +13,10 @@ import {
   FormDescription,
   FormMessage,
   FormHeader,
-} from '@/components/Form'
-import { Input } from '@/components/Input'
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+
+import AsyncButton from '@/components/AsyncButton'
 
 import { RaidStudioAPI } from '@/apis'
 import useAuth from '@/hooks/useAuth'
@@ -62,7 +63,7 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
         </FormDescription>
 
         <FormControl>
-          <Avatar>
+          <Avatar className="size-10">
             <AvatarImage src={photo} alt="profile" />
           </Avatar>
         </FormControl>
@@ -86,9 +87,9 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
         )}
       />
 
-      <Button type="button" onClick={form.submit} useOnClickLoading>
+      <AsyncButton type="button" onClick={form.submit} shouldLoadingIconShow>
         저장하기
-      </Button>
+      </AsyncButton>
     </Form>
   )
 }

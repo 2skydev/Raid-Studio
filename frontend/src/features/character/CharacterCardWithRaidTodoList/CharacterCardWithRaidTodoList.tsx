@@ -1,12 +1,10 @@
 import { CogIcon } from 'lucide-react'
 
-import { Flex } from '@styled-system/jsx'
-
-import Button from '@/components/Button'
-import { Separator } from '@/components/Separator'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 
 import CharacterCard from '@/features/character/CharacterCard'
-import CharacterConfigDialog from '@/features/character/CharacterConfigDialog'
+import CharacterConfigDrawer from '@/features/character/CharacterConfigDrawer'
 import CharacterProfile, { CharacterProfileProps } from '@/features/character/CharacterProfile'
 import RaidTodoList, { RaidTodoListProps } from '@/features/raid/RaidTodoList'
 
@@ -28,19 +26,19 @@ const CharacterCardWithRaidTodoList = ({
 
   return (
     <CharacterCard>
-      <Flex alignItems="center" justifyContent="space-between">
+      <div className="flex items-center justify-between">
         <CharacterProfile characterClassName={characterClassName} name={name} level={level} />
 
-        <Button w="8" h="8" p="0" variant="ghost" onClick={() => setOpen(true)}>
+        <Button className="!size-8 p-0" variant="ghost" onClick={() => setOpen(true)}>
           <CogIcon size="1rem" />
         </Button>
-      </Flex>
+      </div>
 
-      <Separator my="3" />
+      <Separator className="my-3" />
 
       <RaidTodoList clears={clears} fixedRaidIds={fixedRaidIds} onClear={onClear} />
 
-      <CharacterConfigDialog characterName={name} open={open} onOpenChange={handleOpenChange} />
+      <CharacterConfigDrawer characterName={name} open={open} onOpenChange={handleOpenChange} />
     </CharacterCard>
   )
 }
