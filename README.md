@@ -21,16 +21,18 @@ RAID STUDIO의 주 목적은 로스트아크의 레이드 클리어 현황을 �
 [![Made with Supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
 
 - [supabase](https://supabase.com) / backend platform (auth, db, api, edge functions, storage ...)
-- discord-oauth
-- vercel
 - nextjs
 - typescript
-- react
+- jotai / global state manage
+- zod / form validation
+- [lucide-react](https://lucide.dev/icons) / react icons
 - [tailwindcss](https://tailwindcss.com)
-- [shadcn-ui](https://ui.shadcn.com) / UI Component
+- [shadcn-ui](https://ui.shadcn.com) / ui components
 - [framer-motion](https://www.framer.com/motion) / animation js
 - [swr](https://swr.vercel.app/ko) / api state manager
 - [react-hook-form](https://react-hook-form.com) / form state manager
+- discord-oauth
+- vercel
 
 <br />
 
