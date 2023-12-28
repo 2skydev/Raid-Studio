@@ -45,6 +45,7 @@ INSERT INTO
 INSERT INTO
   auth.identities (
     id,
+    provider_id,
     user_id,
     identity_data,
     provider,
@@ -54,6 +55,7 @@ INSERT INTO
   ) (
     select
       uuid_generate_v4(),
+      id,
       id,
       format('{"sub":"%s","email":"%s"}', id::text, email)::jsonb,
       'email',
