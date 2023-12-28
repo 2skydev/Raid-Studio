@@ -126,7 +126,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-destructive', className)}
+      className={cn(error && 'text-destructive', 'text-base', className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -164,7 +164,7 @@ const FormDescription = React.forwardRef<
     <Comp
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-sm text-muted-foreground', className)}
+      className={cn('text-xs text-muted-foreground', className)}
       {...props}
     />
   )
@@ -201,7 +201,7 @@ export interface FormHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   divider?: boolean
 }
 
-export const FormHeader = ({ title, description, divider, ...props }: FormHeaderProps) => {
+export const FormHeader = ({ title, description, divider = true, ...props }: FormHeaderProps) => {
   return (
     <div className="FormHeader" {...props}>
       <h3 className="text-lg font-medium">{title}</h3>
