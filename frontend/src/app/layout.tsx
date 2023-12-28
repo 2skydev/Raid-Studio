@@ -1,15 +1,21 @@
 import type { Metadata } from 'next'
 
+import dynamic from 'next/dynamic'
+
 import { ScrollArea } from '@/components/ui/scroll-area'
 
+import FullscreenLoading from '@/components/FullscreenLoading'
 import Header from '@/components/Header'
-
-import RedirectRegisterPage from '@/features/auth/RedirectRegisterPage'
 
 import Providers from '@/app/providers'
 import AquaticoFont from '@/assets/fonts/Aquatico'
 import PretendardFont from '@/assets/fonts/Pretendard'
 import '@/styles/global.css'
+
+const RedirectRegisterPage = dynamic(() => import('@/features/auth/RedirectRegisterPage'), {
+  ssr: false,
+  loading: () => <FullscreenLoading />,
+})
 
 export const metadata: Metadata = {
   title: 'RAID STUDIO',
