@@ -16,22 +16,14 @@ const RedirectRegisterPage = ({ children }: RedirectRegisterPageProps) => {
   const pathname = usePathname()
   const { user } = useAuth()
 
-  useEffect(() => {
-    if (
-      user &&
-      (!user.profile?.nickname || !user.profile?.main_character_name) &&
-      pathname !== '/register/steps'
-    ) {
-      router.replace('/register/steps')
-    }
-  }, [user, pathname])
+  const hasRequireData = user?.profile?.nickname && user?.profile?.main_character_name
+  const isNeedRedirect = user && !hasRequireData && pathname !== '/register/steps'
 
-  if (
-    user &&
-    (!user.profile?.nickname || !user.profile?.main_character_name) &&
-    pathname !== '/register/steps'
-  )
-    return null
+  useEffect(() => {
+    if (isNeedRedirect) router.replace('/register/steps')
+  }, [isNeedRedirect])
+
+  if (isNeedRedirect) return null
 
   return children
 }

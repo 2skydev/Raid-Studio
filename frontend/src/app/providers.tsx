@@ -3,12 +3,13 @@
 import { ReactNode, Suspense } from 'react'
 
 import { Provider as JotaiProvider } from 'jotai'
-import { Loader2Icon } from 'lucide-react'
 import { AppProgressBar } from 'next-nprogress-bar'
 import { ThemeProvider } from 'next-themes'
 
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
+
+import FullscreenLoading from '@/components/FullscreenLoading'
 
 import { theme } from '@/styles/theme'
 
@@ -34,13 +35,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <JotaiProvider>
-        <Suspense
-          fallback={
-            <div className="flex h-screen w-screen items-center justify-center">
-              <Loader2Icon className="animate-spin" />
-            </div>
-          }
-        >
+        <Suspense fallback={<FullscreenLoading />}>
           <TooltipProvider>
             <AppProgressBar options={{ showSpinner: false }} style={progressBarStyleString} />
             <Toaster closeButton />
