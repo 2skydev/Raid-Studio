@@ -77,3 +77,15 @@
     -webkit-text-size-adjust: 100%;
   }
 }
+
+.filepond--panel-root {
+  @apply bg-muted;
+}
+
+.filepond--drop-label label {
+  @apply text-sm text-muted-foreground;
+}
+
+.filepond--credits {
+  @apply !text-primary;
+}

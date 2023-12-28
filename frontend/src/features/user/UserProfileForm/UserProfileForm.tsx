@@ -1,5 +1,7 @@
 'use client'
 
+import { FilePond } from 'react-filepond'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -34,6 +36,7 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
   const form = useCustomForm({
     resolver: zodResolver(UpdateProfileFormSchema),
     defaultValues: {
+      photo,
       nickname,
     },
     onSubmit: async values => {
@@ -62,11 +65,21 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
           다른 사람들에게 표시될 프로필 사진입니다. 사진은 변경할 수 없습니다.
         </FormDescription>
 
-        <FormControl>
-          <Avatar className="size-10">
-            <AvatarImage src={photo} alt="profile" />
-          </Avatar>
-        </FormControl>
+        <FilePond
+          files={[photo]}
+          // className="size-[80px]"
+          // imagePreviewHeight={100}
+          // imageCropAspectRatio="1:1"
+          // imageResizeMode="cover"
+          // imageResizeTargetHeight={100}
+          // imageResizeTargetWidth={100}
+          // stylePanelLayout="compact circle"
+          // stylePanelAspectRatio="1:1"
+          // imagePreviewMaxHeight={100}
+          imageTransformOutputQuality={0}
+          acceptedFileTypes={['image/*']}
+          labelIdle="프로필 사진을 업로드해주세요"
+        />
       </FormItem>
 
       <FormField

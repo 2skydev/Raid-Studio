@@ -1,4 +1,4 @@
 {
-  "deno.enable": true,
+  "deno.enablePaths": ["./apis", "./shared"],
   "editor.defaultFormatter": "denoland.vscode-deno"
 }
