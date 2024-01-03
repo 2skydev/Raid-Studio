@@ -82,6 +82,11 @@
   @apply bg-muted;
 }
 
+.filepond--drop-label,
+.filepond--file-action-button {
+  @apply cursor-pointer;
+}
+
 .filepond--drop-label label {
   @apply text-sm text-muted-foreground;
 }

@@ -70,7 +70,7 @@ export const updateCurrentUserProfile = async (
     } = await supabase.auth.getSession()
 
     if (!session) throw '로그인이 필요합니다.'
-    // if (checkTestUser(session.user)) throw '테스트 계정은 프로필을 수정할 수 없습니다.'
+    if (checkTestUser(session.user)) throw '테스트 계정은 프로필을 수정할 수 없습니다.'
 
     if (photoFile) {
       const res = await supabase.storage
@@ -79,13 +79,19 @@ export const updateCurrentUserProfile = async (
           upsert: true,
         })
 
-      if (res.error) throw '프로필 사진 업로드에 실패했습니다.'
+      if (res.error) {
+        if (res.error.message.includes('The object exceeded the maximum allowed size')) {
+          throw '프로필 사진의 최대 용량은 1MB입니다.'
+        }
+
+        throw '프로필 사진 업로드에 실패했습니다.'
+      }
 
       const {
         data: { publicUrl },
       } = supabase.storage.from('profile-photo').getPublicUrl(res.data.path)
 
-      data.photo = publicUrl
+      data.photo = publicUrl + '?t=' + Date.now()
     }
 
     const { error } = await supabase.from('profiles').update(data).eq('id', session.user.id)

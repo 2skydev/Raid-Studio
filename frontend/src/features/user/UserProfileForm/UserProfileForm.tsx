@@ -27,7 +27,6 @@ import useAuth from '@/hooks/useAuth'
 import useCustomForm from '@/hooks/useCustomForm'
 import { UpdateProfileFormSchema } from '@/schemas/profiles'
 import { Tables } from '@/types/database.types'
-import { showErrorToast } from '@/utils/error'
 
 export interface UserProfileFormProps extends Pick<Tables<'profiles'>, 'nickname' | 'photo'> {
   className?: string
@@ -36,9 +35,8 @@ export interface UserProfileFormProps extends Pick<Tables<'profiles'>, 'nickname
 const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) => {
   const { user, setUser } = useAuth<true>()
 
-  const [files, setFiles] = useState<FilePondFile[]>([])
-
-  console.log(files)
+  // @ts-ignore: FilePondFile[] is not assignable to FilePondInitialFile[]
+  const [files, setFiles] = useState<FilePondFile[]>([photo])
 
   const form = useCustomForm({
     resolver: zodResolver(UpdateProfileFormSchema),
@@ -48,10 +46,10 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
     },
     onSubmit: async values => {
       try {
-        const { photo } = await RaidStudioAPI.profiles.updateCurrentUserProfile(
-          values,
-          files?.[0]?.file as File | undefined,
-        )
+        const photoFile =
+          files[0] && typeof files[0].source === 'string' ? undefined : (files[0].file as File)
+
+        const { photo } = await RaidStudioAPI.profiles.updateCurrentUserProfile(values, photoFile)
 
         setUser({
           ...user,
@@ -72,15 +70,12 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
       <FormItem>
         <FormLabel>프로필 사진</FormLabel>
 
-        <FormDescription>
-          다른 사람들에게 표시될 프로필 사진입니다. 사진은 변경할 수 없습니다.
-        </FormDescription>
+        <FormDescription>다른 사람들에게 표시될 프로필 사진입니다. (최대 1MB)</FormDescription>
 
         <FilePond
+          // @ts-ignore: FilePondFile[] is not assignable to FilePondInitialFile[]
           files={files}
           onupdatefiles={setFiles}
-          imageResizeMode="cover"
-          imageTransformOutputQuality={0}
           acceptedFileTypes={['image/*']}
           labelIdle="프로필 사진을 업로드해주세요"
         />
