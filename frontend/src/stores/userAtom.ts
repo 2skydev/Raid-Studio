@@ -33,6 +33,7 @@ export const getUserAtomValue = async () => {
           memberId: session.user.id,
           name: profile.nickname,
           avatarUrl: profile.photo,
+          email: session.user.email as string,
         },
       })
     }
