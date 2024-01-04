@@ -15,6 +15,8 @@ import {
 
 import CharacterClassIcon from '@/features/character/CharacterClassIcon'
 
+import { cn } from '@/utils'
+
 const studioSubMenus = [
   {
     url: '/studio/my/characters',
@@ -116,7 +118,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/squad/list" className={navigationMenuTriggerStyle()}>
+            <Link href="/squad/list" className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}>
               공개된 공격대 목록
             </Link>
           </NavigationMenuLink>

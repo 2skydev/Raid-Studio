@@ -1,9 +1,13 @@
 'use client'
 
+import { useState } from 'react'
+import { FilePond } from 'react-filepond'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { FilePondFile } from 'filepond'
+import { toast } from 'sonner'
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   Form,
   FormField,
@@ -31,23 +35,33 @@ export interface UserProfileFormProps extends Pick<Tables<'profiles'>, 'nickname
 const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) => {
   const { user, setUser } = useAuth<true>()
 
+  // @ts-ignore: FilePondFile[] is not assignable to FilePondInitialFile[]
+  const [files, setFiles] = useState<FilePondFile[]>([photo])
+
   const form = useCustomForm({
     resolver: zodResolver(UpdateProfileFormSchema),
     defaultValues: {
+      photo,
       nickname,
     },
     onSubmit: async values => {
       try {
-        await RaidStudioAPI.profiles.updateCurrentUserProfile(values)
+        const photoFile =
+          files[0] && typeof files[0].source === 'string' ? undefined : (files[0].file as File)
+
+        const { photo } = await RaidStudioAPI.profiles.updateCurrentUserProfile(values, photoFile)
 
         setUser({
           ...user,
           profile: {
             ...user.profile,
             ...values,
+            photo: photo || user.profile.photo,
           },
         })
-      } catch (error) {}
+
+        toast.success('프로필이 업데이트되었습니다.')
+      } catch (e) {}
     },
   })
 
@@ -58,15 +72,15 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
       <FormItem>
         <FormLabel>프로필 사진</FormLabel>
 
-        <FormDescription>
-          다른 사람들에게 표시될 프로필 사진입니다. 사진은 변경할 수 없습니다.
-        </FormDescription>
+        <FormDescription>다른 사람들에게 표시될 프로필 사진입니다. (최대 1MB)</FormDescription>
 
-        <FormControl>
-          <Avatar className="size-10">
-            <AvatarImage src={photo} alt="profile" />
-          </Avatar>
-        </FormControl>
+        <FilePond
+          // @ts-ignore: FilePondFile[] is not assignable to FilePondInitialFile[]
+          files={files}
+          onupdatefiles={setFiles}
+          acceptedFileTypes={['image/*']}
+          labelIdle="프로필 사진을 업로드해주세요"
+        />
       </FormItem>
 
       <FormField
