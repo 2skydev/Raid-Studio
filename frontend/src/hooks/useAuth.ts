@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import { useRouter } from 'next-nprogress-bar'
 
+import { channelTalk } from '@/lib/channelTalk'
 import { supabase } from '@/lib/supabase'
 import { getUserAtomValue, userAtom } from '@/stores/userAtom'
 import { NonNullableDeep } from '@/types/util.types'
@@ -19,6 +20,9 @@ const useAuth = <Authenticated extends boolean = false>() => {
     await supabase.auth.signOut()
     router.push('/')
     setUser(null)
+    channelTalk.updateUser({
+      profile: null,
+    })
   }
 
   const reload = async () => {

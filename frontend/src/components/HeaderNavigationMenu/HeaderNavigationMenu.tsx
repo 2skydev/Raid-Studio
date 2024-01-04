@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, HTMLAttributes } from 'react'
 
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -15,36 +15,39 @@ import {
 
 import CharacterClassIcon from '@/features/character/CharacterClassIcon'
 
+import { channelTalk } from '@/lib/channelTalk'
+import { cn } from '@/utils'
+
 const studioSubMenus = [
   {
     url: '/studio/my/characters',
-    title: '클리어 관리',
-    description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
+    title: '내 레이드 관리',
+    description: '내 모든 캐릭터의 레이드 현황 관리 및 설정을 구성합니다.',
+  },
+  {
+    url: '/studio/squad/characters',
+    title: '공격대 - 모든 캐릭터',
+    description: '내 공격대의 모든 멤버의 캐릭터별 레이드 현황을 살펴봅니다.',
+  },
+  {
+    url: '/studio/squad/users',
+    title: '공격대 - 멤버 관리',
+    description: '내 공격대의 모든 멤버를 찾아보거나 관리합니다.',
   },
   {
     url: '/studio/my/characters',
-    title: '클리어 관리',
-    description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
+    title: '임시 메뉴 1',
+    description: '임시 메뉴 설명입니다 임시 메뉴 설명입니다 임시 메뉴 설명입니다',
   },
   {
     url: '/studio/my/characters',
-    title: '클리어 관리',
-    description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
+    title: '임시 메뉴 2',
+    description: '임시 메뉴 설명입니다 임시 메뉴 설명입니다 임시 메뉴 설명입니다',
   },
   {
     url: '/studio/my/characters',
-    title: '클리어 관리',
-    description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
-  },
-  {
-    url: '/studio/my/characters',
-    title: '클리어 관리',
-    description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
-  },
-  {
-    url: '/studio/my/characters',
-    title: '클리어 관리',
-    description: '클리어한 레이드, 어비스 던전 등을 관리합니다.',
+    title: '임시 메뉴 3',
+    description: '임시 메뉴 설명입니다 임시 메뉴 설명입니다 임시 메뉴 설명입니다',
   },
 ]
 
@@ -62,7 +65,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="grid-span-3">
+              <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
                     className="text-decoration-none flex size-full select-none flex-col justify-center rounded-md bg-gradient-to-b from-muted/50 to-muted p-4 outline-none focus:shadow-md"
@@ -92,7 +95,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
                 &quot;참여 코드를 얻는 방법&quot; 같은 자주 묻는 질문들을 확인할 수 있습니다.
               </ListItem>
 
-              <ListItem href="/" title="문의하기">
+              <ListItem title="문의하기" onClick={() => channelTalk.openChat()}>
                 새로운 기능 제안, 버그 제보 등을 할 수 있습니다.
               </ListItem>
             </ul>
@@ -116,7 +119,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/squad/list" className={navigationMenuTriggerStyle()}>
+            <Link href="/squad/list" className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}>
               공개된 공격대 목록
             </Link>
           </NavigationMenuLink>
@@ -126,17 +129,21 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
   )
 }
 
-interface ListItemProps extends ComponentProps<typeof Link> {
+interface ListItemProps extends Omit<ComponentProps<typeof Link>, 'href'> {
   title: string
+  href?: string
 }
 
 const ListItem = ({ title, className, children, ...props }: ListItemProps) => {
+  const Wrapper = props.href ? Link : 'button'
+
   return (
     <li>
       <NavigationMenuLink asChild>
-        <Link
+        {/* @ts-ignore */}
+        <Wrapper
           className={clsx(
-            'block select-none space-y-1 rounded-md bg-transparent p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            'block select-none space-y-1 rounded-md bg-transparent p-3 text-left leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
             className,
           )}
           {...props}
@@ -145,7 +152,7 @@ const ListItem = ({ title, className, children, ...props }: ListItemProps) => {
             <div className="text-sm font-medium leading-none">{title}</div>
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
           </div>
-        </Link>
+        </Wrapper>
       </NavigationMenuLink>
     </li>
   )
