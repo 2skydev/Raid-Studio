@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, Suspense } from 'react'
+import { ReactNode, Suspense, useEffect } from 'react'
 import { registerPlugin } from 'react-filepond'
 
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
@@ -15,6 +15,7 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 
 import FullscreenLoading from '@/components/FullscreenLoading'
 
+import { channelTalk } from '@/lib/channelTalk'
 import { theme } from '@/styles/theme'
 
 const progressBarStyleString = `
@@ -38,6 +39,10 @@ const progressBarStyleString = `
 registerPlugin(FilePondPluginImagePreview)
 
 const Providers = ({ children }: { children: ReactNode }) => {
+  useEffect(() => {
+    channelTalk.init()
+  }, [])
+
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <JotaiProvider>
