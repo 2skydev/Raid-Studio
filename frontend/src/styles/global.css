@@ -83,6 +83,7 @@
 }
 
 .filepond--drop-label,
+.filepond--drop-label label,
 .filepond--file-action-button {
   @apply cursor-pointer;
 }

@@ -1,13 +1,13 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { FilePond } from 'react-filepond'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
-import { FilePondFile, FilePondInitialFile } from 'filepond'
+import { FilePondFile } from 'filepond'
+import { toast } from 'sonner'
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   Form,
   FormField,
@@ -59,6 +59,8 @@ const UserProfileForm = ({ nickname, photo, className }: UserProfileFormProps) =
             photo: photo || user.profile.photo,
           },
         })
+
+        toast.success('프로필이 업데이트되었습니다.')
       } catch (e) {}
     },
   })

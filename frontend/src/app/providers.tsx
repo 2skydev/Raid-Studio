@@ -3,11 +3,8 @@
 import { ReactNode, Suspense } from 'react'
 import { registerPlugin } from 'react-filepond'
 
-import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import FilePondPluginImageResize from 'filepond-plugin-image-resize'
-import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
 import 'filepond/dist/filepond.min.css'
 import { Provider as JotaiProvider } from 'jotai'
 import { AppProgressBar } from 'next-nprogress-bar'
@@ -38,12 +35,7 @@ const progressBarStyleString = `
 }
 `
 
-registerPlugin(
-  FilePondPluginImagePreview,
-  FilePondPluginImageTransform,
-  FilePondPluginImageResize,
-  FilePondPluginImageCrop,
-)
+registerPlugin(FilePondPluginImagePreview)
 
 const Providers = ({ children }: { children: ReactNode }) => {
   return (

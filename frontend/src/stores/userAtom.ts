@@ -18,13 +18,17 @@ export const getUserAtomValue = async () => {
 
   if (!session) return null
 
+  let squadNames: SquadName[] = []
   const profile = await RaidStudioAPI.profiles.getUserProfile(session.user.id)
-  const squadNames = await RaidStudioAPI.squads.getSquadNames(session.user.id)
+
+  if (profile) {
+    squadNames = (await RaidStudioAPI.squads.getSquadNames(session.user.id)) || []
+  }
 
   return {
     id: session.user.id,
     profile,
-    squadNames: squadNames || [],
+    squadNames,
   }
 }
 

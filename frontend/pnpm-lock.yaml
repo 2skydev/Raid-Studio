@@ -86,18 +86,9 @@ dependencies:
   filepond:
     specifier: ^4.30.6
     version: 4.30.6
-  filepond-plugin-image-crop:
-    specifier: ^2.0.6
-    version: 2.0.6(filepond@4.30.6)
   filepond-plugin-image-preview:
     specifier: ^4.6.12
     version: 4.6.12(filepond@4.30.6)
-  filepond-plugin-image-resize:
-    specifier: ^2.0.10
-    version: 2.0.10(filepond@4.30.6)
-  filepond-plugin-image-transform:
-    specifier: ^3.8.7
-    version: 3.8.7(filepond@4.30.6)
   framer-motion:
     specifier: ^10.16.4
     version: 10.16.5(react-dom@18.2.0)(react@18.2.0)
@@ -3186,34 +3177,10 @@ packages:
       flat-cache: 3.2.0
     dev: true
 
-  /filepond-plugin-image-crop@2.0.6(filepond@4.30.6):
-    resolution: {integrity: sha512-bSy/KND4EP/QtW8MxIj23qgSEPUVRrT8XdktJ+OU9y8xRjFjTG+qcuw1LsycARQYRtzi8cZrD3P4POOITfkywQ==}
-    peerDependencies:
-      filepond: '>=3.x <5.x'
-    dependencies:
-      filepond: 4.30.6
-    dev: false
-
   /filepond-plugin-image-preview@4.6.12(filepond@4.30.6):
     resolution: {integrity: sha512-Y8ETX5QVV0mbPB0586UH8AUmG9tZg8PuN5bdEAIlZVJFTct5ebViJ7+Am94/VhTPjLqZjBf1zmDq5JU6XRsZKw==}
     peerDependencies:
       filepond: '>=4.x <5.x'
-    dependencies:
-      filepond: 4.30.6
-    dev: false
-
-  /filepond-plugin-image-resize@2.0.10(filepond@4.30.6):
-    resolution: {integrity: sha512-irX+J275u8Ph1KcciCeSQmxeFjbu0+co5XVCkiwdSNnz6KiqrCKN7RXTvEbdgSdDzyi5omr2oP1rKWps5L1RsQ==}
-    peerDependencies:
-      filepond: '>=3.x <5.x'
-    dependencies:
-      filepond: 4.30.6
-    dev: false
-
-  /filepond-plugin-image-transform@3.8.7(filepond@4.30.6):
-    resolution: {integrity: sha512-vgKwyIDG2y5twanf7YpqZvxkaLudTjwd9vRcoq5sQDB8egUlX5/NA0bQ0823pocrm0fjbFeetICu44mkqeDkIA==}
-    peerDependencies:
-      filepond: '>=3.6.0 <5.x'
     dependencies:
       filepond: 4.30.6
     dev: false

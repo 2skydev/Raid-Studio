@@ -74,7 +74,7 @@ export const updateCurrentUserProfile = async (
 
     if (photoFile) {
       const res = await supabase.storage
-        .from('profile-photo')
+        .from('profile-photos')
         .upload(`${session.user.id}.png`, photoFile, {
           upsert: true,
         })
@@ -89,7 +89,7 @@ export const updateCurrentUserProfile = async (
 
       const {
         data: { publicUrl },
-      } = supabase.storage.from('profile-photo').getPublicUrl(res.data.path)
+      } = supabase.storage.from('profile-photos').getPublicUrl(res.data.path)
 
       data.photo = publicUrl + '?t=' + Date.now()
     }
