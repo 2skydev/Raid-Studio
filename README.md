@@ -2,7 +2,7 @@
 
 RAID STUDIO의 주 목적은 로스트아크의 레이드 클리어 현황을 고정 파티와 공유입니다. 이외에도 현재 특정 레이드 참여 가능한 고정 공대원 찾기, Discord 봇을 이용한 참여 가능 여부 확인 등 여러가지의 유용한 기능을 제공합니다.
 
-![image](https://github.com/2skydev/Raid-Studio/assets/43225384/68c0553f-fd83-4fc9-b0a6-f7f7c34dcefa)
+![homepage](https://github.com/2skydev/Raid-Studio/assets/43225384/46a01a3f-ab12-439a-afff-01a7f102cb6d)
 
 <br />
 
