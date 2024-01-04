@@ -1,6 +1,7 @@
 'use client'
 
-import { ChevronDownIcon, LogOutIcon, UserCircle2Icon, UserCog2Icon } from 'lucide-react'
+import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
+import { ChevronDownIcon } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
@@ -28,7 +29,7 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="text-xs">
-          <Avatar className="!size-6">
+          <Avatar className="size-6">
             <AvatarImage src={user.profile.photo} alt="profile" />
           </Avatar>
           {user.profile.nickname}
@@ -37,21 +38,31 @@ const CurrentUserProfileDropdownMenu = ({}: CurrentUserProfileDropdownMenuProps)
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-40" align="start">
-        <DropdownMenuItem onClick={() => router.push('/my/profile')}>
-          <UserCircle2Icon className="size-4" />
-          프로필 설정
-        </DropdownMenuItem>
+      <DropdownMenuContent className="min-w-52" align="start">
+        <DropdownMenuLabel className="flex items-center gap-3 p-2">
+          <Avatar className="size-8">
+            <AvatarImage src={user.profile.photo} alt="profile" />
+          </Avatar>
+
+          <div className="space-y-1">
+            <div className="text-sm font-medium leading-none">{user.profile.nickname}</div>
+            <div className="text-xs leading-none text-muted-foreground">
+              {user.profile.main_character_name}
+            </div>
+          </div>
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem onClick={() => router.push('/my/profile')}>프로필 설정</DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => router.push('/my/character')}>
-          <UserCog2Icon className="size-4" />
           대표 캐릭터 변경
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={signOut}>
-          <LogOutIcon className="size-4" />
+        <DropdownMenuItem className="text-red-500" onClick={signOut}>
           로그아웃
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -2,6 +2,7 @@ import { Router } from 'oak'
 import { State } from '../index.ts'
 import { nanoid } from 'nanoid'
 import { supabaseAdmin } from '../client.ts'
+import { checkTestSquadName, checkTestUser } from '../../_shared/utils/test.ts'
 
 export const squadsRouter = new Router<State>()
 
@@ -12,6 +13,10 @@ squadsRouter.post('/', async (ctx) => {
 
   if (!user) {
     return ctx.throw(401, '로그인 후 이용해주세요.')
+  }
+
+  if (checkTestUser(user)) {
+    return ctx.throw(403, '테스트 계정으로는 공격대를 만들 수 없습니다.')
   }
 
   const { data: squad, error } = await supabaseAdmin.from('squads').insert(
@@ -53,13 +58,21 @@ squadsRouter.put('/join/:code', async (ctx) => {
     return ctx.throw(401, '로그인 후 이용해주세요.')
   }
 
-  const { data: squad } = await supabaseAdmin.from('squads').select('id').eq(
+  if (checkTestUser(user)) {
+    return ctx.throw(403, '테스트 계정으로는 공격대에 참여할 수 없습니다.')
+  }
+
+  const { data: squad } = await supabaseAdmin.from('squads').select('id, name').eq(
     'code',
     code,
   ).single()
 
   if (!squad) {
     return ctx.throw(404, '존재하지 않는 공격대 참여 코드입니다.')
+  }
+
+  if (checkTestSquadName(squad.name)) {
+    return ctx.throw(403, '테스트 공격대에는 참여할 수 없습니다.')
   }
 
   const { data: squad_user } = await supabaseAdmin.from('squad_users')

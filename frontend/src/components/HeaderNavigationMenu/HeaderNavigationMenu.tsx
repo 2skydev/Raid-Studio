@@ -15,6 +15,8 @@ import {
 
 import CharacterClassIcon from '@/features/character/CharacterClassIcon'
 
+import { cn } from '@/utils'
+
 const studioSubMenus = [
   {
     url: '/studio/my/characters',
@@ -62,7 +64,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="grid-span-3">
+              <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <Link
                     className="text-decoration-none flex size-full select-none flex-col justify-center rounded-md bg-gradient-to-b from-muted/50 to-muted p-4 outline-none focus:shadow-md"
@@ -116,7 +118,7 @@ const HeaderNavigationMenu = ({ className }: HeaderNavigationMenuProps) => {
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/squad/list" className={navigationMenuTriggerStyle()}>
+            <Link href="/squad/list" className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}>
               공개된 공격대 목록
             </Link>
           </NavigationMenuLink>

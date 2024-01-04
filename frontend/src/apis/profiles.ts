@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import { TableActionTypes } from '@/types/database.types'
 import { showErrorToast } from '@/utils/error'
+import { checkTestUser } from '@/utils/test'
 
 export const getUserProfile = async (userId: string) => {
   const { data: profile } = await supabase.from('profiles').select().eq('id', userId).single()
@@ -59,35 +60,63 @@ export const createCurrentUserProfile = async (nickname: string) => {
   return profile
 }
 
-export const updateCurrentUserProfile = async (data: TableActionTypes['profiles']['Update']) => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+export const updateCurrentUserProfile = async (
+  data: TableActionTypes['profiles']['Update'],
+  photoFile?: File,
+) => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
 
-  if (!session) throw '로그인이 필요합니다.'
+    if (!session) throw '로그인이 필요합니다.'
+    if (checkTestUser(session.user)) throw '테스트 계정은 프로필을 수정할 수 없습니다.'
 
-  const { error } = await supabase.from('profiles').update(data).eq('id', session.user.id)
+    if (photoFile) {
+      const res = await supabase.storage
+        .from('profile-photos')
+        .upload(`${session.user.id}.png`, photoFile, {
+          upsert: true,
+        })
 
-  if (error) {
-    let message
+      if (res.error) {
+        if (res.error.message.includes('The object exceeded the maximum allowed size')) {
+          throw '프로필 사진의 최대 용량은 1MB입니다.'
+        }
 
-    if (
-      error.message.includes(
-        'duplicate key value violates unique constraint "profiles_nickname_key"',
-      )
-    ) {
-      message = '이미 사용 중인 닉네임입니다.'
+        throw '프로필 사진 업로드에 실패했습니다.'
+      }
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('profile-photos').getPublicUrl(res.data.path)
+
+      data.photo = publicUrl + '?t=' + Date.now()
     }
 
+    const { error } = await supabase.from('profiles').update(data).eq('id', session.user.id)
+
+    if (error) {
+      if (
+        error.message.includes(
+          'duplicate key value violates unique constraint "profiles_nickname_key"',
+        )
+      )
+        throw '이미 사용 중인 닉네임입니다.'
+
+      throw error
+    }
+
+    return {
+      photo: data.photo,
+    }
+  } catch (error: any) {
     await showErrorToast(error, {
       title: '프로필 업데이트 오류',
-      description: message,
     })
 
     throw error
   }
-
-  return true
 }
 
 export const updateMainCharacterName = async (userId: string, name: string) => {

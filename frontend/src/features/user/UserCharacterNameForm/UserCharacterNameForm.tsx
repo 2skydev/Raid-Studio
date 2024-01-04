@@ -120,6 +120,7 @@ const UserCharacterNameForm = ({
                     type="submit"
                     disabled={inputCharacterName === characterName}
                     loading={loading}
+                    shouldLoadingIconShow
                   >
                     검색하기
                   </AsyncButton>
@@ -151,8 +152,7 @@ const UserCharacterNameForm = ({
                     {mainCharacter.level.toLocaleString()}
                   </b>{' '}
                   캐릭터로 등록하시겠습니까?
-                  <br />
-                  <ul className="list-disc">
+                  <ul className="ml-4 mt-2 list-disc">
                     <li>대표 캐릭터는 이후에 변경할 수 있습니다.</li>
                     <li>대표 캐릭터 기준으로 다른 캐릭터들을 불러옵니다.</li>
                     <li>대표 캐릭터 닉네임 변경 시, 다시 등록해야 합니다.</li>
