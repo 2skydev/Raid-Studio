@@ -19,6 +19,7 @@ import force_master_image from '@/assets/images/class/emblem_force_master.svg'
 import hawk_eye_image from '@/assets/images/class/emblem_hawk_eye.svg'
 import holyknight_image from '@/assets/images/class/emblem_holyknight.svg'
 import infighter_image from '@/assets/images/class/emblem_infighter.svg'
+import infighter_male_image from '@/assets/images/class/emblem_infighter_male.svg'
 import lance_master_image from '@/assets/images/class/emblem_lance_master.svg'
 import reaper_image from '@/assets/images/class/emblem_reaper.svg'
 import scouter_image from '@/assets/images/class/emblem_scouter.svg'
@@ -55,6 +56,7 @@ const IMAGE_MAP = {
   기상술사: weather_artist_image,
   블레이드: blade_image,
   워로드: warlord_image,
+  브레이커: infighter_male_image,
 }
 
 export interface CharacterClassIconProps extends Partial<ComponentProps<typeof Image>> {
